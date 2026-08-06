@@ -3,166 +3,269 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Vaibhav Vikas Ranjan | Portfolio</title>
+<title>Vaibhav Vikas Ranjan | AI Engineer</title>
+<meta name="description" content="AI Engineer building agentic AI pipelines, RAG systems, and anomaly detection — turning research into production software.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="css/style.css">
 <script>
-  // Apply saved theme/accent before first paint to avoid a flash of the wrong theme
+  // Apply saved theme before first paint to avoid a flash of the wrong theme
   (function () {
     var theme = localStorage.getItem('vvr-theme') || 'dark';
-    var accent = localStorage.getItem('vvr-accent') || 'default';
     document.documentElement.setAttribute('data-theme', theme);
-    if (accent !== 'default') document.documentElement.setAttribute('data-accent', accent);
   })();
 </script>
 <script src="https://code.iconify.design/iconify-icon/2.1.0/iconify-icon.min.js" defer></script>
 </head>
 <body>
 
-<!-- Custom cursor (desktop only, see CSS @media(pointer:fine)) -->
-<div class="cursor-dot"></div>
-<div class="cursor-ring"></div>
+<!-- Colorful trailing cursor (desktop only) -->
+<div id="cursorTrail" class="cursor-trail" aria-hidden="true"></div>
 
-<header>
+<!-- Preloader -->
+<div id="preloader">
+  <div class="preloader-inner">
+    <div class="preloader-mark">VVR<span class="dot">.</span></div>
+    <p class="preloader-role">AI Engineer</p>
+  </div>
+  <div class="preloader-bar-wrap">
+    <div class="preloader-bar-labels"><span>Loading</span><span id="preloaderPct">0%</span></div>
+    <div class="preloader-bar-track"><div id="preloaderBar" class="preloader-bar-fill"></div></div>
+  </div>
+</div>
+
+<!-- Ambient background -->
+<div class="bg-fx" aria-hidden="true">
+  <div class="bg-grid"></div>
+  <div class="aurora aurora-a"></div>
+  <div class="aurora aurora-b"></div>
+</div>
+
+<div id="scrollProgress" aria-hidden="true"></div>
+
+<header id="siteHeader">
   <nav class="navbar">
-    <div class="nav-avatar">
-      <img src="assets/images/avatar.jpg" alt="Vaibhav Vikas Ranjan" onerror="this.remove()">
-      <span>VR</span>
-    </div>
+    <a href="#home" class="brand">VVR<span class="dot">.</span></a>
     <ul class="nav-links">
-      <li><a href="#home" class="nav-link active">&lt;/Home&gt;</a></li>
-      <li><a href="#about" class="nav-link">&lt;/About&gt;</a></li>
-      <li><a href="#skills" class="nav-link">&lt;/Skills&gt;</a></li>
-      <li><a href="#experience" class="nav-link">&lt;/Experience&gt;</a></li>
-      <li><a href="#projects" class="nav-link">&lt;/Projects&gt;</a></li>
-      <li><a href="#contact" class="nav-link">&lt;/Contact&gt;</a></li>
+      <li><a href="#about" class="nav-link" data-nav>About</a></li>
+      <li><a href="#skills" class="nav-link" data-nav>Skills</a></li>
+      <li><a href="#experience" class="nav-link" data-nav>Journey</a></li>
+      <li><a href="#projects" class="nav-link" data-nav>Work</a></li>
+      <li><a href="#contact" class="nav-link" data-nav>Contact</a></li>
     </ul>
-    <button id="hamburger" class="hamburger" aria-label="Toggle menu">
+    <a href="#contact" class="btn-pill btn-pill--solid nav-cta">Get in Touch</a>
+    <button id="themeToggle" class="nav-icon-btn" aria-label="Toggle light/dark theme">
+      <iconify-icon icon="lucide:moon" class="icon-dark"></iconify-icon>
+      <iconify-icon icon="lucide:sun" class="icon-alt"></iconify-icon>
+    </button>
+    <button id="musicToggle" class="nav-icon-btn is-muted" aria-label="Toggle background music">
+      <iconify-icon icon="lucide:volume-2" class="icon-dark"></iconify-icon>
+      <iconify-icon icon="lucide:volume-x" class="icon-alt"></iconify-icon>
+    </button>
+    <button id="hamburger" class="hamburger" aria-label="Toggle menu" aria-expanded="false">
       <span></span><span></span><span></span>
     </button>
   </nav>
   <ul id="mobileMenu" class="mobile-menu">
-    <li><a href="#home">Home</a></li>
-    <li><a href="#about">About</a></li>
-    <li><a href="#skills">Skills</a></li>
-    <li><a href="#experience">Experience</a></li>
-    <li><a href="#projects">Projects</a></li>
-    <li><a href="#contact">Contact</a></li>
+    <li><a href="#about" data-nav>About</a></li>
+    <li><a href="#skills" data-nav>Skills</a></li>
+    <li><a href="#experience" data-nav>Journey</a></li>
+    <li><a href="#projects" data-nav>Work</a></li>
+    <li><a href="#contact" data-nav>Contact</a></li>
   </ul>
 </header>
 
 <main>
 
-  <!-- HOME -->
+  <!-- HERO -->
   <section id="home" class="hero">
-    <div class="blob"></div>
-    <div class="hero-content">
-      <p class="tag">&lt;/Welcome&gt;; I'm</p>
-      <h1 class="gradient-text">Vaibhav Vikas Ranjan</h1>
-      <h2>I train models. I ship products.</h2>
-      <p class="hero-desc">
-        AI Engineer at Accure Inc, final-year Data Science &amp; AI student at IIIT Naya Raipur.
-        I build applied ML systems &mdash; from agentic AI pipelines to anomaly detection &mdash;
-        and ship them as real, working software.
-      </p>
-      <div class="hero-buttons">
-        <a href="#contact" class="btn-primary">Let's talk</a>
-        <a href="assets/Vaibhav_Ranjan.pdf" target="_blank" class="btn-secondary">Resume ↓</a>
+    <div class="hero-glow" aria-hidden="true"></div>
+    <div class="container hero-grid">
+      <div class="hero-copy reveal">
+        <span class="eyebrow-pill"><span class="pulse-dot"></span>Open to AI Engineering roles</span>
+        <h1 class="display-xl">Vaibhav Vikas<br>Ranjan</h1>
+        <p class="hero-role">I&rsquo;m an <span class="accent-text">AI Engineer</span></p>
+        <p class="hero-desc">
+          Building <span class="hl">agentic AI pipelines</span>, <span class="hl">anomaly-detection systems</span>,
+          and <span class="hl">production ML tools</span> that hold up under real-world messiness &mdash;
+          not just clean benchmarks.
+        </p>
+        <div class="hero-actions">
+          <a href="#projects" class="btn-pill btn-pill--solid">
+            <iconify-icon icon="lucide:sparkles"></iconify-icon> View My Work
+          </a>
+          <a href="assets/Vaibhav_Ranjan.pdf" target="_blank" class="btn-pill btn-pill--glass">
+            Resume <iconify-icon icon="lucide:arrow-down"></iconify-icon>
+          </a>
+        </div>
+      </div>
+      <div class="hero-portrait reveal" data-reveal-delay="1">
+        <div class="portrait-glow" aria-hidden="true"></div>
+        <div class="portrait-frame">
+          <div class="portrait-initials">VVR</div>
+        </div>
+        <span class="floating-chip chip-1">RAG</span>
+        <span class="floating-chip chip-2">Agentic AI</span>
+        <span class="floating-chip chip-3">AI Automation</span>
+        <span class="floating-chip chip-4">LLMs</span>
       </div>
     </div>
+    <a href="#about" class="scroll-cue" aria-label="Scroll to about section">
+      <span>Scroll</span>
+      <span class="scroll-cue-track"><span class="scroll-cue-dot"></span></span>
+    </a>
   </section>
 
   <!-- ABOUT -->
   <section id="about" class="section">
-    <h2 class="section-heading">&lt;/About&gt;</h2>
-    <div class="about-content">
-      <p>
-        Hey, I'm Vaibhav &mdash; an AI Engineer currently working on enterprise generative AI systems
-        at Accure Inc, and finishing my B.Tech in Data Science &amp; Artificial Intelligence at
-        IIIT Naya Raipur (2022&ndash;2026).
-      </p>
-      <p>
-        I've spent the last few years moving between research and product: designing agentic
-        reasoning pipelines and evaluation frameworks, building anomaly-detection systems trained
-        on unlabeled data, and shipping full-stack tools that real teams use daily. Along the way
-        I've worked across healthcare tech, government systems, and enterprise AI platforms.
-      </p>
-      <p>
-        I care about building things that actually hold up under real-world messiness &mdash;
-        adversarial inputs, missing labels, production load &mdash; not just clean benchmarks.
-      </p>
+    <div class="container">
+      <div class="section-head reveal">
+        <span class="eyebrow"><span class="eyebrow-line"></span><span class="eyebrow-label">About</span></span>
+        <h2 class="display-lg">Turning research into<br>software that ships</h2>
+        <p class="section-lede">
+          Final-year Data Science &amp; AI student at IIIT Naya Raipur, currently working as an
+          AI Engineer at Accure Inc &mdash; moving between agentic reasoning research and the
+          production systems that put it to work.
+        </p>
+      </div>
+
+      <div class="about-grid">
+        <div class="glass-card feature-card reveal">
+          <span class="feature-num">Agentic</span>
+          <h3>Reasoning pipelines</h3>
+          <p>Agentic AI workflows and prompt-engineering pipelines evaluated through a
+             seven-dimension reliability framework.</p>
+        </div>
+        <div class="glass-card feature-card reveal" data-reveal-delay="1">
+          <span class="feature-num">Adversarial</span>
+          <h3>Robustness testing</h3>
+          <p>Stress-testing agentic systems against synthetic adversarial datasets to catch
+             failure modes before production does.</p>
+        </div>
+        <div class="glass-card feature-card reveal" data-reveal-delay="2">
+          <span class="feature-num">Unsupervised</span>
+          <h3>Anomaly detection</h3>
+          <p>Detection systems trained on unlabeled data, built to catch defect types the
+             training set never saw.</p>
+        </div>
+      </div>
+
+      <div class="glass-card stat-strip reveal">
+        <div class="stat"><p class="stat-num">3</p><p class="stat-label">Roles held</p></div>
+        <div class="stat"><p class="stat-num">3</p><p class="stat-label">Projects shipped</p></div>
+        <div class="stat"><p class="stat-num">30+</p><p class="stat-label">Tools &amp; frameworks</p></div>
+        <div class="stat"><p class="stat-num">2026</p><p class="stat-label">Graduating</p></div>
+      </div>
     </div>
   </section>
 
   <!-- SKILLS -->
   <section id="skills" class="section">
-    <h2 class="section-heading">&lt;/Skills&gt;</h2>
+    <div class="container">
+      <div class="section-head section-head--center reveal">
+        <span class="eyebrow eyebrow--center"><span class="eyebrow-line"></span><span class="eyebrow-label">Toolkit</span></span>
+        <h2 class="display-lg">The stack behind<br>the systems</h2>
+        <p class="section-lede">What I reach for when moving from a research idea to a working
+           system.</p>
+      </div>
 
-    <div class="stack-grid" aria-label="Core stack">
-      <div class="stack-tile"><iconify-icon icon="simple-icons:python"></iconify-icon><span class="tile-tip">Python</span></div>
-      <div class="stack-tile"><iconify-icon icon="simple-icons:cplusplus"></iconify-icon><span class="tile-tip">C++</span></div>
-      <div class="stack-tile"><iconify-icon icon="simple-icons:pytorch"></iconify-icon><span class="tile-tip">PyTorch</span></div>
-      <div class="stack-tile"><iconify-icon icon="simple-icons:tensorflow"></iconify-icon><span class="tile-tip">TensorFlow</span></div>
-      <div class="stack-tile"><iconify-icon icon="simple-icons:fastapi"></iconify-icon><span class="tile-tip">FastAPI</span></div>
-      <div class="stack-tile"><iconify-icon icon="simple-icons:streamlit"></iconify-icon><span class="tile-tip">Streamlit</span></div>
-      <div class="stack-tile"><iconify-icon icon="simple-icons:langchain"></iconify-icon><span class="tile-tip">LangChain</span></div>
-      <div class="stack-tile"><iconify-icon icon="simple-icons:docker"></iconify-icon><span class="tile-tip">Docker</span></div>
-      <div class="stack-tile"><iconify-icon icon="simple-icons:amazonaws"></iconify-icon><span class="tile-tip">AWS</span></div>
-      <div class="stack-tile"><iconify-icon icon="simple-icons:github"></iconify-icon><span class="tile-tip">GitHub</span></div>
-      <div class="stack-tile"><iconify-icon icon="simple-icons:postgresql"></iconify-icon><span class="tile-tip">PostgreSQL</span></div>
-      <div class="stack-tile"><iconify-icon icon="simple-icons:huggingface"></iconify-icon><span class="tile-tip">Hugging Face</span></div>
+      <div class="skills-panel">
+        <div class="skills-tabs" role="tablist" aria-label="Skill categories">
+          <button class="skills-tab is-active" data-skill-tab="languages" role="tab" aria-selected="true">
+            <span class="skills-tab-icon"><iconify-icon icon="lucide:code-2"></iconify-icon></span>
+            <span><span class="skills-tab-title">Languages</span><span class="skills-tab-count">5 technologies</span></span>
+          </button>
+          <button class="skills-tab" data-skill-tab="frameworks" role="tab" aria-selected="false">
+            <span class="skills-tab-icon"><iconify-icon icon="lucide:blocks"></iconify-icon></span>
+            <span><span class="skills-tab-title">Frameworks &amp; Libraries</span><span class="skills-tab-count">12 technologies</span></span>
+          </button>
+          <button class="skills-tab" data-skill-tab="tools" role="tab" aria-selected="false">
+            <span class="skills-tab-icon"><iconify-icon icon="lucide:server"></iconify-icon></span>
+            <span><span class="skills-tab-title">Tools &amp; Platforms</span><span class="skills-tab-count">7 technologies</span></span>
+          </button>
+          <button class="skills-tab" data-skill-tab="domains" role="tab" aria-selected="false">
+            <span class="skills-tab-icon"><iconify-icon icon="lucide:brain-circuit"></iconify-icon></span>
+            <span><span class="skills-tab-title">Domains</span><span class="skills-tab-count">8 technologies</span></span>
+          </button>
+        </div>
+
+        <div class="skills-display glass-card">
+          <div class="skills-pills" data-skill-panel="languages">
+            <span class="pill"><iconify-icon icon="simple-icons:python"></iconify-icon>Python</span>
+            <span class="pill"><iconify-icon icon="lucide:database"></iconify-icon>SQL</span>
+            <span class="pill"><iconify-icon icon="simple-icons:cplusplus"></iconify-icon>C++</span>
+            <span class="pill"><iconify-icon icon="simple-icons:javascript"></iconify-icon>JavaScript</span>
+            <span class="pill"><iconify-icon icon="simple-icons:html5"></iconify-icon>HTML/CSS</span>
+          </div>
+          <div class="skills-pills" data-skill-panel="frameworks" hidden>
+            <span class="pill"><iconify-icon icon="simple-icons:pytorch"></iconify-icon>PyTorch</span>
+            <span class="pill"><iconify-icon icon="simple-icons:tensorflow"></iconify-icon>TensorFlow</span>
+            <span class="pill"><iconify-icon icon="simple-icons:scikitlearn"></iconify-icon>Scikit-learn</span>
+            <span class="pill"><iconify-icon icon="simple-icons:opencv"></iconify-icon>OpenCV</span>
+            <span class="pill"><iconify-icon icon="simple-icons:langchain"></iconify-icon>LangChain</span>
+            <span class="pill"><iconify-icon icon="lucide:git-branch"></iconify-icon>LangGraph</span>
+            <span class="pill"><iconify-icon icon="simple-icons:fastapi"></iconify-icon>FastAPI</span>
+            <span class="pill"><iconify-icon icon="simple-icons:streamlit"></iconify-icon>Streamlit</span>
+            <span class="pill"><iconify-icon icon="simple-icons:pandas"></iconify-icon>Pandas</span>
+            <span class="pill"><iconify-icon icon="simple-icons:numpy"></iconify-icon>NumPy</span>
+            <span class="pill"><iconify-icon icon="lucide:plug-zap"></iconify-icon>MCP</span>
+            <span class="pill"><iconify-icon icon="lucide:message-square-code"></iconify-icon>Chainlit</span>
+          </div>
+          <div class="skills-pills" data-skill-panel="tools" hidden>
+            <span class="pill"><iconify-icon icon="simple-icons:docker"></iconify-icon>Docker</span>
+            <span class="pill"><iconify-icon icon="simple-icons:amazonaws"></iconify-icon>AWS</span>
+            <span class="pill"><iconify-icon icon="simple-icons:git"></iconify-icon>Git</span>
+            <span class="pill"><iconify-icon icon="simple-icons:tableau"></iconify-icon>Tableau</span>
+            <span class="pill"><iconify-icon icon="simple-icons:huggingface"></iconify-icon>Hugging Face</span>
+            <span class="pill"><iconify-icon icon="lucide:database"></iconify-icon>ChromaDB</span>
+            <span class="pill"><iconify-icon icon="simple-icons:postgresql"></iconify-icon>PostgreSQL</span>
+          </div>
+          <div class="skills-pills" data-skill-panel="domains" hidden>
+            <span class="pill"><iconify-icon icon="lucide:sparkles"></iconify-icon>Generative AI</span>
+            <span class="pill"><iconify-icon icon="lucide:brain-circuit"></iconify-icon>LLMs</span>
+            <span class="pill"><iconify-icon icon="lucide:search"></iconify-icon>RAG</span>
+            <span class="pill"><iconify-icon icon="lucide:message-square-text"></iconify-icon>NLP</span>
+            <span class="pill"><iconify-icon icon="lucide:scan-eye"></iconify-icon>Computer Vision</span>
+            <span class="pill"><iconify-icon icon="lucide:triangle-alert"></iconify-icon>Anomaly Detection</span>
+            <span class="pill"><iconify-icon icon="lucide:workflow"></iconify-icon>Data Engineering</span>
+            <span class="pill"><iconify-icon icon="lucide:terminal"></iconify-icon>Prompt Engineering</span>
+          </div>
+        </div>
+      </div>
     </div>
 
-    <div class="skills-grid">
-      <div class="skill-group">
-        <h3>Languages</h3>
-        <div class="badges">
-          <span class="badge"><iconify-icon icon="simple-icons:python"></iconify-icon>Python</span>
-          <span class="badge"><iconify-icon icon="lucide:database"></iconify-icon>SQL</span>
-          <span class="badge"><iconify-icon icon="simple-icons:cplusplus"></iconify-icon>C++</span>
-          <span class="badge"><iconify-icon icon="simple-icons:javascript"></iconify-icon>JavaScript</span>
-          <span class="badge"><iconify-icon icon="simple-icons:html5"></iconify-icon>HTML/CSS</span>
+    <div class="marquee-stack">
+      <div class="marquee-row">
+        <div class="marquee-track" style="--duration:34s">
+          <div class="marquee-group">
+            <span>Python<i>&#10022;</i></span><span>PyTorch<i>&#10022;</i></span><span>LangChain<i>&#10022;</i></span>
+            <span>LangGraph<i>&#10022;</i></span><span>FastAPI<i>&#10022;</i></span><span>RAG<i>&#10022;</i></span>
+            <span>Docker<i>&#10022;</i></span><span>AWS<i>&#10022;</i></span><span>PostgreSQL<i>&#10022;</i></span>
+            <span>Hugging Face<i>&#10022;</i></span><span>ChromaDB<i>&#10022;</i></span><span>OpenCV<i>&#10022;</i></span>
+          </div>
+          <div class="marquee-group" aria-hidden="true">
+            <span>Python<i>&#10022;</i></span><span>PyTorch<i>&#10022;</i></span><span>LangChain<i>&#10022;</i></span>
+            <span>LangGraph<i>&#10022;</i></span><span>FastAPI<i>&#10022;</i></span><span>RAG<i>&#10022;</i></span>
+            <span>Docker<i>&#10022;</i></span><span>AWS<i>&#10022;</i></span><span>PostgreSQL<i>&#10022;</i></span>
+            <span>Hugging Face<i>&#10022;</i></span><span>ChromaDB<i>&#10022;</i></span><span>OpenCV<i>&#10022;</i></span>
+          </div>
         </div>
       </div>
-      <div class="skill-group">
-        <h3>Frameworks &amp; Libraries</h3>
-        <div class="badges">
-          <span class="badge"><iconify-icon icon="simple-icons:pytorch"></iconify-icon>PyTorch</span>
-          <span class="badge"><iconify-icon icon="simple-icons:tensorflow"></iconify-icon>TensorFlow</span>
-          <span class="badge"><iconify-icon icon="simple-icons:scikitlearn"></iconify-icon>Scikit-learn</span>
-          <span class="badge"><iconify-icon icon="simple-icons:opencv"></iconify-icon>OpenCV</span>
-          <span class="badge"><iconify-icon icon="simple-icons:langchain"></iconify-icon>LangChain</span>
-          <span class="badge"><iconify-icon icon="lucide:git-branch"></iconify-icon>LangGraph</span>
-          <span class="badge"><iconify-icon icon="simple-icons:fastapi"></iconify-icon>FastAPI</span>
-          <span class="badge"><iconify-icon icon="simple-icons:streamlit"></iconify-icon>Streamlit</span>
-          <span class="badge"><iconify-icon icon="simple-icons:pandas"></iconify-icon>Pandas</span>
-          <span class="badge"><iconify-icon icon="simple-icons:numpy"></iconify-icon>NumPy</span>
-          <span class="badge"><iconify-icon icon="lucide:plug-zap"></iconify-icon>MCP</span>
-          <span class="badge"><iconify-icon icon="lucide:message-square-code"></iconify-icon>Chainlit</span>
-        </div>
-      </div>
-      <div class="skill-group">
-        <h3>Tools &amp; Platforms</h3>
-        <div class="badges">
-          <span class="badge"><iconify-icon icon="simple-icons:docker"></iconify-icon>Docker</span>
-          <span class="badge"><iconify-icon icon="simple-icons:amazonaws"></iconify-icon>AWS</span>
-          <span class="badge"><iconify-icon icon="simple-icons:git"></iconify-icon>Git</span>
-          <span class="badge"><iconify-icon icon="simple-icons:tableau"></iconify-icon>Tableau</span>
-          <span class="badge"><iconify-icon icon="simple-icons:huggingface"></iconify-icon>Hugging Face</span>
-          <span class="badge"><iconify-icon icon="lucide:database"></iconify-icon>ChromaDB</span>
-          <span class="badge"><iconify-icon icon="simple-icons:postgresql"></iconify-icon>PostgreSQL</span>
-        </div>
-      </div>
-      <div class="skill-group">
-        <h3>Domains</h3>
-        <div class="badges">
-          <span class="badge"><iconify-icon icon="lucide:sparkles"></iconify-icon>Generative AI</span>
-          <span class="badge"><iconify-icon icon="lucide:brain-circuit"></iconify-icon>LLMs</span>
-          <span class="badge"><iconify-icon icon="lucide:search"></iconify-icon>RAG</span>
-          <span class="badge"><iconify-icon icon="lucide:message-square-text"></iconify-icon>NLP</span>
-          <span class="badge"><iconify-icon icon="lucide:scan-eye"></iconify-icon>Computer Vision</span>
-          <span class="badge"><iconify-icon icon="lucide:triangle-alert"></iconify-icon>Anomaly Detection</span>
-          <span class="badge"><iconify-icon icon="lucide:workflow"></iconify-icon>Data Engineering</span>
-          <span class="badge"><iconify-icon icon="lucide:terminal"></iconify-icon>Prompt Engineering</span>
+      <div class="marquee-row">
+        <div class="marquee-track marquee-track--reverse" style="--duration:40s">
+          <div class="marquee-group marquee-group--dim">
+            <span>C++<i>&#10022;</i></span><span>TensorFlow<i>&#10022;</i></span><span>Streamlit<i>&#10022;</i></span>
+            <span>MCP<i>&#10022;</i></span><span>Anomalib<i>&#10022;</i></span><span>Pandas<i>&#10022;</i></span>
+            <span>NumPy<i>&#10022;</i></span><span>Tableau<i>&#10022;</i></span><span>Git<i>&#10022;</i></span>
+            <span>Ollama<i>&#10022;</i></span><span>Pydantic<i>&#10022;</i></span><span>Chainlit<i>&#10022;</i></span>
+          </div>
+          <div class="marquee-group marquee-group--dim" aria-hidden="true">
+            <span>C++<i>&#10022;</i></span><span>TensorFlow<i>&#10022;</i></span><span>Streamlit<i>&#10022;</i></span>
+            <span>MCP<i>&#10022;</i></span><span>Anomalib<i>&#10022;</i></span><span>Pandas<i>&#10022;</i></span>
+            <span>NumPy<i>&#10022;</i></span><span>Tableau<i>&#10022;</i></span><span>Git<i>&#10022;</i></span>
+            <span>Ollama<i>&#10022;</i></span><span>Pydantic<i>&#10022;</i></span><span>Chainlit<i>&#10022;</i></span>
+          </div>
         </div>
       </div>
     </div>
@@ -170,155 +273,206 @@
 
   <!-- EXPERIENCE -->
   <section id="experience" class="section">
-    <h2 class="section-heading">&lt;/Experience&gt;</h2>
-    <div class="timeline">
-
-      <div class="timeline-item">
-        <div class="timeline-date">Jan 2026 &ndash; Present</div>
-        <div class="timeline-body">
-          <h3>AI Engineer</h3>
-          <p class="timeline-org">Accure Inc &middot; Bangalore, India</p>
-          <ul>
-            <li>Improved LLM reasoning reliability for AccureIQx by designing agentic AI workflows and prompt-engineering pipelines, evaluated through a seven-dimension framework.</li>
-            <li>Strengthened adversarial robustness of agentic reasoning systems, achieving high anomaly-detection accuracy across five stress-test scenarios using synthetic cybersecurity datasets.</li>
-            <li>Cut manual weekly reporting time by 35% by building automated Python analytics pipelines integrating multi-source EDA data via REST APIs.</li>
-          </ul>
-        </div>
+    <div class="container">
+      <div class="section-head section-head--center reveal">
+        <span class="eyebrow eyebrow--center"><span class="eyebrow-line"></span><span class="eyebrow-label">Journey</span></span>
+        <h2 class="display-lg">From load-tested<br>systems to agentic AI</h2>
+        <p class="section-lede">Three roles, each closer to the model layer than the last.</p>
       </div>
 
-      <div class="timeline-item">
-        <div class="timeline-date">May 2025 &ndash; July 2025</div>
-        <div class="timeline-body">
-          <h3>Software Developer Intern</h3>
-          <p class="timeline-org">Taskar &mdash; India's 1st Healthcare Mall &middot; Remote</p>
-          <ul>
-            <li>Reduced manual reporting workflows by 40% via microservice-based RESTful API integrations for live healthcare and inventory data.</li>
-            <li>Improved analytics dashboard load times by 30% by optimizing UI rendering and async data fetching with React Hooks.</li>
-            <li>Increased user engagement 15% by redesigning dashboard layouts based on stakeholder feedback.</li>
-          </ul>
+      <div class="timeline">
+        <div class="timeline-spine" aria-hidden="true"></div>
+
+        <div class="timeline-item reveal">
+          <span class="timeline-node"><iconify-icon icon="lucide:brain-circuit"></iconify-icon></span>
+          <div class="glass-card timeline-card">
+            <div class="timeline-card-head">
+              <h3>AI Engineer</h3>
+              <span class="timeline-date">Jan 2026 &ndash; Present</span>
+            </div>
+            <p class="timeline-org">Accure Inc &middot; Bangalore, India</p>
+            <ul>
+              <li>Improved LLM reasoning reliability for AccureIQx by designing agentic AI workflows and prompt-engineering pipelines, evaluated through a seven-dimension framework.</li>
+              <li>Strengthened adversarial robustness of agentic reasoning systems, achieving high anomaly-detection accuracy across five stress-test scenarios using synthetic cybersecurity datasets.</li>
+              <li>Cut manual weekly reporting time by 35% by building automated Python analytics pipelines integrating multi-source EDA data via REST APIs.</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="timeline-item reveal">
+          <span class="timeline-node"><iconify-icon icon="lucide:heart-pulse"></iconify-icon></span>
+          <div class="glass-card timeline-card">
+            <div class="timeline-card-head">
+              <h3>Software Developer Intern</h3>
+              <span class="timeline-date">May 2025 &ndash; Jul 2025</span>
+            </div>
+            <p class="timeline-org">Taskar &mdash; India&rsquo;s 1st Healthcare Mall &middot; Remote</p>
+            <ul>
+              <li>Reduced manual reporting workflows by 40% via microservice-based RESTful API integrations for live healthcare and inventory data.</li>
+              <li>Improved analytics dashboard load times by 30% by optimizing UI rendering and async data fetching with React Hooks.</li>
+              <li>Increased user engagement 15% by redesigning dashboard layouts based on stakeholder feedback.</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="timeline-item reveal">
+          <span class="timeline-node"><iconify-icon icon="lucide:server"></iconify-icon></span>
+          <div class="glass-card timeline-card">
+            <div class="timeline-card-head">
+              <h3>Software Engineering Intern</h3>
+              <span class="timeline-date">May 2024 &ndash; Jul 2024</span>
+            </div>
+            <p class="timeline-org">Research Designs and Standards Organisation (RDSO) &middot; Lucknow, India</p>
+            <ul>
+              <li>Supported 500+ concurrent users at 99.9% uptime by engineering a responsive attendance tracking system (HTML, CSS, JS, PHP, MySQL).</li>
+              <li>Cut login times 60% for 1,000+ daily users via an optimized, AJAX-driven authentication workflow.</li>
+              <li>Validated production-grade performance under high concurrency using Apache JMeter load testing.</li>
+            </ul>
+          </div>
         </div>
       </div>
-
-      <div class="timeline-item">
-        <div class="timeline-date">May 2024 &ndash; July 2024</div>
-        <div class="timeline-body">
-          <h3>Software Engineering Intern</h3>
-          <p class="timeline-org">Research Designs and Standards Organisation (RDSO) &middot; Lucknow, India</p>
-          <ul>
-            <li>Supported 500+ concurrent users at 99.9% uptime by engineering a responsive attendance tracking system (HTML, CSS, JS, PHP, MySQL).</li>
-            <li>Cut login times 60% for 1,000+ daily users via an optimized, AJAX-driven authentication workflow.</li>
-            <li>Validated production-grade performance under high concurrency using Apache JMeter load testing.</li>
-          </ul>
-        </div>
-      </div>
-
     </div>
   </section>
 
   <!-- PROJECTS -->
   <section id="projects" class="section">
-    <h2 class="section-heading">&lt;/Projects&gt;</h2>
-    <div class="project-boxes">
+    <div class="container">
+      <div class="section-head section-head--center reveal">
+        <span class="eyebrow eyebrow--center"><span class="eyebrow-line"></span><span class="eyebrow-label">Selected Work</span></span>
+        <h2 class="display-lg">Research, shipped<br>as software</h2>
+        <p class="section-lede">Agentic pipelines, vision systems, and NLP tools built end-to-end.</p>
+      </div>
 
-      <div class="project-box">
-        <div class="project-info">
+      <div class="glass-card filter-bar reveal" role="tablist" aria-label="Filter projects by category">
+        <button class="filter-btn is-active" data-filter="all" role="tab" aria-selected="true">All</button>
+        <button class="filter-btn" data-filter="agentic" role="tab" aria-selected="false">Agentic AI</button>
+        <button class="filter-btn" data-filter="vision" role="tab" aria-selected="false">Computer Vision</button>
+        <button class="filter-btn" data-filter="nlp" role="tab" aria-selected="false">NLP</button>
+      </div>
+
+      <div class="project-grid">
+        <article class="glass-card project-card reveal" data-category="agentic">
+          <div class="project-card-top">
+            <span class="project-tag">Agentic Contract Auditor</span>
+            <span class="project-year">2026</span>
+          </div>
           <h3>CFR Compliance Checker</h3>
-          <p class="project-sub">Agentic Contract Auditor</p>
-          <p class="project-desc">
-            Custom MCP server wrapping the eCFR REST API with 7 typed regulatory-search tools,
-            plus an end-to-end agentic pipeline (Agno + local Ollama Llama 3.1) producing
-            validated compliance reports per contract clause. Cut runtime 65% (12min &rarr; 4:10)
-            via concurrent retrieval and async caching.
-          </p>
-          <div class="badges small">
-            <span class="badge">Python</span><span class="badge">FastMCP</span>
-            <span class="badge">Agno</span><span class="badge">Ollama</span><span class="badge">Pydantic</span>
+          <p>Custom MCP server wrapping the eCFR REST API with 7 typed regulatory-search tools,
+             plus an end-to-end agentic pipeline (Agno + local Ollama Llama 3.1) producing
+             validated compliance reports per contract clause. Cut runtime 65% (12min &rarr; 4:10)
+             via concurrent retrieval and async caching.</p>
+          <div class="chip-row">
+            <span class="chip">Python</span><span class="chip">FastMCP</span>
+            <span class="chip">Agno</span><span class="chip">Ollama</span><span class="chip">Pydantic</span>
           </div>
-          <a href="https://github.com/vvXranjan/cfr-compliance-mcp" target="_blank" class="project-link">GitHub ↗</a>
-        </div>
-      </div>
+          <a href="https://github.com/vvXranjan/cfr-compliance-mcp" target="_blank" rel="noopener" class="project-link">
+            View on GitHub <iconify-icon icon="lucide:arrow-up-right"></iconify-icon>
+          </a>
+        </article>
 
-      <div class="project-box">
-        <div class="project-info">
+        <article class="glass-card project-card reveal" data-category="vision" data-reveal-delay="1">
+          <div class="project-card-top">
+            <span class="project-tag">PatchCore PoC</span>
+            <span class="project-year">2025</span>
+          </div>
           <h3>Welding Anomaly Detection</h3>
-          <p class="project-sub">PatchCore PoC</p>
-          <p class="project-desc">
-            Unsupervised anomaly-detection pipeline trained only on normal weld images to catch
-            unseen defect types without labeled data, using PatchCore (Anomalib). Generates
-            pixel-level explainable heatmaps alongside anomaly scores.
-          </p>
-          <div class="badges small">
-            <span class="badge">PyTorch</span><span class="badge">Anomalib</span>
-            <span class="badge">OpenCV</span><span class="badge">NumPy</span>
+          <p>Unsupervised anomaly-detection pipeline trained only on normal weld images to catch
+             unseen defect types without labeled data, using PatchCore (Anomalib). Generates
+             pixel-level explainable heatmaps alongside anomaly scores.</p>
+          <div class="chip-row">
+            <span class="chip">PyTorch</span><span class="chip">Anomalib</span>
+            <span class="chip">OpenCV</span><span class="chip">NumPy</span>
           </div>
-          <a href="https://github.com/vvXranjan/welding-anomaly-detection-poc" target="_blank" class="project-link">GitHub ↗</a>
-        </div>
-      </div>
+          <a href="https://github.com/vvXranjan/welding-anomaly-detection-poc" target="_blank" rel="noopener" class="project-link">
+            View on GitHub <iconify-icon icon="lucide:arrow-up-right"></iconify-icon>
+          </a>
+        </article>
 
-      <div class="project-box">
-        <div class="project-info">
+        <article class="glass-card project-card reveal" data-category="nlp" data-reveal-delay="2">
+          <div class="project-card-top">
+            <span class="project-tag">Resume&ndash;JD Matcher</span>
+            <span class="project-year">2025</span>
+          </div>
           <h3>Smart ATS</h3>
-          <p class="project-sub">Resume&ndash;JD Matcher</p>
-          <p class="project-desc">
-            Explainable NLP-based ATS engine combining transformer semantic embeddings with
-            keyword scoring across dual scoring modes. FastAPI backend + Streamlit UI surface
-            missing-keyword detection with privacy-safe, auto-redacted parsing.
-          </p>
-          <div class="badges small">
-            <span class="badge">FastAPI</span><span class="badge">Streamlit</span>
-            <span class="badge">SentenceTransformers</span><span class="badge">PyMuPDF</span>
+          <p>Explainable NLP-based ATS engine combining transformer semantic embeddings with
+             keyword scoring across dual scoring modes. FastAPI backend + Streamlit UI surface
+             missing-keyword detection with privacy-safe, auto-redacted parsing.</p>
+          <div class="chip-row">
+            <span class="chip">FastAPI</span><span class="chip">Streamlit</span>
+            <span class="chip">SentenceTransformers</span><span class="chip">PyMuPDF</span>
           </div>
-          <a href="https://github.com/vvXranjan/smart-ats-resume-matcher" target="_blank" class="project-link">GitHub ↗</a>
+          <a href="https://github.com/vvXranjan/smart-ats-resume-matcher" target="_blank" rel="noopener" class="project-link">
+            View on GitHub <iconify-icon icon="lucide:arrow-up-right"></iconify-icon>
+          </a>
+        </article>
+      </div>
+      <p class="filter-empty" hidden>No projects in this category yet.</p>
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section id="contact" class="section">
+    <div class="container">
+      <div class="glass-card contact-panel reveal">
+        <div class="bg-grid contact-grid-fx" aria-hidden="true"></div>
+        <span class="eyebrow"><span class="eyebrow-line"></span><span class="eyebrow-label">Contact</span></span>
+        <h2 class="display-lg">Let&rsquo;s build something<br>reliable</h2>
+        <p class="section-lede">Open to AI Engineering roles and interesting problems in agentic
+           systems, RAG, or applied ML &mdash; reach out.</p>
+
+        <div class="contact-row">
+          <a href="mailto:vaivikran@gmail.com" class="btn-pill btn-pill--solid btn-pill--lg">
+            Start a conversation
+            <span class="btn-pill-icon"><iconify-icon icon="lucide:arrow-up-right"></iconify-icon></span>
+          </a>
+          <div class="contact-cards">
+            <a href="mailto:vaivikran@gmail.com" class="contact-card">
+              <span class="contact-card-icon"><iconify-icon icon="lucide:mail"></iconify-icon></span>
+              <span><span class="contact-card-label">Email</span><span class="contact-card-value">vaivikran@gmail.com</span></span>
+            </a>
+            <a href="https://www.linkedin.com/in/vaibhavvranjan" target="_blank" rel="noopener" class="contact-card">
+              <span class="contact-card-icon"><iconify-icon icon="simple-icons:linkedin"></iconify-icon></span>
+              <span><span class="contact-card-label">LinkedIn</span><span class="contact-card-value">in/vaibhavvranjan</span></span>
+            </a>
+            <a href="https://github.com/vvXranjan" target="_blank" rel="noopener" class="contact-card">
+              <span class="contact-card-icon"><iconify-icon icon="simple-icons:github"></iconify-icon></span>
+              <span><span class="contact-card-label">GitHub</span><span class="contact-card-value">vvXranjan</span></span>
+            </a>
+          </div>
         </div>
       </div>
-
     </div>
   </section>
 
 </main>
 
-<!-- CONTACT / FOOTER -->
-<footer id="contact">
-  <h2 class="section-heading">&lt;/Contact&gt;</h2>
-  <p class="footer-line">Open to interesting problems &mdash; reach out.</p>
-  <div class="social-links">
-    <a href="mailto:vaivikran@gmail.com" aria-label="Email">Email</a>
-    <a href="https://www.linkedin.com/in/vaibhavvranjan" target="_blank" aria-label="LinkedIn">LinkedIn</a>
-    <a href="https://github.com/vvXranjan" target="_blank" aria-label="GitHub">GitHub</a>
-  </div>
-  <p class="footer-bottom">&copy; 2026 Vaibhav Ranjan. Built with code, not templates.</p>
-</footer>
-
-<button id="backToTop" aria-label="Back to top">↑</button>
-
-<!-- Floating control bar -->
-<div class="control-bar">
-  <a href="#contact" class="talk-btn">Let's Talk!</a>
-
-  <div class="settings-wrap">
-    <button id="settingsToggle" class="control-icon" aria-label="Accent color settings" aria-expanded="false">
-      <iconify-icon icon="lucide:settings"></iconify-icon>
-    </button>
-    <div id="settingsPanel" class="settings-panel">
-      <p>Accent</p>
-      <div class="accent-options">
-        <button type="button" class="accent-dot active" data-accent-choice="default" aria-label="Ocean accent"></button>
-        <button type="button" class="accent-dot" data-accent-choice="sunset" aria-label="Sunset accent"></button>
-        <button type="button" class="accent-dot" data-accent-choice="forest" aria-label="Forest accent"></button>
-      </div>
+<footer>
+  <div class="container footer-grid">
+    <div>
+      <a href="#home" class="brand">VR<span class="dot">.</span></a>
+      <p class="footer-tagline">AI Engineer building agentic pipelines, RAG systems, and
+         production ML tools.</p>
+    </div>
+    <nav class="footer-nav">
+      <a href="#about" data-nav>About</a>
+      <a href="#skills" data-nav>Skills</a>
+      <a href="#experience" data-nav>Journey</a>
+      <a href="#projects" data-nav>Work</a>
+      <a href="#contact" data-nav>Contact</a>
+    </nav>
+    <div class="footer-socials">
+      <a href="https://www.linkedin.com/in/vaibhavvranjan" target="_blank" rel="noopener" aria-label="LinkedIn"><iconify-icon icon="simple-icons:linkedin"></iconify-icon></a>
+      <a href="https://github.com/vvXranjan" target="_blank" rel="noopener" aria-label="GitHub"><iconify-icon icon="simple-icons:github"></iconify-icon></a>
+      <a href="mailto:vaivikran@gmail.com" aria-label="Email"><iconify-icon icon="lucide:mail"></iconify-icon></a>
     </div>
   </div>
+  <div class="container footer-bottom">
+    <p>&copy; 2026 Vaibhav Ranjan. All rights reserved.</p>
+    <p class="footer-credit">Built with code, not templates.</p>
+  </div>
+</footer>
 
-  <button id="themeToggle" class="control-icon" aria-label="Toggle light/dark theme">
-    <iconify-icon icon="lucide:moon" class="icon-dark"></iconify-icon>
-    <iconify-icon icon="lucide:sun" class="icon-alt"></iconify-icon>
-  </button>
-
-  <button id="musicToggle" class="control-icon is-muted" aria-label="Toggle background music">
-    <iconify-icon icon="lucide:volume-2" class="icon-dark"></iconify-icon>
-    <iconify-icon icon="lucide:volume-x" class="icon-alt"></iconify-icon>
-  </button>
-</div>
+<button id="backToTop" aria-label="Back to top"><iconify-icon icon="lucide:arrow-up"></iconify-icon></button>
 
 <audio id="bgMusic" loop preload="none"></audio>
 
