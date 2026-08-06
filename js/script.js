@@ -8,7 +8,7 @@ const CONFIG = {
   musicSrc: 'assets/audio/bg-music.mp3',
 
   // Playback volume, 0.0 (silent) to 1.0 (full volume).
-  musicVolume: 0.7,
+  musicVolume: 0.4,
 };
 
 // Mobile menu toggle
@@ -127,25 +127,14 @@ const cursorDot = document.querySelector('.cursor-dot');
 const cursorRing = document.querySelector('.cursor-ring');
 
 if (cursorDot && cursorRing && window.matchMedia('(hover: hover) and (pointer: fine)').matches) {
-  let mouseX = 0, mouseY = 0;
-  let ringX = 0, ringY = 0;
-
   window.addEventListener('mousemove', (e) => {
-    mouseX = e.clientX;
-    mouseY = e.clientY;
-    cursorDot.style.left = `${mouseX}px`;
-    cursorDot.style.top = `${mouseY}px`;
+    const x = `${e.clientX}px`;
+    const y = `${e.clientY}px`;
+    cursorDot.style.left = x;
+    cursorDot.style.top = y;
+    cursorRing.style.left = x;
+    cursorRing.style.top = y;
   });
-
-  // The ring eases toward the pointer each frame for a slight trailing feel
-  function animateRing() {
-    ringX += (mouseX - ringX) * 0.18;
-    ringY += (mouseY - ringY) * 0.18;
-    cursorRing.style.left = `${ringX}px`;
-    cursorRing.style.top = `${ringY}px`;
-    requestAnimationFrame(animateRing);
-  }
-  animateRing();
 
   const hoverTargets = 'a, button, .badge, .stack-tile, input, textarea';
   document.querySelectorAll(hoverTargets).forEach(el => {
