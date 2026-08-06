@@ -1,16 +1,26 @@
-<!DOCTYPE html>
+<!-- <!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Vaibhav Vikas Ranjan | Portfolio</title>
 <link rel="stylesheet" href="css/style.css">
+<script>
+  // Apply saved theme/accent before first paint to avoid a flash of the wrong theme
+  (function () {
+    var theme = localStorage.getItem('vvr-theme') || 'dark';
+    var accent = localStorage.getItem('vvr-accent') || 'default';
+    document.documentElement.setAttribute('data-theme', theme);
+    if (accent !== 'default') document.documentElement.setAttribute('data-accent', accent);
+  })();
+</script>
+<script src="https://code.iconify.design/iconify-icon/2.1.0/iconify-icon.min.js" defer></script>
 </head>
 <body>
 
 <header>
   <nav class="navbar">
-    <div class="logo">VR</div>
+    <div class="logo">V</div>
     <ul class="nav-links">
       <li><a href="#home" class="nav-link active">&lt;/Home&gt;</a></li>
       <li><a href="#about" class="nav-link">&lt;/About&gt;</a></li>
@@ -79,42 +89,73 @@
   <!-- SKILLS -->
   <section id="skills" class="section">
     <h2 class="section-heading">&lt;/Skills&gt;</h2>
+
+    <div class="stack-grid" aria-label="Core stack">
+      <div class="stack-tile"><iconify-icon icon="simple-icons:python"></iconify-icon><span class="tile-tip">Python</span></div>
+      <div class="stack-tile"><iconify-icon icon="simple-icons:cplusplus"></iconify-icon><span class="tile-tip">C++</span></div>
+      <div class="stack-tile"><iconify-icon icon="simple-icons:pytorch"></iconify-icon><span class="tile-tip">PyTorch</span></div>
+      <div class="stack-tile"><iconify-icon icon="simple-icons:tensorflow"></iconify-icon><span class="tile-tip">TensorFlow</span></div>
+      <div class="stack-tile"><iconify-icon icon="simple-icons:fastapi"></iconify-icon><span class="tile-tip">FastAPI</span></div>
+      <div class="stack-tile"><iconify-icon icon="simple-icons:streamlit"></iconify-icon><span class="tile-tip">Streamlit</span></div>
+      <div class="stack-tile"><iconify-icon icon="simple-icons:langchain"></iconify-icon><span class="tile-tip">LangChain</span></div>
+      <div class="stack-tile"><iconify-icon icon="simple-icons:docker"></iconify-icon><span class="tile-tip">Docker</span></div>
+      <div class="stack-tile"><iconify-icon icon="simple-icons:amazonaws"></iconify-icon><span class="tile-tip">AWS</span></div>
+      <div class="stack-tile"><iconify-icon icon="simple-icons:github"></iconify-icon><span class="tile-tip">GitHub</span></div>
+      <div class="stack-tile"><iconify-icon icon="simple-icons:postgresql"></iconify-icon><span class="tile-tip">PostgreSQL</span></div>
+      <div class="stack-tile"><iconify-icon icon="simple-icons:huggingface"></iconify-icon><span class="tile-tip">Hugging Face</span></div>
+    </div>
+
     <div class="skills-grid">
       <div class="skill-group">
         <h3>Languages</h3>
         <div class="badges">
-          <span class="badge">Python</span><span class="badge">SQL</span>
-          <span class="badge">C++</span><span class="badge">JavaScript</span>
-          <span class="badge">HTML/CSS</span>
+          <span class="badge"><iconify-icon icon="simple-icons:python"></iconify-icon>Python</span>
+          <span class="badge"><iconify-icon icon="lucide:database"></iconify-icon>SQL</span>
+          <span class="badge"><iconify-icon icon="simple-icons:cplusplus"></iconify-icon>C++</span>
+          <span class="badge"><iconify-icon icon="simple-icons:javascript"></iconify-icon>JavaScript</span>
+          <span class="badge"><iconify-icon icon="simple-icons:html5"></iconify-icon>HTML/CSS</span>
         </div>
       </div>
       <div class="skill-group">
         <h3>Frameworks &amp; Libraries</h3>
         <div class="badges">
-          <span class="badge">PyTorch</span><span class="badge">TensorFlow</span>
-          <span class="badge">Scikit-learn</span><span class="badge">OpenCV</span>
-          <span class="badge">LangChain</span><span class="badge">LangGraph</span>
-          <span class="badge">FastAPI</span><span class="badge">Streamlit</span>
-          <span class="badge">Pandas</span><span class="badge">NumPy</span>
-          <span class="badge">MCP</span><span class="badge">Chainlit</span>
+          <span class="badge"><iconify-icon icon="simple-icons:pytorch"></iconify-icon>PyTorch</span>
+          <span class="badge"><iconify-icon icon="simple-icons:tensorflow"></iconify-icon>TensorFlow</span>
+          <span class="badge"><iconify-icon icon="simple-icons:scikitlearn"></iconify-icon>Scikit-learn</span>
+          <span class="badge"><iconify-icon icon="simple-icons:opencv"></iconify-icon>OpenCV</span>
+          <span class="badge"><iconify-icon icon="simple-icons:langchain"></iconify-icon>LangChain</span>
+          <span class="badge"><iconify-icon icon="lucide:git-branch"></iconify-icon>LangGraph</span>
+          <span class="badge"><iconify-icon icon="simple-icons:fastapi"></iconify-icon>FastAPI</span>
+          <span class="badge"><iconify-icon icon="simple-icons:streamlit"></iconify-icon>Streamlit</span>
+          <span class="badge"><iconify-icon icon="simple-icons:pandas"></iconify-icon>Pandas</span>
+          <span class="badge"><iconify-icon icon="simple-icons:numpy"></iconify-icon>NumPy</span>
+          <span class="badge"><iconify-icon icon="lucide:plug-zap"></iconify-icon>MCP</span>
+          <span class="badge"><iconify-icon icon="lucide:message-square-code"></iconify-icon>Chainlit</span>
         </div>
       </div>
       <div class="skill-group">
         <h3>Tools &amp; Platforms</h3>
         <div class="badges">
-          <span class="badge">Docker</span><span class="badge">AWS</span>
-          <span class="badge">Git</span><span class="badge">Tableau</span>
-          <span class="badge">Hugging Face</span><span class="badge">ChromaDB</span>
-          <span class="badge">PostgreSQL</span>
+          <span class="badge"><iconify-icon icon="simple-icons:docker"></iconify-icon>Docker</span>
+          <span class="badge"><iconify-icon icon="simple-icons:amazonaws"></iconify-icon>AWS</span>
+          <span class="badge"><iconify-icon icon="simple-icons:git"></iconify-icon>Git</span>
+          <span class="badge"><iconify-icon icon="simple-icons:tableau"></iconify-icon>Tableau</span>
+          <span class="badge"><iconify-icon icon="simple-icons:huggingface"></iconify-icon>Hugging Face</span>
+          <span class="badge"><iconify-icon icon="lucide:database"></iconify-icon>ChromaDB</span>
+          <span class="badge"><iconify-icon icon="simple-icons:postgresql"></iconify-icon>PostgreSQL</span>
         </div>
       </div>
       <div class="skill-group">
         <h3>Domains</h3>
         <div class="badges">
-          <span class="badge">Generative AI</span><span class="badge">LLMs</span>
-          <span class="badge">RAG</span><span class="badge">NLP</span>
-          <span class="badge">Computer Vision</span><span class="badge">Anomaly Detection</span>
-          <span class="badge">Data Engineering</span><span class="badge">Prompt Engineering</span>
+          <span class="badge"><iconify-icon icon="lucide:sparkles"></iconify-icon>Generative AI</span>
+          <span class="badge"><iconify-icon icon="lucide:brain-circuit"></iconify-icon>LLMs</span>
+          <span class="badge"><iconify-icon icon="lucide:search"></iconify-icon>RAG</span>
+          <span class="badge"><iconify-icon icon="lucide:message-square-text"></iconify-icon>NLP</span>
+          <span class="badge"><iconify-icon icon="lucide:scan-eye"></iconify-icon>Computer Vision</span>
+          <span class="badge"><iconify-icon icon="lucide:triangle-alert"></iconify-icon>Anomaly Detection</span>
+          <span class="badge"><iconify-icon icon="lucide:workflow"></iconify-icon>Data Engineering</span>
+          <span class="badge"><iconify-icon icon="lucide:terminal"></iconify-icon>Prompt Engineering</span>
         </div>
       </div>
     </div>
@@ -242,6 +283,39 @@
 </footer>
 
 <button id="backToTop" aria-label="Back to top">↑</button>
+
+<!-- Floating control bar -->
+<div class="control-bar">
+  <a href="#contact" class="talk-btn">Let's Talk!</a>
+
+  <div class="settings-wrap">
+    <button id="settingsToggle" class="control-icon" aria-label="Accent color settings" aria-expanded="false">
+      <iconify-icon icon="lucide:settings"></iconify-icon>
+    </button>
+    <div id="settingsPanel" class="settings-panel">
+      <p>Accent</p>
+      <div class="accent-options">
+        <button type="button" class="accent-dot active" data-accent-choice="default" aria-label="Ocean accent"></button>
+        <button type="button" class="accent-dot" data-accent-choice="sunset" aria-label="Sunset accent"></button>
+        <button type="button" class="accent-dot" data-accent-choice="forest" aria-label="Forest accent"></button>
+      </div>
+    </div>
+  </div>
+
+  <button id="themeToggle" class="control-icon" aria-label="Toggle light/dark theme">
+    <iconify-icon icon="lucide:moon" class="icon-dark"></iconify-icon>
+    <iconify-icon icon="lucide:sun" class="icon-alt"></iconify-icon>
+  </button>
+
+  <button id="musicToggle" class="control-icon is-muted" aria-label="Toggle background music">
+    <iconify-icon icon="lucide:volume-2" class="icon-dark"></iconify-icon>
+    <iconify-icon icon="lucide:volume-x" class="icon-alt"></iconify-icon>
+  </button>
+</div>
+
+<audio id="bgMusic" loop preload="none">
+  <source src="assets/audio/bg-music.mp3" type="audio/mpeg">
+</audio>
 
 <script src="js/script.js"></script>
 </body>
