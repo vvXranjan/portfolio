@@ -11,6 +11,10 @@
   --accent-purple: #8000ff;
   --accent-pink: #cf59e6;
   --blob-opacity: 0.25;
+  /* Text-safe accent colors: same hue as above by default, but re-darkened
+     in light mode below so accent-colored text stays readable on white. */
+  --accent-blue-text: var(--accent-blue);
+  --accent-pink-text: var(--accent-pink);
 }
 
 /* ===== Light theme ===== */
@@ -19,8 +23,12 @@
   --bg-card: #ffffff;
   --border-col: #e1e1ea;
   --text-white: #16161f;
-  --text-gray: #61616d;
+  --text-gray: #4b4b58;
   --blob-opacity: 0.12;
+  /* Darken accents when used as text on a light background, whatever
+     accent palette (default/sunset/forest) is currently active. */
+  --accent-blue-text: color-mix(in srgb, var(--accent-blue) 60%, black 22%);
+  --accent-pink-text: color-mix(in srgb, var(--accent-pink) 60%, black 18%);
 }
 
 /* ===== Accent palettes ===== */
@@ -61,8 +69,8 @@ header {
 
 .navbar {
   width: 90%;
-  max-width: 1100px;
-  height: 70px;
+  max-width: 1160px;
+  height: 84px;
   background: color-mix(in srgb, var(--bg-card) 75%, transparent);
   backdrop-filter: blur(10px);
   border: 1px solid var(--border-col);
@@ -70,16 +78,36 @@ header {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 0 30px;
+  padding: 0 16px 0 16px;
   transition: background 0.3s ease, border-color 0.3s ease;
 }
 
-.logo {
+.nav-avatar {
+  position: relative;
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  flex-shrink: 0;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, var(--accent-blue), var(--accent-purple));
+  border: 2px solid var(--border-col);
+}
+.nav-avatar img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+.nav-avatar span {
   font-weight: 700;
   font-size: 18px;
-  background: linear-gradient(90deg, var(--accent-blue), var(--accent-purple));
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
+  color: #fff;
+  letter-spacing: 0.5px;
 }
 
 .nav-links {
@@ -94,7 +122,7 @@ header {
 }
 
 .nav-link:hover, .nav-link.active {
-  color: var(--accent-blue);
+  color: var(--accent-blue-text);
 }
 
 .hamburger {
@@ -150,7 +178,7 @@ header {
 
 .hero-content { max-width: 700px; }
 
-.tag { color: var(--accent-blue); font-size: 15px; margin-bottom: 10px; }
+.tag { color: var(--accent-blue-text); font-size: 15px; margin-bottom: 10px; }
 
 .gradient-text {
   font-size: clamp(42px, 7vw, 72px);
@@ -245,7 +273,7 @@ header {
 }
 .skill-group h3 {
   font-size: 15px;
-  color: var(--accent-blue);
+  color: var(--accent-blue-text);
   margin-bottom: 14px;
   font-weight: 700;
 }
@@ -263,7 +291,7 @@ header {
   transition: border-color 0.2s, transform 0.2s;
 }
 .badge:hover { border-color: var(--accent-blue); transform: translateY(-2px); }
-.badge iconify-icon { font-size: 16px; color: var(--accent-blue); flex-shrink: 0; }
+.badge iconify-icon { font-size: 16px; color: var(--accent-blue-text); flex-shrink: 0; }
 .badges.small .badge { font-size: 11.5px; padding: 5px 12px; }
 .badges.small .badge iconify-icon { font-size: 14px; }
 
@@ -339,7 +367,7 @@ header {
   font-size: 13px;
 }
 .timeline-body h3 { font-size: 18px; margin-bottom: 4px; }
-.timeline-org { color: var(--accent-blue); font-size: 13.5px; margin-bottom: 12px; }
+.timeline-org { color: var(--accent-blue-text); font-size: 13.5px; margin-bottom: 12px; }
 .timeline-body ul { padding-left: 18px; }
 .timeline-body li {
   color: var(--text-gray);
@@ -365,7 +393,7 @@ header {
 }
 .project-box:hover { border-color: var(--accent-blue); }
 .project-info h3 { font-size: 22px; margin-bottom: 4px; }
-.project-sub { color: var(--accent-pink); font-size: 13px; margin-bottom: 14px; }
+.project-sub { color: var(--accent-pink-text); font-size: 13px; margin-bottom: 14px; }
 .project-desc {
   color: var(--text-gray);
   font-size: 14px;
@@ -376,7 +404,7 @@ header {
 .project-link {
   display: inline-block;
   margin-top: 8px;
-  color: var(--accent-blue);
+  color: var(--accent-blue-text);
   font-size: 13.5px;
   border-bottom: 1px solid transparent;
 }
@@ -403,7 +431,7 @@ footer {
   font-size: 13px;
   transition: border-color 0.2s, color 0.2s;
 }
-.social-links a:hover { border-color: var(--accent-blue); color: var(--accent-blue); }
+.social-links a:hover { border-color: var(--accent-blue); color: var(--accent-blue-text); }
 .footer-bottom { color: #666; font-size: 12px; }
 
 /* ===== Floating control bar ===== */
@@ -454,7 +482,7 @@ footer {
 }
 .control-icon:hover {
   border-color: var(--border-col);
-  color: var(--accent-blue);
+  color: var(--accent-blue-text);
   background: var(--bg-dark);
 }
 .control-icon .icon-alt { display: none; }
@@ -531,4 +559,42 @@ footer {
   .hamburger { display: flex; }
   .mobile-menu { display: flex; }
   .timeline-item { grid-template-columns: 1fr; }
+}
+
+/* ===== Custom ring cursor (desktop with a precise pointer only) ===== */
+@media (hover: hover) and (pointer: fine) {
+  body { cursor: none; }
+  a, button, .badge, .stack-tile, input, textarea { cursor: none; }
+
+  .cursor-dot,
+  .cursor-ring {
+    position: fixed;
+    top: 0;
+    left: 0;
+    border-radius: 50%;
+    pointer-events: none;
+    z-index: 9999;
+    transform: translate(-50%, -50%);
+  }
+  .cursor-dot {
+    width: 8px;
+    height: 8px;
+    background: var(--accent-blue);
+  }
+  .cursor-ring {
+    width: 32px;
+    height: 32px;
+    border: 1.5px solid var(--text-white);
+    transition: width 0.2s ease, height 0.2s ease, border-color 0.2s ease, background 0.2s ease;
+  }
+  .cursor-ring.is-hovering {
+    width: 44px;
+    height: 44px;
+    background: color-mix(in srgb, var(--accent-blue) 15%, transparent);
+    border-color: var(--accent-blue);
+  }
+}
+/* Touch/imprecise-pointer devices: keep the elements out of the flow entirely */
+@media not all and (hover: hover) and (pointer: fine) {
+  .cursor-dot, .cursor-ring { display: none; }
 }

@@ -1,3 +1,16 @@
+// ============================================================
+// SITE CONFIG — the knobs you'll actually want to change live here
+// ============================================================
+const CONFIG = {
+  // Path to your background music file. Drop the file into
+  // assets/audio/ and point this at it. Any browser-playable
+  // audio format works (mp3, ogg, m4a...).
+  musicSrc: 'assets/audio/bg-music.mp3',
+
+  // Playback volume, 0.0 (silent) to 1.0 (full volume).
+  musicVolume: 0.4,
+};
+
 // Mobile menu toggle
 const hamburger = document.getElementById('hamburger');
 const mobileMenu = document.getElementById('mobileMenu');
@@ -92,12 +105,14 @@ accentDots.forEach(dot => {
 // ===== Background music toggle =====
 const musicToggle = document.getElementById('musicToggle');
 const bgMusic = document.getElementById('bgMusic');
+bgMusic.src = CONFIG.musicSrc;
+bgMusic.volume = CONFIG.musicVolume;
 
 musicToggle.addEventListener('click', () => {
   if (bgMusic.paused) {
-    bgMusic.volume = 0.4;
     bgMusic.play().catch(() => {
-      // Autoplay/format blocked (e.g. no audio file added yet) — keep icon muted
+      // No audio file at CONFIG.musicSrc yet, or the browser blocked it —
+      // keep the icon showing "muted" either way.
       musicToggle.classList.add('is-muted');
     });
     musicToggle.classList.remove('is-muted');
@@ -106,3 +121,35 @@ musicToggle.addEventListener('click', () => {
     musicToggle.classList.add('is-muted');
   }
 });
+
+// ===== Custom ring cursor =====
+const cursorDot = document.querySelector('.cursor-dot');
+const cursorRing = document.querySelector('.cursor-ring');
+
+if (cursorDot && cursorRing && window.matchMedia('(hover: hover) and (pointer: fine)').matches) {
+  let mouseX = 0, mouseY = 0;
+  let ringX = 0, ringY = 0;
+
+  window.addEventListener('mousemove', (e) => {
+    mouseX = e.clientX;
+    mouseY = e.clientY;
+    cursorDot.style.left = `${mouseX}px`;
+    cursorDot.style.top = `${mouseY}px`;
+  });
+
+  // The ring eases toward the pointer each frame for a slight trailing feel
+  function animateRing() {
+    ringX += (mouseX - ringX) * 0.18;
+    ringY += (mouseY - ringY) * 0.18;
+    cursorRing.style.left = `${ringX}px`;
+    cursorRing.style.top = `${ringY}px`;
+    requestAnimationFrame(animateRing);
+  }
+  animateRing();
+
+  const hoverTargets = 'a, button, .badge, .stack-tile, input, textarea';
+  document.querySelectorAll(hoverTargets).forEach(el => {
+    el.addEventListener('mouseenter', () => cursorRing.classList.add('is-hovering'));
+    el.addEventListener('mouseleave', () => cursorRing.classList.remove('is-hovering'));
+  });
+}

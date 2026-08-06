@@ -18,9 +18,16 @@
 </head>
 <body>
 
+<!-- Custom cursor (desktop only, see CSS @media(pointer:fine)) -->
+<div class="cursor-dot"></div>
+<div class="cursor-ring"></div>
+
 <header>
   <nav class="navbar">
-    <div class="logo">V</div>
+    <div class="nav-avatar">
+      <img src="assets/images/avatar.jpg" alt="Vaibhav Vikas Ranjan" onerror="this.remove()">
+      <span>VR</span>
+    </div>
     <ul class="nav-links">
       <li><a href="#home" class="nav-link active">&lt;/Home&gt;</a></li>
       <li><a href="#about" class="nav-link">&lt;/About&gt;</a></li>
@@ -313,9 +320,7 @@
   </button>
 </div>
 
-<audio id="bgMusic" loop preload="none">
-  <source src="assets/audio/bg-music.mp3" type="audio/mpeg">
-</audio>
+<audio id="bgMusic" loop preload="none"></audio>
 
 <script src="js/script.js"></script>
 </body>
