@@ -8,7 +8,7 @@ const CONFIG = {
   musicSrc: 'assets/audio/bg-music.mp3',
 
   // Playback volume, 0.0 (silent) to 1.0 (full volume).
-  musicVolume: 0.4,
+  musicVolume: 1.0,
 };
 
 // Mobile menu toggle
