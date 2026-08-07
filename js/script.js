@@ -8,7 +8,7 @@ const CONFIG = {
   musicSrc: 'assets/bg-music.mp3',
 
   // Playback volume, 0.0 (silent) to 1.0 (full volume).
-  musicVolume: 0.4,
+  musicVolume: 0.2,
 };
 
 // ============================================================
@@ -156,7 +156,15 @@ filterBtns.forEach(btn => {
 // THEME TOGGLE (light/dark)
 // ============================================================
 const themeToggle = document.getElementById('themeToggle');
+const themeToggleIcon = document.getElementById('themeToggleIcon');
 const rootEl = document.documentElement;
+
+function syncThemeIcon() {
+  if (!themeToggleIcon) return;
+  const isLight = rootEl.getAttribute('data-theme') === 'light';
+  themeToggleIcon.setAttribute('icon', isLight ? 'lucide:sun' : 'lucide:moon');
+}
+syncThemeIcon(); // reflect whatever theme was applied by the head init script
 
 if (themeToggle) {
   themeToggle.addEventListener('click', () => {
@@ -164,6 +172,7 @@ if (themeToggle) {
     const next = isLight ? 'dark' : 'light';
     rootEl.setAttribute('data-theme', next);
     localStorage.setItem('vvr-theme', next);
+    syncThemeIcon();
   });
 }
 
@@ -171,6 +180,7 @@ if (themeToggle) {
 // BACKGROUND MUSIC TOGGLE
 // ============================================================
 const musicToggle = document.getElementById('musicToggle');
+const musicToggleIcon = document.getElementById('musicToggleIcon');
 const bgMusic = document.getElementById('bgMusic');
 
 if (musicToggle && bgMusic) {
@@ -179,15 +189,16 @@ if (musicToggle && bgMusic) {
 
   musicToggle.addEventListener('click', () => {
     if (bgMusic.paused) {
-      bgMusic.play().catch(() => {
+      bgMusic.play().then(() => {
+        if (musicToggleIcon) musicToggleIcon.setAttribute('icon', 'lucide:volume-2');
+      }).catch(() => {
         // No audio file at CONFIG.musicSrc yet, or the browser blocked it —
         // keep the icon showing "muted" either way.
-        musicToggle.classList.add('is-muted');
+        if (musicToggleIcon) musicToggleIcon.setAttribute('icon', 'lucide:volume-x');
       });
-      musicToggle.classList.remove('is-muted');
     } else {
       bgMusic.pause();
-      musicToggle.classList.add('is-muted');
+      if (musicToggleIcon) musicToggleIcon.setAttribute('icon', 'lucide:volume-x');
     }
   });
 }
@@ -201,12 +212,13 @@ if (cursorTrail && window.matchMedia('(hover: hover) and (pointer: fine)').match
   const DOT_COUNT = 16;
   const dots = [];
   const positions = [];
+  // Cycle the trail through the actual site palette instead of a generic hue sweep
+  const TRAIL_COLORS = ['#4A20B9', '#7B44BD', '#AE7FD7', '#FF3B57', '#A41E29', '#BF5231', '#F3E9D3'];
 
   for (let i = 0; i < DOT_COUNT; i++) {
     const dot = document.createElement('div');
     dot.className = 'trail-dot';
-    // Sweep hue across the trail so it reads as a little rainbow comet
-    dot.style.setProperty('--hue', Math.round((i / DOT_COUNT) * 300));
+    dot.style.setProperty('--dot-color', TRAIL_COLORS[i % TRAIL_COLORS.length]);
     const size = 12 - (i / DOT_COUNT) * 8;
     dot.style.setProperty('--dot-size', `${size}px`);
     dot.style.opacity = String(1 - i / DOT_COUNT * 0.85);

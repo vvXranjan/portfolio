@@ -56,12 +56,10 @@
     </ul>
     <a href="#contact" class="btn-pill btn-pill--solid nav-cta">Get in Touch</a>
     <button id="themeToggle" class="nav-icon-btn" aria-label="Toggle light/dark theme">
-      <iconify-icon icon="lucide:moon" class="icon-dark"></iconify-icon>
-      <iconify-icon icon="lucide:sun" class="icon-alt"></iconify-icon>
+      <iconify-icon id="themeToggleIcon" icon="lucide:moon"></iconify-icon>
     </button>
-    <button id="musicToggle" class="nav-icon-btn is-muted" aria-label="Toggle background music">
-      <iconify-icon icon="lucide:volume-2" class="icon-dark"></iconify-icon>
-      <iconify-icon icon="lucide:volume-x" class="icon-alt"></iconify-icon>
+    <button id="musicToggle" class="nav-icon-btn" aria-label="Toggle background music">
+      <iconify-icon id="musicToggleIcon" icon="lucide:volume-x"></iconify-icon>
     </button>
     <button id="hamburger" class="hamburger" aria-label="Toggle menu" aria-expanded="false">
       <span></span><span></span><span></span>
@@ -87,7 +85,7 @@
         <h1 class="display-xl">Vaibhav Vikas<br>Ranjan</h1>
         <p class="hero-role">I&rsquo;m an <span class="accent-text">AI Engineer</span></p>
         <p class="hero-desc">
-          Building <span class="hl">agentic AI pipelines</span>, <span class="hl">anomaly-detection systems</span>,
+          Building <span class="hl">agentic AI pipelines</span>, <span class="hl">LLM evaluation frameworks</span>,
           and <span class="hl">production ML tools</span> that hold up under real-world messiness &mdash;
           not just clean benchmarks.
         </p>
@@ -103,6 +101,7 @@
       <div class="hero-portrait reveal" data-reveal-delay="1">
         <div class="portrait-glow" aria-hidden="true"></div>
         <div class="portrait-frame">
+          <img src="assets/portrait.jpg" alt="Vaibhav Vikas Ranjan" class="portrait-photo" onerror="this.remove()">
           <div class="portrait-initials">VVR</div>
         </div>
         <span class="floating-chip chip-1">RAG</span>
