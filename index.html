@@ -5,6 +5,9 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Vaibhav Vikas Ranjan | AI Engineer</title>
 <meta name="description" content="AI Engineer building agentic AI pipelines, RAG systems, and anomaly detection — turning research into production software.">
+<!-- Favicon (browser tab icon) — files live in assets/, swap them for your own art anytime -->
+<link rel="icon" type="image/png" href="assets/favicon.png">
+<link rel="apple-touch-icon" href="assets/favicon.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700;800&display=swap" rel="stylesheet">
@@ -93,7 +96,7 @@
           <a href="#projects" class="btn-pill btn-pill--solid">
             <iconify-icon icon="lucide:sparkles"></iconify-icon> View My Work
           </a>
-          <a href="assets/Vaibhav_Vikas_Ranjan.pdf-1" target="_blank" class="btn-pill btn-pill--glass">
+          <a href="assets/Vaibhav_Vikas_Ranjan.pdf" target="_blank" class="btn-pill btn-pill--glass">
             Resume <iconify-icon icon="lucide:arrow-down"></iconify-icon>
           </a>
         </div>
@@ -209,6 +212,7 @@
             <span class="pill"><iconify-icon icon="simple-icons:pandas"></iconify-icon>Pandas</span>
             <span class="pill"><iconify-icon icon="simple-icons:numpy"></iconify-icon>NumPy</span>
             <span class="pill"><iconify-icon icon="lucide:plug-zap"></iconify-icon>MCP</span>
+            <span class="pill"><iconify-icon icon="lucide:plug-zap"></iconify-icon>Agno</span>
             <span class="pill"><iconify-icon icon="lucide:message-square-code"></iconify-icon>Chainlit</span>
           </div>
           <div class="skills-pills" data-skill-panel="tools" hidden>
@@ -350,6 +354,7 @@
       </div>
 
       <div class="project-grid">
+
         <article class="glass-card project-card reveal" data-category="agentic">
           <div class="project-card-top">
             <span class="project-tag">Agentic Contract Auditor</span>
@@ -404,6 +409,79 @@
             View on GitHub <iconify-icon icon="lucide:arrow-up-right"></iconify-icon>
           </a>
         </article>
+
+        <!-- ============================================================
+             EXTRA PROJECTS -- safe on/off switch
+             ============================================================
+             This section holds project articles added after the original
+             3 above. They're plain siblings inside .project-grid, so they
+             lay out in the grid exactly the same way as the rest -- no
+             wrapper element, nothing that can disturb column packing.
+
+             TO HIDE A PROJECT (or any added here later):
+             Select the article you want to hide and wrap it in an HTML
+             comment: type the 4-character comment-open marker immediately
+             before the article, and the 3-character comment-close marker
+             immediately after it. None of these articles contain comments
+             of their own, so one outer comment here is safe and won't
+             break early.
+
+             TO SHOW IT AGAIN: delete those two markers you added.
+
+             Each article is independent -- delete or comment out any one
+             without touching the others.
+        -->
+
+        <article class="glass-card project-card reveal" data-category="agentic">
+          <div class="project-card-top">
+            <span class="project-tag">Multi-Agent Incident Response</span>
+            <span class="project-year">2026</span>
+          </div>
+          <h3>Distributed Agentic Incident &amp; Security Response Engine</h3>
+          <p>A multi-agent, event-driven pipeline that investigates production incidents, retrieves
+             historical precedent from a vector database of post-mortems, and drafts a remediation
+             plan &mdash; but never executes it. Every action is gated behind human approval: a
+             two-phase investigator (sandboxed diagnostics, then tool-free analysis) keeps evidence
+             application-owned rather than model-claimed, and <code>requires_approval</code> is
+             hard-set in code, never accepted from model output. Backed by 147 passing tests, with
+             the Kafka event path, sandboxed MCP diagnostics, and the full two-phase investigator all
+             runtime-validated against live infrastructure (a real Ollama model, a real MCP server,
+             a real Kafka broker).</p>
+          <div class="chip-row">
+            <span class="chip">Python</span><span class="chip">Agno</span>
+            <span class="chip">MCP / FastMCP</span><span class="chip">Pydantic v2</span>
+            <span class="chip">Kafka</span><span class="chip">ChromaDB</span>
+            <span class="chip">FastAPI</span><span class="chip">React</span>
+          </div>
+          <a href="https://github.com/vvXranjan/incident-response-engine" target="_blank" rel="noopener" class="project-link">
+            View on GitHub <iconify-icon icon="lucide:arrow-up-right"></iconify-icon>
+          </a>
+        </article>
+
+        <article class="glass-card project-card reveal" data-category="agentic">
+          <div class="project-card-top">
+            <span class="project-tag">GitHub Issue &rarr; PR Pipeline</span>
+            <span class="project-year">2026</span>
+          </div>
+          <h3>Multi-Agent Orchestrator</h3>
+          <p>A stateful LangGraph pipeline &mdash; Researcher, Planner, Coder, TestWriter,
+             Verifier, PRWriter &mdash; that turns a GitHub Issue into a verified Pull Request.
+             Conditional retry/escalation routing handles failing tests and tool errors instead
+             of looping blindly, every generated patch runs inside an isolated Docker sandbox
+             before it's trusted, and no branch or PR is ever created without an explicit
+             human approval gate. Repository context (file tree, relevant source files) is
+             fetched and bounded before planning begins, so every agent reasons over real code,
+             not hallucinated structure.</p>
+          <div class="chip-row">
+            <span class="chip">Python</span><span class="chip">LangGraph</span>
+            <span class="chip">Docker</span><span class="chip">GitHub API</span>
+            <span class="chip">Pydantic</span>
+          </div>
+          <a href="https://github.com/vvXranjan/multi-agent-orchestrator" target="_blank" rel="noopener" class="project-link">
+            View on GitHub <iconify-icon icon="lucide:arrow-up-right"></iconify-icon>
+          </a>
+        </article>
+
       </div>
       <p class="filter-empty" hidden>No projects in this category yet.</p>
     </div>
@@ -448,7 +526,7 @@
 <footer>
   <div class="container footer-grid">
     <div>
-      <a href="#home" class="brand">VR<span class="dot">.</span></a>
+      <a href="#home" class="brand">VVR<span class="dot">.</span></a>
       <p class="footer-tagline">AI Engineer building agentic pipelines, RAG systems, and
          production ML tools.</p>
     </div>
