@@ -96,7 +96,7 @@
           <a href="#projects" class="btn-pill btn-pill--solid">
             <iconify-icon icon="lucide:sparkles"></iconify-icon> View My Work
           </a>
-          <a href="assets/Vaibhav_Vikas_Ranjan-2.pdf target="_blank" class="btn-pill btn-pill--glass">
+          <a href="assets/Vaibhav_Vikas_Ranjan-2.pdf" target="_blank" class="btn-pill btn-pill--glass">
             Resume <iconify-icon icon="lucide:arrow-down"></iconify-icon>
           </a>
         </div>
@@ -155,7 +155,7 @@
 
       <div class="glass-card stat-strip reveal">
         <div class="stat"><p class="stat-num">3</p><p class="stat-label">Roles held</p></div>
-        <div class="stat"><p class="stat-num">3</p><p class="stat-label">Projects shipped</p></div>
+        <div class="stat"><p class="stat-num">5</p><p class="stat-label">Projects shipped</p></div>
         <div class="stat"><p class="stat-num">30+</p><p class="stat-label">Tools &amp; frameworks</p></div>
         <div class="stat"><p class="stat-num">2026</p><p class="stat-label">Graduating</p></div>
       </div>
@@ -343,14 +343,14 @@
       <div class="section-head section-head--center reveal">
         <span class="eyebrow eyebrow--center"><span class="eyebrow-line"></span><span class="eyebrow-label">Selected Work</span></span>
         <h2 class="display-lg">Research, shipped<br>as software</h2>
-        <p class="section-lede">Agentic pipelines, vision systems, and NLP tools built end-to-end.</p>
+        <p class="section-lede">Agentic pipelines, vision systems, and ML models built end-to-end.</p>
       </div>
 
       <div class="glass-card filter-bar reveal" role="tablist" aria-label="Filter projects by category">
         <button class="filter-btn is-active" data-filter="all" role="tab" aria-selected="true">All</button>
         <button class="filter-btn" data-filter="agentic" role="tab" aria-selected="false">Agentic AI</button>
         <button class="filter-btn" data-filter="vision" role="tab" aria-selected="false">Computer Vision</button>
-        <button class="filter-btn" data-filter="nlp" role="tab" aria-selected="false">NLP</button>
+        <button class="filter-btn" data-filter="ml" role="tab" aria-selected="false">Machine Learning</button>
       </div>
 
       <div class="project-grid">
@@ -361,10 +361,10 @@
             <span class="project-year">2026</span>
           </div>
           <h3>CFR Compliance Checker</h3>
-          <p>Custom MCP server wrapping the eCFR REST API with 7 typed regulatory-search tools,
-             plus an end-to-end agentic pipeline (Agno + local Ollama Llama 3.1) producing
-             validated compliance reports per contract clause. Cut runtime 65% (12min &rarr; 4:10)
-             via concurrent retrieval and async caching.</p>
+          <p>Custom MCP server wrapping the eCFR REST API with 8 typed regulatory-retrieval tools,
+             feeding a deterministic-rules &rarr; LLM &rarr; verification pipeline (Agno + local
+             Ollama Llama 3.1) that grounds every compliance verdict in retrieved regulatory text.
+             Cut runtime 65% (12min &rarr; 4:10) via concurrent retrieval and async caching.</p>
           <div class="chip-row">
             <span class="chip">Python</span><span class="chip">FastMCP</span>
             <span class="chip">Agno</span><span class="chip">Ollama</span><span class="chip">Pydantic</span>
@@ -392,20 +392,20 @@
           </a>
         </article>
 
-        <article class="glass-card project-card reveal" data-category="nlp" data-reveal-delay="2">
+        <article class="glass-card project-card reveal" data-category="ml" data-reveal-delay="2">
           <div class="project-card-top">
-            <span class="project-tag">Resume&ndash;JD Matcher</span>
+            <span class="project-tag">Time-Series Forecasting</span>
             <span class="project-year">2025</span>
           </div>
-          <h3>Smart ATS</h3>
-          <p>Explainable NLP-based ATS engine combining transformer semantic embeddings with
-             keyword scoring across dual scoring modes. FastAPI backend + Streamlit UI surface
-             missing-keyword detection with privacy-safe, auto-redacted parsing.</p>
+          <h3>Stock Price Predictor</h3>
+          <p>Predicts stock price movements from technical indicators using classical ML and
+             deep learning models, including an LSTM sequence model for short-horizon
+             forecasting.</p>
           <div class="chip-row">
-            <span class="chip">FastAPI</span><span class="chip">Streamlit</span>
-            <span class="chip">SentenceTransformers</span><span class="chip">PyMuPDF</span>
+            <span class="chip">Python</span><span class="chip">Scikit-learn</span>
+            <span class="chip">LSTM</span>
           </div>
-          <a href="https://github.com/vvXranjan/smart-ats-resume-matcher" target="_blank" rel="noopener" class="project-link">
+          <a href="https://github.com/vvXranjan/stock_market_prediction" target="_blank" rel="noopener" class="project-link">
             View on GitHub <iconify-icon icon="lucide:arrow-up-right"></iconify-icon>
           </a>
         </article>
@@ -438,20 +438,20 @@
             <span class="project-year">2026</span>
           </div>
           <h3>Distributed Agentic Incident &amp; Security Response Engine</h3>
-          <p>A multi-agent, event-driven pipeline that investigates production incidents, retrieves
-             historical precedent from a vector database of post-mortems, and drafts a remediation
-             plan &mdash; but never executes it. Every action is gated behind human approval: a
-             two-phase investigator (sandboxed diagnostics, then tool-free analysis) keeps evidence
-             application-owned rather than model-claimed, and <code>requires_approval</code> is
-             hard-set in code, never accepted from model output. Backed by 147 passing tests, with
-             the Kafka event path, sandboxed MCP diagnostics, and the full two-phase investigator all
-             runtime-validated against live infrastructure (a real Ollama model, a real MCP server,
-             a real Kafka broker).</p>
+          <p>A multi-agent, event-driven pipeline over Kafka that investigates production
+             incidents, gating escalation with a z-score detector plus an LOF-based ML anomaly
+             gate to suppress transient noise. A two-phase Investigator Agent separates sandboxed
+             MCP tool execution from tool-free LLM analysis to keep evidence provenance verifiable,
+             retrieves historical precedent from ChromaDB, and drafts &mdash; but never executes
+             &mdash; a remediation plan: every action is gated behind human approval via Slack and
+             a FastAPI/React dashboard, with <code>requires_approval</code> hard-set in code, never
+             accepted from model output. Backed by a 220-test pytest suite covering schema
+             contracts, sandbox security, and orchestrator behavior.</p>
           <div class="chip-row">
             <span class="chip">Python</span><span class="chip">Agno</span>
-            <span class="chip">MCP / FastMCP</span><span class="chip">Pydantic v2</span>
-            <span class="chip">Kafka</span><span class="chip">ChromaDB</span>
-            <span class="chip">FastAPI</span><span class="chip">React</span>
+            <span class="chip">MCP / FastMCP</span><span class="chip">Kafka</span>
+            <span class="chip">ChromaDB</span><span class="chip">FastAPI</span>
+            <span class="chip">React</span><span class="chip">Pydantic v2</span>
           </div>
           <a href="https://github.com/vvXranjan/incident-response-engine" target="_blank" rel="noopener" class="project-link">
             View on GitHub <iconify-icon icon="lucide:arrow-up-right"></iconify-icon>
