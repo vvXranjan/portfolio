@@ -5,7 +5,7 @@ const CONFIG = {
   // Path to your background music file. Drop the file into
   // assets/audio/ and point this at it. Any browser-playable
   // audio format works (mp3, ogg, m4a...).
-  musicSrc: 'assets/bg1-music.mp3',
+  musicSrc: 'assets/bg-music.mp3',
 
   // Playback volume, 0.0 (silent) to 1.0 (full volume).
   musicVolume: 0.2,
