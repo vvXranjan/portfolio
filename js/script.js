@@ -252,6 +252,4 @@ if (cursorTrail && window.matchMedia('(hover: hover) and (pointer: fine)').match
   }
   animateTrail();
 }
-============================================================
-SITE CONFIG — the knobs you'll actually want to change live here
-============================================================
+
