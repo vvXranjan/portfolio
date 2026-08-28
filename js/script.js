@@ -107,26 +107,6 @@ if ('IntersectionObserver' in window) {
 }
 
 // ============================================================
-// SKILLS TABS
-// ============================================================
-const skillsTabs = document.querySelectorAll('.skills-tab');
-const skillsPanels = document.querySelectorAll('.skills-pills');
-
-skillsTabs.forEach(tab => {
-  tab.addEventListener('click', () => {
-    const target = tab.dataset.skillTab;
-
-    skillsTabs.forEach(t => {
-      t.classList.toggle('is-active', t === tab);
-      t.setAttribute('aria-selected', t === tab);
-    });
-    skillsPanels.forEach(panel => {
-      panel.hidden = panel.dataset.skillPanel !== target;
-    });
-  });
-});
-
-// ============================================================
 // PROJECT FILTER
 // ============================================================
 const filterBtns = document.querySelectorAll('.filter-btn');
@@ -253,3 +233,114 @@ if (cursorTrail && window.matchMedia('(hover: hover) and (pointer: fine)').match
   animateTrail();
 }
 
+// ============================================================
+// MAGNETIC BUTTONS (desktop only)
+// Nudges any .btn-magnetic toward the cursor while it's within a radius
+// around the button, using CSS custom properties so the button's own
+// hover/active styles (translateY etc.) keep working unmodified.
+// ============================================================
+if (window.matchMedia('(hover: hover) and (pointer: fine)').matches) {
+  const MAGNET_RADIUS = 70;   // px around the button that starts pulling
+  const MAGNET_STRENGTH = 0.35; // 0-1, how far it travels toward the cursor
+
+  document.querySelectorAll('.btn-magnetic').forEach(btn => {
+    let raf = null;
+
+    btn.addEventListener('mousemove', (e) => {
+      const rect = btn.getBoundingClientRect();
+      const cx = rect.left + rect.width / 2;
+      const cy = rect.top + rect.height / 2;
+      const dx = e.clientX - cx;
+      const dy = e.clientY - cy;
+
+      if (raf) cancelAnimationFrame(raf);
+      raf = requestAnimationFrame(() => {
+        btn.style.setProperty('--magnet-x', `${dx * MAGNET_STRENGTH}px`);
+        btn.style.setProperty('--magnet-y', `${dy * MAGNET_STRENGTH}px`);
+      });
+    });
+
+    btn.addEventListener('mouseleave', () => {
+      if (raf) cancelAnimationFrame(raf);
+      btn.style.setProperty('--magnet-x', '0px');
+      btn.style.setProperty('--magnet-y', '0px');
+    });
+  });
+}
+
+// ============================================================
+// TILT-ON-HOVER PROJECT CARDS (desktop only)
+// Rotates each .tilt-card slightly toward the cursor position within it.
+// ============================================================
+if (window.matchMedia('(hover: hover) and (pointer: fine)').matches) {
+  const TILT_MAX_DEG = 6;
+
+  document.querySelectorAll('.tilt-card').forEach(card => {
+    let raf = null;
+
+    card.addEventListener('mousemove', (e) => {
+      const rect = card.getBoundingClientRect();
+      const px = (e.clientX - rect.left) / rect.width;  // 0-1 across the card
+      const py = (e.clientY - rect.top) / rect.height;   // 0-1 down the card
+
+      const rotateY = (px - 0.5) * TILT_MAX_DEG * 2;
+      const rotateX = (0.5 - py) * TILT_MAX_DEG * 2;
+
+      if (raf) cancelAnimationFrame(raf);
+      raf = requestAnimationFrame(() => {
+        card.classList.add('is-tilting');
+        card.style.setProperty('--tilt-x', `${rotateX}deg`);
+        card.style.setProperty('--tilt-y', `${rotateY}deg`);
+      });
+    });
+
+    card.addEventListener('mouseleave', () => {
+      if (raf) cancelAnimationFrame(raf);
+      card.classList.remove('is-tilting');
+      card.style.setProperty('--tilt-x', '0deg');
+      card.style.setProperty('--tilt-y', '0deg');
+    });
+  });
+}
+
+// ============================================================
+// THERMAL SCAN HOVER (hero portrait, desktop only)
+// The CSS handles the false-color/scanline/grain/HUD reveal on
+// :hover by itself -- this just drives the live REC timer and a
+// gently jittering temperature readout while the cursor is over
+// the portrait, so the HUD doesn't sit frozen on one frame.
+// ============================================================
+const thermalFrame = document.querySelector('.portrait-frame');
+const thermalTempEl = document.getElementById('thermalTemp');
+const thermalRecEl = document.getElementById('thermalRec');
+
+if (thermalFrame && window.matchMedia('(hover: hover) and (pointer: fine)').matches) {
+  let recSeconds = 0;
+  let recTimer = null;
+
+  function formatRec(totalSeconds) {
+    const m = String(Math.floor(totalSeconds / 60)).padStart(2, '0');
+    const s = String(totalSeconds % 60).padStart(2, '0');
+    return `REC 00:${m}:${s}`;
+  }
+
+  thermalFrame.addEventListener('mouseenter', () => {
+    recSeconds = 0;
+    if (thermalRecEl) thermalRecEl.textContent = formatRec(0);
+    if (recTimer) clearInterval(recTimer);
+    recTimer = setInterval(() => {
+      recSeconds += 1;
+      if (thermalRecEl) thermalRecEl.textContent = formatRec(recSeconds);
+      if (thermalTempEl) {
+        const baseTemp = 36.6;
+        const jitter = (Math.random() - 0.5) * 0.4;
+        thermalTempEl.textContent = `${(baseTemp + jitter).toFixed(1)}\u00B0C`;
+      }
+    }, 1000);
+  });
+
+  thermalFrame.addEventListener('mouseleave', () => {
+    if (recTimer) clearInterval(recTimer);
+    recTimer = null;
+  });
+}
