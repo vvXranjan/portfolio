@@ -12,8 +12,231 @@ const CONFIG = {
 };
 
 // ============================================================
-// PRELOADER
+// COCKPIT DEPTH SYSTEM — star field + central parallax engine
+// ------------------------------------------------------------
+// A single camera/head-movement simulation:
+//   .bg-stars  -> many tiny distant stars          (depth 0.3)
+//   .bg-mid    -> fewer, larger midground specks   (depth 0.65)
+//   .bg-hud    -> near-field cockpit HUD           (depth 1)
+//   hero foreground (portrait + chips)             (shallow, ~9-13px)
+//
+// ONE requestAnimationFrame loop drives every parallax layer.
+// Depth is applied ONCE in JS (--px/--py are already depth-scaled
+// per layer); CSS merely consumes the custom properties, so there is
+// no JS+CSS double multiplication. Disabled for coarse pointers and
+// prefers-reduced-motion (static depth remains).
 // ============================================================
+(function () {
+  const isFinePointer = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
+  const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  const starLayer = document.querySelector('.bg-stars');
+  const midLayer = document.querySelector('.bg-mid');
+  if (!starLayer || !midLayer) return;
+
+  const R = 0.9; // keep stars inside a soft safe region
+
+  const stars = [];
+  const particles = [];
+
+  // Theme-aware palettes so light mode keeps a cool, atmospheric sky
+  // instead of dark chips on an off-white background. (See also the
+  // cyber-streams re-theme below.)
+  const STAR_PAL = {
+    dark:  ['rgba(214,226,245,', 'rgba(176,205,240,', 'rgba(150,190,225,', 'rgba(120,175,255,'],
+    light: ['rgba(70,96,128,',   'rgba(92,122,158,',  'rgba(120,150,190,', 'rgba(150,178,210,']
+  };
+  const PARTICLE_PAL = {
+    dark:  ['rgba(172,214,255,', 'rgba(140,190,240,'],
+    light: ['rgba(110,150,195,', 'rgba(140,172,214,']
+  };
+  function isLight() {
+    return document.documentElement.getAttribute('data-theme') === 'light';
+  }
+
+  // ----- Build distant stars (mobile uses fewer) -----
+  const starCount = window.innerWidth < 700 ? 70 : (window.innerWidth < 1200 ? 130 : 190);
+  const frag = document.createDocumentFragment();
+  for (let i = 0; i < starCount; i++) {
+    const s = document.createElement('i');
+    s.className = 'bg-star';
+    const size = Math.random() < 0.85 ? 1 + Math.random() : 2 + Math.random() * 1.5;
+    const bright = Math.random();
+    s.style.setProperty('--x', (Math.random() * 100 * R + (100 - 100 * R) / 2) + '%');
+    s.style.setProperty('--y', (Math.random() * 100 * R + (100 - 100 * R) / 2) + '%');
+    s.style.setProperty('--s', `${size}px`);
+    s.style.setProperty('--o', (0.35 + bright * 0.6).toFixed(2));
+    s.style.setProperty('--tw', `${3 + Math.random() * 7}s`);
+    s.style.setProperty('--td', `${Math.random() * 6}s`);
+    frag.appendChild(s);
+    stars.push(s);
+  }
+  starLayer.appendChild(frag);
+
+  // ----- Build midground particles (mobile uses fewer) -----
+  const midCount = window.innerWidth < 700 ? 14 : (window.innerWidth < 1200 ? 22 : 30);
+  const mfrag = document.createDocumentFragment();
+  for (let i = 0; i < midCount; i++) {
+    const p = document.createElement('i');
+    p.className = 'bg-particle';
+    p.style.setProperty('--x', (Math.random() * 80 + 10) + '%');
+    p.style.setProperty('--y', (Math.random() * 80 + 10) + '%');
+    p.style.setProperty('--s', `${2 + Math.random() * 2.5}px`);
+    p.style.setProperty('--o', (0.5 + Math.random() * 0.4).toFixed(2));
+    p.style.setProperty('--drift', `${20 + Math.random() * 22}s`);
+    p.style.setProperty('--drift-y', `${-(6 + Math.random() * 16)}px`);
+    p.style.setProperty('--td', `${Math.random() * 8}s`);
+    mfrag.appendChild(p);
+    particles.push(p);
+  }
+  midLayer.appendChild(mfrag);
+
+  // Recolour the generated specks when the theme changes.
+  function applyFieldTheme() {
+    const light = isLight();
+    const sp = light ? STAR_PAL.light : STAR_PAL.dark;
+    const pp = light ? PARTICLE_PAL.light : PARTICLE_PAL.dark;
+    stars.forEach((s, i) => {
+      s.style.setProperty('--c', sp[(Math.random() * sp.length) | 0] + (light ? (0.35) : (0.35 + Math.random() * 0.6)).toFixed(2) + ')');
+    });
+    particles.forEach((p, i) => {
+      p.style.setProperty('--c', pp[(Math.random() * pp.length) | 0] + (0.4 + Math.random() * 0.35).toFixed(2) + ')');
+    });
+  }
+  applyFieldTheme();
+  window.__applyFieldTheme = applyFieldTheme;
+
+  // ----- Central parallax engine (single rAF loop) -----
+  if (!isFinePointer || reduced) return;
+
+  // Background depth layers: base(14px) * depth(0.3/0.65/1)
+  const bgLayers = Array.from(document.querySelectorAll('.bg-layer[data-depth]'));
+  // Foreground decorative elements (hero portrait + chips), ~9-13px
+  const fgElements = Array.from(document.querySelectorAll('.portrait-frame, .floating-chip'));
+
+  const BASE = 14;          // background base mouse offset in px
+  const FG_STRENGTH = 9;    // foreground base, shallower than the HUD
+  let tx = 0, ty = 0, cx = 0, cy = 0;
+  let raf = null;
+
+  window.addEventListener('mousemove', (e) => {
+    tx = (e.clientX / window.innerWidth - 0.5) * 2;   // -1..1
+    ty = (e.clientY / window.innerHeight - 0.5) * 2;  // -1..1
+    if (!raf) raf = requestAnimationFrame(tick);
+  }, { passive: true });
+
+  function tick() {
+    cx += (tx - cx) * 0.06;
+    cy += (ty - cy) * 0.06;
+
+    // Background: apply depth ONCE per layer in JS
+    bgLayers.forEach(l => {
+      const d = parseFloat(l.dataset.depth) || 0;
+      l.style.setProperty('--px', (cx * BASE * d).toFixed(1) + 'px');
+      l.style.setProperty('--py', (cy * BASE * d).toFixed(1) + 'px');
+    });
+
+    // Foreground: shallow, slightly deeper than HUD, subtle spread
+    fgElements.forEach((el, i) => {
+      const d = 1 + i * 0.12;
+      el.style.setProperty('--par-x', ((cx * FG_STRENGTH * d)).toFixed(1) + 'px');
+      el.style.setProperty('--par-y', ((cy * FG_STRENGTH * d)).toFixed(1) + 'px');
+    });
+
+    if (Math.abs(tx - cx) > 0.002 || Math.abs(ty - cy) > 0.002) {
+      raf = requestAnimationFrame(tick);
+    } else {
+      raf = null;
+    }
+  }
+})();
+
+// ============================================================
+// AI/ML NOTATION FIELD — faint mathematical / ML notation that
+// drifts slowly behind the content (no second parallax engine:
+// the container rides the existing parallax via data-depth, and
+// each token moves independently through pure CSS animation).
+// Sparse + extremely faint by design. Purely decorative — the
+// symbols are ambient texture, not claims about expertise.
+// ============================================================
+(function () {
+  const field = document.querySelector('.bg-notation');
+  if (!field) return;
+  const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  const NOTATION = [
+    'Σ', '∫', '∇', 'θ', 'λ', 'α', '∂L/∂θ',
+    'P(x)', 'P(y|x)', 'argmax', 'f(x)',
+    'RAG', 'LLM', 'CV', 'NLP', 'MLOps',
+    'embed', 'latent', 'vector', 'attention',
+    'loss', 'gradient', '[A]', 'x ∈ ℝⁿ', 'h(x)'
+  ];
+
+  // Three gentle depth bands: far (blurred, faint) → near (sharper).
+  const bands = [
+    { count: 6, minO: 0.05, maxO: 0.09, minSize: 13, maxSize: 22, blur: 1.5 },
+    { count: 5, minO: 0.07, maxO: 0.13, minSize: 17, maxSize: 26, blur: 0.6 },
+    { count: 3, minO: 0.09, maxO: 0.15, minSize: 22, maxSize: 32, blur: 0 }
+  ];
+  function bandCounts() {
+    if (window.innerWidth < 700) {
+      // mobile: 3–6 total, mostly mid/near (fewer, still clear)
+      return [{ ...bands[2], count: 2 }, { ...bands[1], count: 2 }, { count: 0 }];
+    }
+    return bands;
+  }
+
+  const frag = document.createDocumentFragment();
+  const tokens = [];
+  function build() {
+    const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const palette = reduced || document.documentElement.getAttribute('data-theme') === 'light'
+      ? { base: 'rgba(30,72,110,', accent: 'rgba(13,122,168,' }
+      : { base: 'rgba(120,160,210,', accent: 'rgba(110,190,235,' };
+    // stagger the alpha so a few tokens get a faint cyan accent
+    frag.replaceChildren();
+    tokens.length = 0;
+    bandCounts().forEach((band, bi) => {
+      for (let i = 0; i < band.count; i++) {
+        const t = document.createElement('span');
+        t.className = 'nt-token' + ' nt-token--' + (bi === 0 ? 'far' : bi === 1 ? 'mid' : 'near');
+        t.textContent = NOTATION[(Math.random() * NOTATION.length) | 0];
+        const alpha = band.minO + Math.random() * (band.maxO - band.minO);
+        const accent = Math.random() < 0.25;
+        const col = accent ? palette.accent : palette.base;
+        t.style.setProperty('--nt-o', (alpha + (reduced ? 0.06 : 0)).toFixed(3));
+        t.style.setProperty('--c', col + alpha.toFixed(3) + ')');
+        t.style.setProperty('--s', (band.minSize + Math.random() * (band.maxSize - band.minSize)).toFixed(0) + 'px');
+        t.style.setProperty('--nt-x', (Math.random() < 0.5 ? -1 : 1) * (30 + Math.random() * 60) + 'px');
+        t.style.setProperty('--nt-y', (Math.random() < 0.5 ? -1 : 1) * (18 + Math.random() * 40) + 'px');
+        t.style.setProperty('--nt-d', (40 + Math.random() * 50).toFixed(0) + 's');
+        t.style.setProperty('--nt-delay', (-(Math.random() * 60)).toFixed(0) + 's');
+        t.style.left = (Math.random() * 88 + 6) + '%';
+        t.style.top = (Math.random() * 90 + 5) + '%';
+        if (band.blur) t.style.filter = 'blur(' + band.blur + 'px)';
+        frag.appendChild(t);
+        tokens.push(t);
+      }
+    });
+    field.appendChild(frag);
+    if (reduced) field.classList.add('nt-static');
+  }
+
+  function applyNotationTheme() {
+    if (reduced) return;
+    const light = document.documentElement.getAttribute('data-theme') === 'light';
+    const base = light ? 'rgba(40,84,122,' : 'rgba(126,164,214,';
+    const accent = light ? 'rgba(13,122,168,' : 'rgba(120,195,238,';
+    tokens.forEach(t => {
+      const o = parseFloat(t.style.getPropertyValue('--nt-o')) || 0.1;
+      t.style.setProperty('--c', (Math.random() < 0.25 ? accent : base) + o.toFixed(3) + ')');
+    });
+  }
+  build();
+  window.__applyNotationTheme = applyNotationTheme;
+})();
+
+
 (function () {
   const preloader = document.getElementById('preloader');
   const bar = document.getElementById('preloaderBar');
@@ -37,6 +260,104 @@ const CONFIG = {
       }, 200);
     }
   }, 90);
+})();
+
+// ============================================================
+// COCKPIT BOOT-UP (hero) + SYSTEM STATUS
+// Reveals the hero's .boot-step elements in sequence so the page
+// "initializes" like a console coming online. Respects
+// prefers-reduced-motion by revealing everything at once.
+// ============================================================
+(function () {
+  const bootSteps = document.querySelectorAll('.boot-step');
+  const sysState = document.getElementById('sysState');
+  if (!bootSteps.length) return;
+
+  const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  const bootMessages = [
+    'BOOT_SEQUENCE',
+    'LOADING ENV...',
+    'CALIBRATING HUD...',
+    'CONNECTING AI CORE...',
+    'SYSTEM READY',
+    'SYSTEM ONLINE',
+    'SYSTEM ONLINE'
+  ];
+
+  function setState(i) {
+    if (sysState && bootMessages[i]) sysState.textContent = bootMessages[i];
+  }
+
+  if (reduced) {
+    bootSteps.forEach(el => el.classList.add('is-up'));
+    if (sysState) sysState.textContent = 'SYSTEM ONLINE';
+    return;
+  }
+
+  // First boot step appears immediately (after the preloader starts its
+  // fade, ~950ms), then each subsequent step follows at a steady cadence.
+  bootSteps.forEach((step, i) => {
+    setTimeout(() => {
+      step.classList.add('is-up');
+      setState(i);
+    }, 950 + i * 240);
+  });
+
+  // Final lock-in message once the last step is in.
+  setTimeout(() => {
+    if (sysState) sysState.textContent = 'SYSTEM ONLINE';
+  }, 950 + bootSteps.length * 240);
+})();
+
+// ============================================================
+// CYBER DATA STREAMS (decorative background telemetry)
+// Sparse, very-low-opacity hexadecimal / node markers that drift
+// slowly through the peripheral areas of the viewport. Pure
+// atmosphere — not real data. Disabled/reduced under
+// prefers-reduced-motion (kept static instead).
+// ============================================================
+(function () {
+  const streams = document.querySelector('.cyber-streams');
+  if (!streams) return;
+  const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  // Fewer streams on small screens.
+  const count = window.innerWidth < 700 ? 10 : 18;
+  const tokens = [
+    '0x7A21', '01011', 'SYS_04', 'NODE_07', 'AI_CORE', 'DATA_SYNC',
+    '0x3F9C', '10110', 'NODE_02', 'CH_09', 'TELEMETRY', '0xBE27',
+    'AGENT_01', 'PIPE_03', 'SYNC', 'SEC_02', '0xF0A8', 'LINK_05'
+  ];
+  const lines = [];
+  const frag = document.createDocumentFragment();
+  for (let i = 0; i < count; i++) {
+    const s = document.createElement('i');
+    s.className = 'cs-line';
+    s.textContent = tokens[(Math.random() * tokens.length) | 0];
+    // peripheral edges / corners mostly
+    const left = Math.random() < 0.7
+      ? (Math.random() < 0.5 ? Math.random() * 14 : 86 + Math.random() * 10)
+      : Math.random() * 100;
+    s.style.setProperty('--cs-r', (8 + Math.random() * 18).toFixed(0) + 'vh');
+    s.style.setProperty('--cs-o', (0.2 + Math.random() * 0.3).toFixed(2));
+    s.style.setProperty('--cs-t', (34 + Math.random() * 40).toFixed(0) + 's');
+    s.style.setProperty('--cs-d', (-(Math.random() * 60)).toFixed(0) + 's');
+    s.style.left = left + '%';
+    s.style.top = (Math.random() * 100) + '%';
+    frag.appendChild(s);
+    lines.push(s);
+  }
+  streams.appendChild(frag);
+  if (reduced) streams.classList.add('cs-static');
+
+  // Theme-aware tint: soft green drop in dark cockpit, a deeper readable
+  // green-slate on the bright daylight background.
+  function reTheme() {
+    const light = document.documentElement.getAttribute('data-theme') === 'light';
+    streams.classList.toggle('is-light', light);
+  }
+  reTheme();
+  window.__applyStreamTheme = reTheme;
 })();
 
 // ============================================================
@@ -153,6 +474,9 @@ if (themeToggle) {
     rootEl.setAttribute('data-theme', next);
     localStorage.setItem('vvr-theme', next);
     syncThemeIcon();
+    if (typeof window.__applyFieldTheme === 'function') window.__applyFieldTheme();
+    if (typeof window.__applyStreamTheme === 'function') window.__applyStreamTheme();
+    if (typeof window.__applyNotationTheme === 'function') window.__applyNotationTheme();
   });
 }
 
@@ -192,8 +516,9 @@ if (cursorTrail && window.matchMedia('(hover: hover) and (pointer: fine)').match
   const DOT_COUNT = 16;
   const dots = [];
   const positions = [];
-  // Cycle the trail through the actual site palette instead of a generic hue sweep
-  const TRAIL_COLORS = ['#4A20B9', '#7B44BD', '#AE7FD7', '#FF3B57', '#A41E29', '#BF5231', '#F3E9D3'];
+  // Cycle the trail through the HUD palette (cyan/blue/off-white) instead of
+  // a generic hue sweep.
+  const TRAIL_COLORS = ['#1A5F8F', '#43C6F6', '#6BE4FF', '#F5B84B', '#2aa6c9', '#8fd6ff', '#D6E2EE'];
 
   for (let i = 0; i < DOT_COUNT; i++) {
     const dot = document.createElement('div');
@@ -344,3 +669,11 @@ if (thermalFrame && window.matchMedia('(hover: hover) and (pointer: fine)').matc
     recTimer = null;
   });
 }
+
+// ============================================================
+// SCRIPT READY — progressive enhancement gate
+// Marking the document as .js only once the script has finished
+// running lets the CSS keep content visible by default (no-JS / JS
+// failure safe) while still enabling the reveal + boot animations.
+// ============================================================
+document.documentElement.classList.add('js');
