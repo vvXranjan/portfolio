@@ -6,11 +6,10 @@
 <title>Vaibhav Vikas Ranjan | AI Engineer</title>
 <meta name="description" content="AI Engineer building agentic AI pipelines, RAG systems, and anomaly detection — turning research into production software.">
 <!-- Favicon (browser tab icon) — files live in assets/, swap them for your own art anytime -->
-<link rel="icon" type="image/png" href="assets/favicon.png">
-<link rel="apple-touch-icon" href="assets/favicon.png">
+<link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Playfair+Display:ital,wght@1,400;1,500;1,600&family=JetBrains+Mono:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="css/style.css">
 <script>
   // Apply saved theme before first paint to avoid a flash of the wrong theme
@@ -34,7 +33,7 @@
 <!-- Preloader -->
 <div id="preloader">
   <div class="preloader-inner">
-    <div class="preloader-mark">VVR<span class="dot">.</span></div>
+    <div class="preloader-mark">VVR.<span class="dot">.</span></div>
     <p class="preloader-role">AI Engineer</p>
   </div>
   <div class="preloader-bar-wrap">
@@ -43,11 +42,90 @@
   </div>
 </div>
 
-<!-- Ambient background -->
+<!-- Ambient background: deep-space depth layers.
+     Each .bg-layer gets its depth via data-depth and a JS-driven --px/--py
+     parallax offset (script.js). Static layers carry no data-depth. -->
 <div class="bg-fx" aria-hidden="true">
-  <div class="bg-grid"></div>
-  <div class="aurora aurora-a"></div>
-  <div class="aurora aurora-b"></div>
+  <div class="bg-layer bg-space"></div>
+  <div class="bg-layer bg-stars" data-depth="0.3"></div>
+  <div class="bg-layer bg-mid" data-depth="0.65"></div>
+  <div class="bg-layer bg-hud" data-depth="1">
+    <div class="bg-grid"></div>
+    <div class="bg-datums"></div>
+    <div class="bg-radar"></div>
+    <span class="bg-target bg-target--tl"></span>
+    <span class="bg-target bg-target--br"></span>
+    <div class="aurora aurora-a"></div>
+    <div class="aurora aurora-b"></div>
+    <div class="bg-sweep"></div>
+  </div>
+  <div class="bg-vignette"></div>
+  <!-- Sparse drifting AI/ML notation (filled procedurally by script.js) -->
+  <div class="bg-layer bg-notation" data-depth="0.5" aria-hidden="true"></div>
+</div>
+
+<!-- Decorative cyber data-streams: sparse, very-low-opacity hexadecimal /
+     node telemetry tokens that drift slowly around the peripheral edges.
+     Purely atmospheric (no real data). Filled procedurally by script.js. -->
+<div class="cyber-streams" aria-hidden="true"></div>
+
+<!-- Cockpit composition: fixed framing around the whole viewport so the
+     portfolio reads as the instrument panel of a cockpit. Purely
+     decorative (pointer-events: none). -->
+<div class="cockpit-frame" aria-hidden="true">
+  <div class="cf-overhead"></div>
+  <div class="cf-persp cf-persp--left"></div>
+  <div class="cf-persp cf-persp--right"></div>
+  <div class="cf-horizon"></div>
+</div>
+<div class="cockpit-dash" aria-hidden="true">
+  <div class="dash-lines"></div>
+  <span class="dash-module dash-module--tl">
+    <span class="dash-led" style="--led:#4ade80;"></span>
+    <span class="dash-readout">nav&middot;lock</span>
+  </span>
+  <span class="dash-module dash-module--tr">
+    <span class="dash-led"></span>
+    <span class="dash-readout">auto&middot;pilot</span>
+  </span>
+  <span class="dash-wire dash-wire--a"></span>
+  <span class="dash-wire dash-wire--b"></span>
+  <div class="dash-scale"></div>
+</div>
+<div class="hack-panels" aria-hidden="true">
+  <div class="hpanel hpanel--left">
+    <div class="hpanel-box">
+      <div class="hpanel-head"><span class="hpanel-prompt">&gt;_</span>System.Status<span class="hpanel-cursor"></span></div>
+      <div class="hpanel-row"><span>AI_CORE</span><b class="ok">ONLINE</b></div>
+      <div class="hpanel-row"><span>PIPELINE</span><b class="ok">ACTIVE</b></div>
+      <div class="hpanel-row"><span>MODE</span><b>ANALYSIS</b></div>
+      <div class="hpanel-row"><span>SIGNAL</span><b class="ok">STABLE</b></div>
+      <div class="hpanel-sweep"></div>
+    </div>
+    <div class="hpanel-box">
+      <div class="hpanel-head"><span class="hpanel-prompt">&gt;_</span>Data.Stream<span class="hpanel-cursor"></span></div>
+      <div class="hpanel-row"><span>0x7A21</span><b>PACKET</b></div>
+      <div class="hpanel-row"><span>0x91F3</span><b>PACKET</b></div>
+      <div class="hpanel-row"><span>0xB2C7</span><b>PACKET</b></div>
+      <div class="hpanel-row"><span>0x3F9C</span><b>PACKET</b></div>
+    </div>
+  </div>
+  <div class="hpanel hpanel--right">
+    <div class="hpanel-box">
+      <div class="hpanel-head"><span class="hpanel-prompt">&gt;_</span>Model.Status<span class="hpanel-cursor"></span></div>
+      <div class="hpanel-row"><span>MODEL</span><b class="ok">READY</b></div>
+      <div class="hpanel-row"><span>VECTOR</span><b class="ok">ACTIVE</b></div>
+      <div class="hpanel-row"><span>PIPELINE</span><b class="ok">ONLINE</b></div>
+    </div>
+    <div class="hpanel-box hpanel-box--feed">
+      <div class="hpanel-head"><span class="hpanel-prompt">&gt;_</span>Terminal.Feed<span class="hpanel-cursor"></span></div>
+      <div class="hpanel-log">09:21:01 <span>INIT</span> core_engine</div>
+      <div class="hpanel-log">09:21:02 <span>LOAD</span> modules</div>
+      <div class="hpanel-log">09:21:03 <span>CHECK</span> deps</div>
+      <div class="hpanel-log">09:21:04 <span>SYNC</span> vector_store</div>
+      <div class="hpanel-log">09:21:05 <span>READY</span> system_online</div>
+    </div>
+  </div>
 </div>
 
 <div id="scrollProgress" aria-hidden="true"></div>
@@ -56,11 +134,11 @@
   <nav class="navbar">
     <a href="#home" class="brand">VVR<span class="dot">.</span></a>
     <ul class="nav-links">
-      <li><a href="#about" class="nav-link" data-nav>About</a></li>
-      <li><a href="#skills" class="nav-link" data-nav>Skills</a></li>
-      <li><a href="#experience" class="nav-link" data-nav>Journey</a></li>
-      <li><a href="#projects" class="nav-link" data-nav>Work</a></li>
-      <li><a href="#contact" class="nav-link" data-nav>Contact</a></li>
+      <li><a href="#about" class="nav-link" data-nav><span class="nav-idx">01</span>About</a></li>
+      <li><a href="#skills" class="nav-link" data-nav><span class="nav-idx">02</span>Skills</a></li>
+      <li><a href="#experience" class="nav-link" data-nav><span class="nav-idx">03</span>Journey</a></li>
+      <li><a href="#projects" class="nav-link" data-nav><span class="nav-idx">04</span>Work</a></li>
+      <li><a href="#contact" class="nav-link" data-nav><span class="nav-idx">05</span>Contact</a></li>
     </ul>
     <a href="#contact" class="btn-pill btn-pill--solid nav-cta">Get in Touch</a>
     <button id="themeToggle" class="nav-icon-btn" aria-label="Toggle light/dark theme">
@@ -74,11 +152,11 @@
     </button>
   </nav>
   <ul id="mobileMenu" class="mobile-menu">
-    <li><a href="#about" data-nav>About</a></li>
-    <li><a href="#skills" data-nav>Skills</a></li>
-    <li><a href="#experience" data-nav>Journey</a></li>
-    <li><a href="#projects" data-nav>Work</a></li>
-    <li><a href="#contact" data-nav>Contact</a></li>
+    <li><a href="#about" data-nav><span class="nav-idx">01</span>About</a></li>
+    <li><a href="#skills" data-nav><span class="nav-idx">02</span>Skills</a></li>
+    <li><a href="#experience" data-nav><span class="nav-idx">03</span>Journey</a></li>
+    <li><a href="#projects" data-nav><span class="nav-idx">04</span>Work</a></li>
+    <li><a href="#contact" data-nav><span class="nav-idx">05</span>Contact</a></li>
   </ul>
 </header>
 
@@ -89,21 +167,44 @@
     <div class="hero-glow" aria-hidden="true"></div>
     <div class="container hero-grid">
       <div class="hero-copy reveal">
-        <span class="eyebrow-pill"><span class="pulse-dot"></span>Open to AI Engineering roles</span>
-        <h1 class="display-xl">Vaibhav Vikas<br>Ranjan</h1>
-        <p class="hero-role">I&rsquo;m an <span class="accent-text">AI Engineer</span></p>
-        <p class="hero-desc">
+        <span class="eyebrow-pill boot-step boot-step--1">
+          <span class="sys-status"><span class="status-dot status-dot--ok"></span><span id="sysState">BOOTING</span></span>
+          <span class="eyebrow-divider"></span>
+          <span class="sys-status-label">Open to AI Engineering roles</span>
+        </span>
+        <h1 class="display-xl boot-step boot-step--2">
+          <span class="hero-name">Vaibhav Vikas Ranjan</span>
+          <span class="hero-cluster" aria-hidden="true">
+            <span class="ed-line">Building <em class="ed-italic">intelligent</em></span>
+            <span class="ed-line">systems for <em class="ed-italic">production.</em></span>
+          </span>
+          <span class="sr-only">Building intelligent systems for production</span>
+        </h1>
+        <p class="hero-role boot-step boot-step--3">I&rsquo;m an <span class="accent-text">AI Engineer</span></p>
+        <p class="hero-desc boot-step boot-step--4">
           Building <span class="hl">agentic AI pipelines</span>, <span class="hl">LLM evaluation frameworks</span>,
           and <span class="hl">production ML tools</span> that hold up under real-world messiness &mdash;
           not just clean benchmarks.
         </p>
-        <div class="hero-actions">
+        <div class="hero-actions boot-step boot-step--5">
           <a href="#projects" class="btn-pill btn-pill--solid btn-magnetic">
             <iconify-icon icon="lucide:sparkles"></iconify-icon> View My Work
           </a>
           <a href="assets/Vaibhav_Vikas_Ranjan-1.pdf" target="_blank" class="btn-pill btn-pill--glass btn-magnetic">
             Resume <iconify-icon icon="lucide:arrow-down"></iconify-icon>
           </a>
+        </div>
+        <p class="sys-readout boot-step" aria-hidden="true">
+          <span class="sys-readout-label">SYS&middot;LOCK</span>
+          <span class="sys-readout-sep">&mdash;</span>
+          <span>AGENTIC&darr; ONLINE &middot; UV INDEX NOMINAL</span>
+        </p>
+        <div class="term hero-term boot-step" aria-hidden="true">
+          <div class="term-title">SYS://AI-ENGINE <span class="term-cursor"></span></div>
+          <div class="term-row"><span class="term-key">STATUS</span><span class="term-val ok">ONLINE</span></div>
+          <div class="term-row"><span class="term-key">CONNECTION</span><span class="term-val ok">SECURE</span></div>
+          <div class="term-row"><span class="term-key">CORE</span><span class="term-val ok">ACTIVE</span></div>
+          <div class="term-row"><span class="term-key">MODE</span><span class="term-val">ANALYSIS</span></div>
         </div>
       </div>
       <div class="hero-portrait reveal" data-reveal-delay="1">
@@ -137,6 +238,20 @@
         <span class="floating-chip chip-4">LLMs</span>
       </div>
     </div>
+    <div class="hero-hud" aria-hidden="true">
+      <span class="hhud-line"></span>
+      <span class="hhud-coord hhud-coord--tl">26.2902&deg;N</span>
+      <span class="hhud-coord hhud-coord--tr">81.8167&deg;E</span>
+      <span class="hhud-coord hhud-coord--bl">ALT 0&deg; &middot; RNG 100%</span>
+      <span class="hhud-coord hhud-coord--br">SPD 0 / TRK 000</span>
+      <span class="hhud-bracket hhud-bracket--tl"></span>
+      <span class="hhud-bracket hhud-bracket--tr"></span>
+      <span class="hhud-bracket hhud-bracket--bl"></span>
+      <span class="hhud-bracket hhud-bracket--br"></span>
+    </div>
+    <div class="hero-horizon" aria-hidden="true"></div>
+    <div class="hero-glass" aria-hidden="true"></div>
+    <div class="hero-datum" aria-hidden="true"></div>
     <a href="#about" class="scroll-cue" aria-label="Scroll to about section">
       <span>Scroll</span>
       <span class="scroll-cue-track"><span class="scroll-cue-dot"></span></span>
@@ -146,9 +261,9 @@
   <!-- ABOUT -->
   <section id="about" class="section">
     <div class="container">
-      <div class="section-head reveal">
+      <div class="section-head reveal" data-sector="PROFILE">
         <span class="eyebrow"><span class="eyebrow-line"></span><span class="eyebrow-label">About</span></span>
-        <h2 class="display-lg">Turning research into<br>software that ships</h2>
+        <h2 class="display-lg">Turning <em class="ed-italic">research</em> into<br>software that ships</h2>
         <p class="section-lede">
           Final-year Data Science &amp; AI student at IIIT Naya Raipur, currently working as an
           AI Engineer at Accure Inc &mdash; moving between agentic reasoning research and the
@@ -183,15 +298,22 @@
         <div class="stat"><p class="stat-num">30+</p><p class="stat-label">Tools &amp; frameworks</p></div>
         <div class="stat"><p class="stat-num">2026</p><p class="stat-label">Graduating</p></div>
       </div>
+
+      <div class="term profile-term reveal" data-reveal-delay="2" aria-hidden="true">
+        <div class="term-title">USER PROFILE <span class="term-cursor"></span></div>
+        <div class="term-row"><span class="term-key">ROLE</span><span class="term-val">AI / ML ENGINEER</span></div>
+        <div class="term-row"><span class="term-key">FOCUS</span><span class="term-val">GENAI &middot; LLM &middot; RAG &middot; CV</span></div>
+        <div class="term-row"><span class="term-key">STATUS</span><span class="term-val ok">AVAILABLE</span></div>
+      </div>
     </div>
   </section>
 
   <!-- SKILLS -->
   <section id="skills" class="section">
     <div class="container">
-      <div class="section-head section-head--center reveal">
+      <div class="section-head section-head--center reveal" data-sector="MODULES">
         <span class="eyebrow eyebrow--center"><span class="eyebrow-line"></span><span class="eyebrow-label">Toolkit</span></span>
-        <h2 class="display-lg">The stack behind<br>production AI</h2>
+        <h2 class="display-lg">The stack behind<br><em class="ed-italic">production</em> AI</h2>
         <p class="section-lede">~25+ tools across the ML lifecycle — from first notebook to deployed pipeline.</p>
       </div>
 
@@ -309,9 +431,9 @@
   <!-- EXPERIENCE -->
   <section id="experience" class="section">
     <div class="container">
-      <div class="section-head section-head--center reveal">
+      <div class="section-head section-head--center reveal" data-sector="JOURNEY">
         <span class="eyebrow eyebrow--center"><span class="eyebrow-line"></span><span class="eyebrow-label">Journey</span></span>
-        <h2 class="display-lg">From load-tested<br>systems to agentic AI</h2>
+        <h2 class="display-lg">From load-tested<br>systems to <em class="ed-italic">agentic</em> AI</h2>
         <p class="section-lede">Three roles, each closer to the model layer than the last.</p>
       </div>
 
@@ -372,9 +494,9 @@
   <!-- PROJECTS -->
   <section id="projects" class="section">
     <div class="container">
-      <div class="section-head section-head--center reveal">
+      <div class="section-head section-head--center reveal" data-sector="MISSIONS">
         <span class="eyebrow eyebrow--center"><span class="eyebrow-line"></span><span class="eyebrow-label">Selected Work</span></span>
-        <h2 class="display-lg">Research, shipped<br>as software</h2>
+        <h2 class="display-lg">Research, <em class="ed-italic">shipped</em><br>as software</h2>
         <p class="section-lede">Agentic pipelines, vision systems, and NLP tools built end-to-end.</p>
       </div>
 
@@ -398,6 +520,7 @@
             <span class="chip">Python</span><span class="chip">FastMCP</span>
             <span class="chip">Agno</span><span class="chip">Ollama</span><span class="chip">Pydantic</span>
           </div>
+          <span class="project-status">status // operational</span>
           <a href="https://github.com/vvXranjan/cfr-compliance-mcp" target="_blank" rel="noopener" class="project-link">
             View on GitHub <iconify-icon icon="lucide:arrow-up-right"></iconify-icon>
           </a>
@@ -416,6 +539,7 @@
             <span class="chip">Kafka</span><span class="chip">ChromaDB</span>
             <span class="chip">FastAPI</span><span class="chip">React</span>
           </div>
+          <span class="project-status">status // operational</span>
           <a href="https://github.com/vvXranjan/incident-response-engine" target="_blank" rel="noopener" class="project-link">
             View on GitHub <iconify-icon icon="lucide:arrow-up-right"></iconify-icon>
           </a>
@@ -434,6 +558,7 @@
             <span class="chip">PostgreSQL</span><span class="chip">ChromaDB</span>
             <span class="chip">Kafka</span><span class="chip">Streamlit</span>
           </div>
+          <span class="project-status">status // operational</span>
           <a href="https://github.com/vvXranjan/smart-ats-resume-matcher" target="_blank" rel="noopener" class="project-link">
             View on GitHub <iconify-icon icon="lucide:arrow-up-right"></iconify-icon>
           </a>
@@ -452,6 +577,7 @@
             <span class="chip">OpenAI</span><span class="chip">Gradio</span>
             <span class="chip">MLflow</span><span class="chip">Docker</span>
           </div>
+          <span class="project-status">status // operational</span>
           <a href="https://github.com/vvXranjan/telco-churn-analysis" target="_blank" rel="noopener" class="project-link">
             View on GitHub <iconify-icon icon="lucide:arrow-up-right"></iconify-icon>
           </a>
@@ -470,12 +596,13 @@
             <span class="chip">Docker</span><span class="chip">Pydantic</span>
             <span class="chip">GitHub API</span><span class="chip">Slack API</span>
           </div>
+          <span class="project-status">status // operational</span>
           <a href="https://github.com/vvXranjan/multi-agent-orchestrator" target="_blank" rel="noopener" class="project-link">
             View on GitHub <iconify-icon icon="lucide:arrow-up-right"></iconify-icon>
           </a>
         </article>
 
-        <article class="glass-card project-card reveal tilt-card" data-category="vision" data-reveal-delay="1">           <div class="project-card-top">             <span class="project-tag">PatchCore PoC</span>             <span class="project-year">2025</span>           </div>           <h3>Welding Anomaly Detection</h3>           <p>Unsupervised anomaly-detection pipeline trained only on normal weld images to catch              unseen defect types without labeled data, using PatchCore (Anomalib). Generates              pixel-level explainable heatmaps alongside anomaly scores.</p>           <div class="chip-row">             <span class="chip">PyTorch</span><span class="chip">Anomalib</span>             <span class="chip">OpenCV</span><span class="chip">NumPy</span>           </div>           <a href="https://github.com/vvXranjan/welding-anomaly-detection-poc" target="_blank" rel="noopener" class="project-link">             View on GitHub <iconify-icon icon="lucide:arrow-up-right"></iconify-icon>           </a>         </article>
+        <article class="glass-card project-card reveal tilt-card" data-category="vision" data-reveal-delay="1">           <div class="project-card-top">             <span class="project-tag">PatchCore PoC</span>             <span class="project-year">2025</span>           </div>           <h3>Welding Anomaly Detection</h3>           <p>Unsupervised anomaly-detection pipeline trained only on normal weld images to catch              unseen defect types without labeled data, using PatchCore (Anomalib). Generates              pixel-level explainable heatmaps alongside anomaly scores.</p>           <div class="chip-row">             <span class="chip">PyTorch</span><span class="chip">Anomalib</span>             <span class="chip">OpenCV</span><span class="chip">NumPy</span>           </div><span class="project-status">status // operational</span>           <a href="https://github.com/vvXranjan/welding-anomaly-detection-poc" target="_blank" rel="noopener" class="project-link">             View on GitHub <iconify-icon icon="lucide:arrow-up-right"></iconify-icon>           </a>         </article>
 
 
       </div>
@@ -489,7 +616,7 @@
       <div class="glass-card contact-panel reveal">
         <div class="bg-grid contact-grid-fx" aria-hidden="true"></div>
         <span class="eyebrow"><span class="eyebrow-line"></span><span class="eyebrow-label">Contact</span></span>
-        <h2 class="display-lg">Let&rsquo;s build something<br>reliable</h2>
+        <h2 class="display-lg">Let&rsquo;s build something<br><em class="ed-italic">reliable</em></h2>
         <p class="section-lede">Open to AI Engineering roles and interesting problems in agentic
            systems, RAG, or applied ML &mdash; reach out.</p>
 
