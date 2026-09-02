@@ -1,681 +1,943 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Vaibhav Vikas Ranjan | AI Engineer</title>
-<meta name="description" content="AI Engineer building agentic AI pipelines, RAG systems, and anomaly detection — turning research into production software.">
-<!-- Favicon (browser tab icon) — files live in assets/, swap them for your own art anytime -->
-<link rel="icon" type="image/svg+xml" href="assets/favicon.png">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Playfair+Display:ital,wght@1,400;1,500;1,600&family=JetBrains+Mono:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="css/style.css">
-<script>
-  // Apply saved theme before first paint to avoid a flash of the wrong theme
-  (function () {
-    var theme = localStorage.getItem('vvr-theme') || 'dark';
-    document.documentElement.setAttribute('data-theme', theme);
-  })();
-  // Always start each load/navigation at the top of the page, and let our
-  // own reveal/preloader animations own the initial scroll position instead
-  // of the browser restoring a previous scroll offset.
-  if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
-  window.scrollTo(0, 0);
-</script>
-<script src="https://code.iconify.design/iconify-icon/2.1.0/iconify-icon.min.js" defer></script>
-</head>
-<body>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Vaibhav Vikas Ranjan | AI Engineer</title>
+    <meta
+      name="description"
+      content="AI Engineer building agentic AI pipelines, RAG systems, and anomaly detection — turning research into production software."
+    />
+    <!-- Favicon (browser tab icon) — files live in assets/, swap them for your own art anytime -->
+    <link rel="icon" type="image/svg+xml" href="assets/favicon.png" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Playfair+Display:ital,wght@1,400;1,500;1,600&family=JetBrains+Mono:wght@400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="css/style.css" />
+    <script>
+      // Apply saved theme before first paint to avoid a flash of the wrong theme
+      (function () {
+        var theme = localStorage.getItem("vvr-theme") || "dark";
+        document.documentElement.setAttribute("data-theme", theme);
+      })();
+      // Always start each load/navigation at the top of the page, and let our
+      // own reveal/preloader animations own the initial scroll position instead
+      // of the browser restoring a previous scroll offset.
+      if ("scrollRestoration" in history) history.scrollRestoration = "manual";
+      window.scrollTo(0, 0);
+    </script>
+    <script src="https://code.iconify.design/iconify-icon/2.1.0/iconify-icon.min.js" defer></script>
+  </head>
+  <body>
+    <!-- Colorful trailing cursor (desktop only) -->
+    <div id="cursorTrail" class="cursor-trail" aria-hidden="true"></div>
 
-<!-- Colorful trailing cursor (desktop only) -->
-<div id="cursorTrail" class="cursor-trail" aria-hidden="true"></div>
+    <!-- Preloader -->
+    <div id="preloader">
+      <div class="preloader-inner">
+        <div class="preloader-mark">VVR.<span class="dot">.</span></div>
+        <p class="preloader-role">AI Engineer</p>
+      </div>
+      <div class="preloader-bar-wrap">
+        <div class="preloader-bar-labels"><span>Loading</span><span id="preloaderPct">0%</span></div>
+        <div class="preloader-bar-track"><div id="preloaderBar" class="preloader-bar-fill"></div></div>
+      </div>
+    </div>
 
-<!-- Preloader -->
-<div id="preloader">
-  <div class="preloader-inner">
-    <div class="preloader-mark">VVR.<span class="dot">.</span></div>
-    <p class="preloader-role">AI Engineer</p>
-  </div>
-  <div class="preloader-bar-wrap">
-    <div class="preloader-bar-labels"><span>Loading</span><span id="preloaderPct">0%</span></div>
-    <div class="preloader-bar-track"><div id="preloaderBar" class="preloader-bar-fill"></div></div>
-  </div>
-</div>
-
-<!-- Ambient background: deep-space depth layers.
+    <!-- Ambient background: deep-space depth layers.
      Each .bg-layer gets its depth via data-depth and a JS-driven --px/--py
      parallax offset (script.js). Static layers carry no data-depth. -->
-<div class="bg-fx" aria-hidden="true">
-  <div class="bg-layer bg-space"></div>
-  <div class="bg-layer bg-stars" data-depth="0.3"></div>
-  <div class="bg-layer bg-mid" data-depth="0.65"></div>
-  <div class="bg-layer bg-hud" data-depth="1">
-    <div class="bg-grid"></div>
-    <div class="bg-datums"></div>
-    <div class="bg-radar"></div>
-    <span class="bg-target bg-target--tl"></span>
-    <span class="bg-target bg-target--br"></span>
-    <div class="aurora aurora-a"></div>
-    <div class="aurora aurora-b"></div>
-    <div class="bg-sweep"></div>
-  </div>
-  <div class="bg-vignette"></div>
-  <!-- Sparse drifting AI/ML notation (filled procedurally by script.js) -->
-  <div class="bg-layer bg-notation" data-depth="0.5" aria-hidden="true"></div>
-</div>
+    <div class="bg-fx" aria-hidden="true">
+      <div class="bg-layer bg-space"></div>
+      <div class="bg-layer bg-stars" data-depth="0.3"></div>
+      <div class="bg-layer bg-mid" data-depth="0.65"></div>
+      <div class="bg-layer bg-hud" data-depth="1">
+        <div class="bg-grid"></div>
+        <div class="bg-datums"></div>
+        <div class="bg-radar"></div>
+        <span class="bg-target bg-target--tl"></span>
+        <span class="bg-target bg-target--br"></span>
+        <div class="aurora aurora-a"></div>
+        <div class="aurora aurora-b"></div>
+        <div class="bg-sweep"></div>
+      </div>
+      <div class="bg-vignette"></div>
+      <!-- Sparse drifting AI/ML notation (filled procedurally by script.js) -->
+      <div class="bg-layer bg-notation" data-depth="0.5" aria-hidden="true"></div>
+    </div>
 
-<!-- Decorative cyber data-streams: sparse, very-low-opacity hexadecimal /
+    <!-- Decorative cyber data-streams: sparse, very-low-opacity hexadecimal /
      node telemetry tokens that drift slowly around the peripheral edges.
      Purely atmospheric (no real data). Filled procedurally by script.js. -->
-<div class="cyber-streams" aria-hidden="true"></div>
+    <div class="cyber-streams" aria-hidden="true"></div>
 
-<!-- Cockpit composition: fixed framing around the whole viewport so the
+    <!-- Cockpit composition: fixed framing around the whole viewport so the
      portfolio reads as the instrument panel of a cockpit. Purely
      decorative (pointer-events: none). -->
-<div class="cockpit-frame" aria-hidden="true">
-  <div class="cf-overhead"></div>
-  <div class="cf-persp cf-persp--left"></div>
-  <div class="cf-persp cf-persp--right"></div>
-  <div class="cf-horizon"></div>
-</div>
-<div class="cockpit-dash" aria-hidden="true">
-  <div class="dash-lines"></div>
-  <span class="dash-module dash-module--tl">
-    <span class="dash-led" style="--led:#4ade80;"></span>
-    <span class="dash-readout">nav&middot;lock</span>
-  </span>
-  <span class="dash-module dash-module--tr">
-    <span class="dash-led"></span>
-    <span class="dash-readout">auto&middot;pilot</span>
-  </span>
-  <span class="dash-wire dash-wire--a"></span>
-  <span class="dash-wire dash-wire--b"></span>
-  <div class="dash-scale"></div>
-</div>
-<div class="hack-panels" aria-hidden="true">
-  <div class="hpanel hpanel--left">
-    <div class="hpanel-box">
-      <div class="hpanel-head"><span class="hpanel-prompt">&gt;_</span>System.Status<span class="hpanel-cursor"></span></div>
-      <div class="hpanel-row"><span>AI_CORE</span><b class="ok">ONLINE</b></div>
-      <div class="hpanel-row"><span>PIPELINE</span><b class="ok">ACTIVE</b></div>
-      <div class="hpanel-row"><span>MODE</span><b>ANALYSIS</b></div>
-      <div class="hpanel-row"><span>SIGNAL</span><b class="ok">STABLE</b></div>
-      <div class="hpanel-sweep"></div>
+    <div class="cockpit-frame" aria-hidden="true">
+      <div class="cf-overhead"></div>
+      <div class="cf-persp cf-persp--left"></div>
+      <div class="cf-persp cf-persp--right"></div>
+      <div class="cf-horizon"></div>
     </div>
-    <div class="hpanel-box">
-      <div class="hpanel-head"><span class="hpanel-prompt">&gt;_</span>Data.Stream<span class="hpanel-cursor"></span></div>
-      <div class="hpanel-row"><span>0x7A21</span><b>PACKET</b></div>
-      <div class="hpanel-row"><span>0x91F3</span><b>PACKET</b></div>
-      <div class="hpanel-row"><span>0xB2C7</span><b>PACKET</b></div>
-      <div class="hpanel-row"><span>0x3F9C</span><b>PACKET</b></div>
+    <div class="cockpit-dash" aria-hidden="true">
+      <div class="dash-lines"></div>
+      <span class="dash-module dash-module--tl">
+        <span class="dash-led" style="--led: #4ade80"></span>
+        <span class="dash-readout">nav&middot;lock</span>
+      </span>
+      <span class="dash-module dash-module--tr">
+        <span class="dash-led"></span>
+        <span class="dash-readout">auto&middot;pilot</span>
+      </span>
+      <span class="dash-wire dash-wire--a"></span>
+      <span class="dash-wire dash-wire--b"></span>
+      <div class="dash-scale"></div>
     </div>
-  </div>
-  <div class="hpanel hpanel--right">
-    <div class="hpanel-box">
-      <div class="hpanel-head"><span class="hpanel-prompt">&gt;_</span>Model.Status<span class="hpanel-cursor"></span></div>
-      <div class="hpanel-row"><span>MODEL</span><b class="ok">READY</b></div>
-      <div class="hpanel-row"><span>VECTOR</span><b class="ok">ACTIVE</b></div>
-      <div class="hpanel-row"><span>PIPELINE</span><b class="ok">ONLINE</b></div>
-    </div>
-    <div class="hpanel-box hpanel-box--feed">
-      <div class="hpanel-head"><span class="hpanel-prompt">&gt;_</span>Terminal.Feed<span class="hpanel-cursor"></span></div>
-      <div class="hpanel-log">09:21:01 <span>INIT</span> core_engine</div>
-      <div class="hpanel-log">09:21:02 <span>LOAD</span> modules</div>
-      <div class="hpanel-log">09:21:03 <span>CHECK</span> deps</div>
-      <div class="hpanel-log">09:21:04 <span>SYNC</span> vector_store</div>
-      <div class="hpanel-log">09:21:05 <span>READY</span> system_online</div>
-    </div>
-  </div>
-</div>
-
-<div id="scrollProgress" aria-hidden="true"></div>
-
-<header id="siteHeader">
-  <nav class="navbar">
-    <a href="#home" class="brand">VVR<span class="dot">.</span></a>
-    <ul class="nav-links">
-      <li><a href="#about" class="nav-link" data-nav><span class="nav-idx">01</span>About</a></li>
-      <li><a href="#skills" class="nav-link" data-nav><span class="nav-idx">02</span>Skills</a></li>
-      <li><a href="#experience" class="nav-link" data-nav><span class="nav-idx">03</span>Journey</a></li>
-      <li><a href="#projects" class="nav-link" data-nav><span class="nav-idx">04</span>Work</a></li>
-      <li><a href="#contact" class="nav-link" data-nav><span class="nav-idx">05</span>Contact</a></li>
-    </ul>
-    <a href="#contact" class="btn-pill btn-pill--solid nav-cta">Get in Touch</a>
-    <button id="themeToggle" class="nav-icon-btn" aria-label="Toggle light/dark theme">
-      <iconify-icon id="themeToggleIcon" icon="lucide:moon"></iconify-icon>
-    </button>
-    <button id="musicToggle" class="nav-icon-btn" aria-label="Toggle background music">
-      <iconify-icon id="musicToggleIcon" icon="lucide:volume-x"></iconify-icon>
-    </button>
-    <button id="hamburger" class="hamburger" aria-label="Toggle menu" aria-expanded="false">
-      <span></span><span></span><span></span>
-    </button>
-  </nav>
-  <ul id="mobileMenu" class="mobile-menu">
-    <li><a href="#about" data-nav><span class="nav-idx">01</span>About</a></li>
-    <li><a href="#skills" data-nav><span class="nav-idx">02</span>Skills</a></li>
-    <li><a href="#experience" data-nav><span class="nav-idx">03</span>Journey</a></li>
-    <li><a href="#projects" data-nav><span class="nav-idx">04</span>Work</a></li>
-    <li><a href="#contact" data-nav><span class="nav-idx">05</span>Contact</a></li>
-  </ul>
-</header>
-
-<main>
-
-  <!-- HERO -->
-  <section id="home" class="hero">
-    <div class="hero-glow" aria-hidden="true"></div>
-    <div class="container hero-grid">
-      <div class="hero-copy reveal">
-        <span class="eyebrow-pill boot-step boot-step--1">
-          <span class="sys-status"><span class="status-dot status-dot--ok"></span><span id="sysState">BOOTING</span></span>
-          <span class="eyebrow-divider"></span>
-          <span class="sys-status-label">Open to AI Engineering roles</span>
-        </span>
-        <h1 class="display-xl boot-step boot-step--2">
-          <span class="hero-name">Vaibhav Vikas Ranjan</span>
-          <span class="hero-cluster" aria-hidden="true">
-            <span class="ed-line">Building <em class="ed-italic">intelligent</em></span>
-            <span class="ed-line">systems for <em class="ed-italic">production.</em></span>
-          </span>
-          <span class="sr-only">Building intelligent systems for production</span>
-        </h1>
-        <p class="hero-role boot-step boot-step--3">I&rsquo;m an <span class="accent-text">AI Engineer</span></p>
-        <p class="hero-desc boot-step boot-step--4">
-          Building <span class="hl">agentic AI pipelines</span>, <span class="hl">LLM evaluation frameworks</span>,
-          and <span class="hl">production ML tools</span> that hold up under real-world messiness &mdash;
-          not just clean benchmarks.
-        </p>
-        <div class="hero-actions boot-step boot-step--5">
-          <a href="#projects" class="btn-pill btn-pill--solid btn-magnetic">
-            <iconify-icon icon="lucide:sparkles"></iconify-icon> View My Work
-          </a>
-          <a href="assets/Vaibhav_Vikas_Ranjan-1.pdf" target="_blank" class="btn-pill btn-pill--glass btn-magnetic">
-            Resume <iconify-icon icon="lucide:arrow-down"></iconify-icon>
-          </a>
+    <div class="hack-panels" aria-hidden="true">
+      <div class="hpanel hpanel--left">
+        <div class="hpanel-box">
+          <div class="hpanel-head">
+            <span class="hpanel-prompt">&gt;_</span>System.Status<span class="hpanel-cursor"></span>
+          </div>
+          <div class="hpanel-row"><span>AI_CORE</span><b class="ok">ONLINE</b></div>
+          <div class="hpanel-row"><span>PIPELINE</span><b class="ok">ACTIVE</b></div>
+          <div class="hpanel-row"><span>MODE</span><b>ANALYSIS</b></div>
+          <div class="hpanel-row"><span>SIGNAL</span><b class="ok">STABLE</b></div>
+          <div class="hpanel-sweep"></div>
         </div>
-        <p class="sys-readout boot-step" aria-hidden="true">
-          <span class="sys-readout-label">SYS&middot;LOCK</span>
-          <span class="sys-readout-sep">&mdash;</span>
-          <span>AGENTIC&darr; ONLINE &middot; UV INDEX NOMINAL</span>
-        </p>
-        <div class="term hero-term boot-step" aria-hidden="true">
-          <div class="term-title">SYS://AI-ENGINE <span class="term-cursor"></span></div>
-          <div class="term-row"><span class="term-key">STATUS</span><span class="term-val ok">ONLINE</span></div>
-          <div class="term-row"><span class="term-key">CONNECTION</span><span class="term-val ok">SECURE</span></div>
-          <div class="term-row"><span class="term-key">CORE</span><span class="term-val ok">ACTIVE</span></div>
-          <div class="term-row"><span class="term-key">MODE</span><span class="term-val">ANALYSIS</span></div>
+        <div class="hpanel-box">
+          <div class="hpanel-head">
+            <span class="hpanel-prompt">&gt;_</span>Data.Stream<span class="hpanel-cursor"></span>
+          </div>
+          <div class="hpanel-row"><span>0x7A21</span><b>PACKET</b></div>
+          <div class="hpanel-row"><span>0x91F3</span><b>PACKET</b></div>
+          <div class="hpanel-row"><span>0xB2C7</span><b>PACKET</b></div>
+          <div class="hpanel-row"><span>0x3F9C</span><b>PACKET</b></div>
         </div>
       </div>
-      <div class="hero-portrait reveal" data-reveal-delay="1">
-        <div class="portrait-glow" aria-hidden="true"></div>
-        <div class="portrait-frame">
-          <img src="assets/portrait.JPG" alt="Vaibhav Vikas Ranjan" class="portrait-photo" onerror="this.remove()">
-          <div class="portrait-initials">VVR</div>
+      <div class="hpanel hpanel--right">
+        <div class="hpanel-box">
+          <div class="hpanel-head">
+            <span class="hpanel-prompt">&gt;_</span>Model.Status<span class="hpanel-cursor"></span>
+          </div>
+          <div class="hpanel-row"><span>MODEL</span><b class="ok">READY</b></div>
+          <div class="hpanel-row"><span>VECTOR</span><b class="ok">ACTIVE</b></div>
+          <div class="hpanel-row"><span>PIPELINE</span><b class="ok">ONLINE</b></div>
+        </div>
+        <div class="hpanel-box hpanel-box--feed">
+          <div class="hpanel-head">
+            <span class="hpanel-prompt">&gt;_</span>Terminal.Feed<span class="hpanel-cursor"></span>
+          </div>
+          <div class="hpanel-log">09:21:01 <span>INIT</span> core_engine</div>
+          <div class="hpanel-log">09:21:02 <span>LOAD</span> modules</div>
+          <div class="hpanel-log">09:21:03 <span>CHECK</span> deps</div>
+          <div class="hpanel-log">09:21:04 <span>SYNC</span> vector_store</div>
+          <div class="hpanel-log">09:21:05 <span>READY</span> system_online</div>
+        </div>
+      </div>
+    </div>
 
-          <!-- Thermal-scan hover effect: pure CSS false-color duotone (mix-blend-mode
+    <div id="scrollProgress" aria-hidden="true"></div>
+
+    <header id="siteHeader">
+      <nav class="navbar">
+        <a href="#home" class="brand">VVR<span class="dot">.</span></a>
+        <ul class="nav-links">
+          <li>
+            <a href="#about" class="nav-link" data-nav><span class="nav-idx">01</span>About</a>
+          </li>
+          <li>
+            <a href="#skills" class="nav-link" data-nav><span class="nav-idx">02</span>Skills</a>
+          </li>
+          <li>
+            <a href="#experience" class="nav-link" data-nav><span class="nav-idx">03</span>Journey</a>
+          </li>
+          <li>
+            <a href="#projects" class="nav-link" data-nav><span class="nav-idx">04</span>Work</a>
+          </li>
+          <li>
+            <a href="#contact" class="nav-link" data-nav><span class="nav-idx">05</span>Contact</a>
+          </li>
+        </ul>
+        <a href="#contact" class="btn-pill btn-pill--solid nav-cta">Get in Touch</a>
+        <button id="themeToggle" class="nav-icon-btn" aria-label="Toggle light/dark theme">
+          <iconify-icon id="themeToggleIcon" icon="lucide:moon"></iconify-icon>
+        </button>
+        <button id="musicToggle" class="nav-icon-btn" aria-label="Toggle background music">
+          <iconify-icon id="musicToggleIcon" icon="lucide:volume-x"></iconify-icon>
+        </button>
+        <button id="hamburger" class="hamburger" aria-label="Toggle menu" aria-expanded="false">
+          <span></span><span></span><span></span>
+        </button>
+      </nav>
+      <ul id="mobileMenu" class="mobile-menu">
+        <li>
+          <a href="#about" data-nav><span class="nav-idx">01</span>About</a>
+        </li>
+        <li>
+          <a href="#skills" data-nav><span class="nav-idx">02</span>Skills</a>
+        </li>
+        <li>
+          <a href="#experience" data-nav><span class="nav-idx">03</span>Journey</a>
+        </li>
+        <li>
+          <a href="#projects" data-nav><span class="nav-idx">04</span>Work</a>
+        </li>
+        <li>
+          <a href="#contact" data-nav><span class="nav-idx">05</span>Contact</a>
+        </li>
+      </ul>
+    </header>
+
+    <main>
+      <!-- HERO -->
+      <section id="home" class="hero">
+        <div class="hero-glow" aria-hidden="true"></div>
+        <div class="container hero-grid">
+          <div class="hero-copy reveal">
+            <span class="eyebrow-pill boot-step boot-step--1">
+              <span class="sys-status"
+                ><span class="status-dot status-dot--ok"></span><span id="sysState">BOOTING</span></span
+              >
+              <span class="eyebrow-divider"></span>
+              <span class="sys-status-label">Open to AI Engineering roles</span>
+            </span>
+            <h1 class="display-xl boot-step boot-step--2">
+              <span class="hero-name">Vaibhav Vikas Ranjan</span>
+              <span class="hero-cluster" aria-hidden="true">
+                <span class="ed-line">Building <em class="ed-italic">intelligent</em></span>
+                <span class="ed-line">systems for <em class="ed-italic">production.</em></span>
+              </span>
+              <span class="sr-only">Building intelligent systems for production</span>
+            </h1>
+            <p class="hero-role boot-step boot-step--3">I&rsquo;m an <span class="accent-text">AI Engineer</span></p>
+            <p class="hero-desc boot-step boot-step--4">
+              Building <span class="hl">agentic AI pipelines</span>, <span class="hl">LLM evaluation frameworks</span>,
+              and <span class="hl">production ML tools</span> that hold up under real-world messiness &mdash; not just
+              clean benchmarks.
+            </p>
+            <div class="hero-actions boot-step boot-step--5">
+              <a href="#projects" class="btn-pill btn-pill--solid btn-magnetic">
+                <iconify-icon icon="lucide:sparkles"></iconify-icon> View My Work
+              </a>
+              <a href="assets/Vaibhav_Vikas_Ranjan-1.pdf" target="_blank" class="btn-pill btn-pill--glass btn-magnetic">
+                Resume <iconify-icon icon="lucide:arrow-down"></iconify-icon>
+              </a>
+            </div>
+            <p class="sys-readout boot-step" aria-hidden="true">
+              <span class="sys-readout-label">SYS&middot;LOCK</span>
+              <span class="sys-readout-sep">&mdash;</span>
+              <span>AGENTIC&darr; ONLINE &middot; UV INDEX NOMINAL</span>
+            </p>
+            <div class="term hero-term boot-step" aria-hidden="true">
+              <div class="term-title">SYS://AI-ENGINE <span class="term-cursor"></span></div>
+              <div class="term-row"><span class="term-key">STATUS</span><span class="term-val ok">ONLINE</span></div>
+              <div class="term-row">
+                <span class="term-key">CONNECTION</span><span class="term-val ok">SECURE</span>
+              </div>
+              <div class="term-row"><span class="term-key">CORE</span><span class="term-val ok">ACTIVE</span></div>
+              <div class="term-row"><span class="term-key">MODE</span><span class="term-val">ANALYSIS</span></div>
+            </div>
+          </div>
+          <div class="hero-portrait reveal" data-reveal-delay="1">
+            <div class="portrait-glow" aria-hidden="true"></div>
+            <div class="portrait-frame">
+              <img
+                src="assets/portrait.JPG"
+                alt="Vaibhav Vikas Ranjan"
+                class="portrait-photo"
+                onerror="this.remove()"
+              />
+              <div class="portrait-initials">VVR</div>
+
+              <!-- Thermal-scan hover effect: pure CSS false-color duotone (mix-blend-mode
                over a desaturated photo) plus scanline/grain/HUD overlays, all hidden
                until .portrait-frame:hover. See style.css "THERMAL SCAN HOVER" section
                and script.js "THERMAL SCAN HOVER" section for the live REC/temp readout. -->
-          <div class="thermal-overlay" aria-hidden="true"></div>
-          <div class="thermal-scanlines" aria-hidden="true"></div>
-          <div class="thermal-grain" aria-hidden="true"></div>
-          <div class="thermal-hud" aria-hidden="true">
-            <span class="hud-corner hud-corner--tl"></span>
-            <span class="hud-corner hud-corner--tr"></span>
-            <span class="hud-corner hud-corner--bl"></span>
-            <span class="hud-corner hud-corner--br"></span>
-            <span class="hud-reticle"></span>
-            <span class="hud-label hud-label--top">FLIR &middot; THERMAL SCAN</span>
-            <span class="hud-label hud-label--bottom">
-              <span id="thermalTemp">36.6&deg;C</span><span id="thermalRec">REC 00:00:00</span>
-            </span>
-          </div>
-        </div>
-        <span class="floating-chip chip-1">RAG</span>
-        <span class="floating-chip chip-2">Agentic AI</span>
-        <span class="floating-chip chip-3">AI Automation</span>
-        <span class="floating-chip chip-4">LLMs</span>
-      </div>
-    </div>
-    <div class="hero-hud" aria-hidden="true">
-      <span class="hhud-line"></span>
-      <span class="hhud-coord hhud-coord--tl">26.2902&deg;N</span>
-      <span class="hhud-coord hhud-coord--tr">81.8167&deg;E</span>
-      <span class="hhud-coord hhud-coord--bl">ALT 0&deg; &middot; RNG 100%</span>
-      <span class="hhud-coord hhud-coord--br">SPD 0 / TRK 000</span>
-      <span class="hhud-bracket hhud-bracket--tl"></span>
-      <span class="hhud-bracket hhud-bracket--tr"></span>
-      <span class="hhud-bracket hhud-bracket--bl"></span>
-      <span class="hhud-bracket hhud-bracket--br"></span>
-    </div>
-    <div class="hero-horizon" aria-hidden="true"></div>
-    <div class="hero-glass" aria-hidden="true"></div>
-    <div class="hero-datum" aria-hidden="true"></div>
-    <a href="#about" class="scroll-cue" aria-label="Scroll to about section">
-      <span>Scroll</span>
-      <span class="scroll-cue-track"><span class="scroll-cue-dot"></span></span>
-    </a>
-  </section>
-
-  <!-- ABOUT -->
-  <section id="about" class="section">
-    <div class="container">
-      <div class="section-head reveal" data-sector="PROFILE">
-        <span class="eyebrow"><span class="eyebrow-line"></span><span class="eyebrow-label">About</span></span>
-        <h2 class="display-lg">Turning <em class="ed-italic">research</em> into<br>software that ships</h2>
-        <p class="section-lede">
-          Final-year Data Science &amp; AI student at IIIT Naya Raipur, currently working as an
-          AI Engineer at Accure Inc &mdash; moving between agentic reasoning research and the
-          production systems that put it to work.
-        </p>
-      </div>
-
-      <div class="about-grid">
-        <div class="glass-card feature-card reveal">
-          <span class="feature-num">Agentic</span>
-          <h3>Reasoning pipelines</h3>
-          <p>Agentic AI workflows and prompt-engineering pipelines evaluated through a
-             seven-dimension reliability framework.</p>
-        </div>
-        <div class="glass-card feature-card reveal" data-reveal-delay="1">
-          <span class="feature-num">Adversarial</span>
-          <h3>Robustness testing</h3>
-          <p>Stress-testing agentic systems against synthetic adversarial datasets to catch
-             failure modes before production does.</p>
-        </div>
-        <div class="glass-card feature-card reveal" data-reveal-delay="2">
-          <span class="feature-num">Unsupervised</span>
-          <h3>Anomaly detection</h3>
-          <p>Detection systems trained on unlabeled data, built to catch defect types the
-             training set never saw.</p>
-        </div>
-      </div>
-
-      <div class="glass-card stat-strip reveal">
-        <div class="stat"><p class="stat-num">3</p><p class="stat-label">Roles held</p></div>
-        <div class="stat"><p class="stat-num">4</p><p class="stat-label">Projects shipped</p></div>
-        <div class="stat"><p class="stat-num">30+</p><p class="stat-label">Tools &amp; frameworks</p></div>
-        <div class="stat"><p class="stat-num">2026</p><p class="stat-label">Graduating</p></div>
-      </div>
-
-      <div class="term profile-term reveal" data-reveal-delay="2" aria-hidden="true">
-        <div class="term-title">USER PROFILE <span class="term-cursor"></span></div>
-        <div class="term-row"><span class="term-key">ROLE</span><span class="term-val">AI / ML ENGINEER</span></div>
-        <div class="term-row"><span class="term-key">FOCUS</span><span class="term-val">GENAI &middot; LLM &middot; RAG &middot; CV</span></div>
-        <div class="term-row"><span class="term-key">STATUS</span><span class="term-val ok">AVAILABLE</span></div>
-      </div>
-    </div>
-  </section>
-
-  <!-- SKILLS -->
-  <section id="skills" class="section">
-    <div class="container">
-      <div class="section-head section-head--center reveal" data-sector="MODULES">
-        <span class="eyebrow eyebrow--center"><span class="eyebrow-line"></span><span class="eyebrow-label">Toolkit</span></span>
-        <h2 class="display-lg">The stack behind<br><em class="ed-italic">production</em> AI</h2>
-        <p class="section-lede">~25+ tools across the ML lifecycle — from first notebook to deployed pipeline.</p>
-      </div>
-
-      <div class="stack-grid">
-        <div class="stack-card glass-card reveal">
-          <div class="stack-card-head">
-            <span class="stack-dot" style="--dot: var(--accent);"></span>
-            <h3>Languages &amp; Core</h3>
-            <span class="stack-count">/ 05</span>
-          </div>
-          <div class="stack-items">
-            <span class="stack-item"><span class="stack-item-icon"><iconify-icon icon="simple-icons:python"></iconify-icon></span>Python</span>
-            <span class="stack-item"><span class="stack-item-icon"><iconify-icon icon="lucide:database"></iconify-icon></span>SQL</span>
-            <span class="stack-item"><span class="stack-item-icon"><iconify-icon icon="simple-icons:cplusplus"></iconify-icon></span>C++</span>
-            <span class="stack-item"><span class="stack-item-icon"><iconify-icon icon="simple-icons:javascript"></iconify-icon></span>JavaScript</span>
-            <span class="stack-item"><span class="stack-item-icon"><iconify-icon icon="simple-icons:html5"></iconify-icon></span>HTML/CSS</span>
-          </div>
-        </div>
-
-        <div class="stack-card glass-card reveal" data-reveal-delay="1">
-          <div class="stack-card-head">
-            <span class="stack-dot" style="--dot: var(--accent-strong);"></span>
-            <h3>Generative AI &amp; LLMs</h3>
-            <span class="stack-count">/ 06</span>
-          </div>
-          <div class="stack-items">
-            <span class="stack-item"><span class="stack-item-icon"><iconify-icon icon="simple-icons:langchain"></iconify-icon></span>LangChain</span>
-            <span class="stack-item"><span class="stack-item-icon"><iconify-icon icon="lucide:git-branch"></iconify-icon></span>LangGraph</span>
-            <span class="stack-item"><span class="stack-item-icon"><iconify-icon icon="lucide:plug-zap"></iconify-icon></span>MCP</span>
-            <span class="stack-item"><span class="stack-item-icon"><iconify-icon icon="lucide:message-square-code"></iconify-icon></span>Chainlit</span>
-            <span class="stack-item"><span class="stack-item-icon"><iconify-icon icon="simple-icons:huggingface"></iconify-icon></span>Hugging Face</span>
-            <span class="stack-item"><span class="stack-item-icon"><iconify-icon icon="lucide:terminal"></iconify-icon></span>Ollama</span>
-          </div>
-        </div>
-
-        <div class="stack-card glass-card reveal" data-reveal-delay="1">
-          <div class="stack-card-head">
-            <span class="stack-dot" style="--dot: var(--accent-deep);"></span>
-            <h3>ML &amp; Deep Learning</h3>
-            <span class="stack-count">/ 06</span>
-          </div>
-          <div class="stack-items">
-            <span class="stack-item"><span class="stack-item-icon"><iconify-icon icon="simple-icons:pytorch"></iconify-icon></span>PyTorch</span>
-            <span class="stack-item"><span class="stack-item-icon"><iconify-icon icon="simple-icons:tensorflow"></iconify-icon></span>TensorFlow</span>
-            <span class="stack-item"><span class="stack-item-icon"><iconify-icon icon="simple-icons:scikitlearn"></iconify-icon></span>Scikit-learn</span>
-            <span class="stack-item"><span class="stack-item-icon"><iconify-icon icon="simple-icons:opencv"></iconify-icon></span>OpenCV</span>
-            <span class="stack-item"><span class="stack-item-icon"><iconify-icon icon="simple-icons:pandas"></iconify-icon></span>Pandas</span>
-            <span class="stack-item"><span class="stack-item-icon"><iconify-icon icon="simple-icons:numpy"></iconify-icon></span>NumPy</span>
-          </div>
-        </div>
-
-        <div class="stack-card glass-card reveal" data-reveal-delay="2">
-          <div class="stack-card-head">
-            <span class="stack-dot" style="--dot: #4fb0a8;"></span>
-            <h3>Infra &amp; Data</h3>
-            <span class="stack-count">/ 08</span>
-          </div>
-          <div class="stack-items">
-            <span class="stack-item"><span class="stack-item-icon"><iconify-icon icon="simple-icons:docker"></iconify-icon></span>Docker</span>
-            <span class="stack-item"><span class="stack-item-icon"><iconify-icon icon="simple-icons:amazonaws"></iconify-icon></span>AWS</span>
-            <span class="stack-item"><span class="stack-item-icon"><iconify-icon icon="simple-icons:fastapi"></iconify-icon></span>FastAPI</span>
-            <span class="stack-item"><span class="stack-item-icon"><iconify-icon icon="simple-icons:postgresql"></iconify-icon></span>PostgreSQL</span>
-            <span class="stack-item"><span class="stack-item-icon"><iconify-icon icon="lucide:database"></iconify-icon></span>ChromaDB</span>
-            <span class="stack-item"><span class="stack-item-icon"><iconify-icon icon="simple-icons:git"></iconify-icon></span>Git</span>
-            <span class="stack-item"><span class="stack-item-icon"><iconify-icon icon="simple-icons:tableau"></iconify-icon></span>Tableau</span>
-            <span class="stack-item"><span class="stack-item-icon"><iconify-icon icon="simple-icons:streamlit"></iconify-icon></span>Streamlit</span>
-          </div>
-        </div>
-
-        <div class="stack-orbit glass-card reveal" data-reveal-delay="2">
-          <div class="orbit-head">
-            <span class="orbit-kicker">// core_loop</span>
-            <span class="orbit-live"><span class="orbit-live-dot"></span>live</span>
-          </div>
-          <p class="orbit-title">Daily orbit</p>
-
-          <div class="orbit-stage" aria-hidden="true">
-            <div class="orbit-ring orbit-ring--outer"></div>
-            <div class="orbit-ring orbit-ring--inner"></div>
-            <div class="orbit-core">AI</div>
-
-            <div class="orbit-node" style="--angle:0deg;"><iconify-icon icon="simple-icons:python"></iconify-icon></div>
-            <div class="orbit-node" style="--angle:45deg;"><iconify-icon icon="simple-icons:pytorch"></iconify-icon></div>
-            <div class="orbit-node" style="--angle:90deg;"><iconify-icon icon="simple-icons:langchain"></iconify-icon></div>
-            <div class="orbit-node" style="--angle:135deg;"><iconify-icon icon="lucide:git-branch"></iconify-icon></div>
-            <div class="orbit-node" style="--angle:180deg;"><iconify-icon icon="simple-icons:docker"></iconify-icon></div>
-            <div class="orbit-node" style="--angle:225deg;"><iconify-icon icon="simple-icons:amazonaws"></iconify-icon></div>
-            <div class="orbit-node" style="--angle:270deg;"><iconify-icon icon="simple-icons:huggingface"></iconify-icon></div>
-            <div class="orbit-node" style="--angle:315deg;"><iconify-icon icon="simple-icons:fastapi"></iconify-icon></div>
-          </div>
-
-          <div class="orbit-foot">
-            <span>tools_in_motion = 08</span>
-            <span>updated daily</span>
-          </div>
-        </div>
-      </div>
-
-      <div class="focus-strip reveal" data-reveal-delay="2">
-        <span class="focus-strip-label">Focus areas</span>
-        <div class="focus-tags">
-          <span class="focus-tag">Generative AI</span>
-          <span class="focus-tag">LLMs</span>
-          <span class="focus-tag">RAG</span>
-          <span class="focus-tag">NLP</span>
-          <span class="focus-tag">Computer Vision</span>
-          <span class="focus-tag">Anomaly Detection</span>
-          <span class="focus-tag">Data Engineering</span>
-          <span class="focus-tag">Prompt Engineering</span>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- EXPERIENCE -->
-  <section id="experience" class="section">
-    <div class="container">
-      <div class="section-head section-head--center reveal" data-sector="JOURNEY">
-        <span class="eyebrow eyebrow--center"><span class="eyebrow-line"></span><span class="eyebrow-label">Journey</span></span>
-        <h2 class="display-lg">From load-tested<br>systems to <em class="ed-italic">agentic</em> AI</h2>
-        <p class="section-lede">Three roles, each closer to the model layer than the last.</p>
-      </div>
-
-      <div class="timeline">
-        <div class="timeline-spine" aria-hidden="true"></div>
-
-        <div class="timeline-item reveal">
-          <span class="timeline-node"><iconify-icon icon="lucide:brain-circuit"></iconify-icon></span>
-          <div class="glass-card timeline-card">
-            <div class="timeline-card-head">
-              <h3>AI Engineer</h3>
-              <span class="timeline-date">Jan 2026 &ndash; Present</span>
+              <div class="thermal-overlay" aria-hidden="true"></div>
+              <div class="thermal-scanlines" aria-hidden="true"></div>
+              <div class="thermal-grain" aria-hidden="true"></div>
+              <div class="thermal-hud" aria-hidden="true">
+                <span class="hud-corner hud-corner--tl"></span>
+                <span class="hud-corner hud-corner--tr"></span>
+                <span class="hud-corner hud-corner--bl"></span>
+                <span class="hud-corner hud-corner--br"></span>
+                <span class="hud-reticle"></span>
+                <span class="hud-label hud-label--top">FLIR &middot; THERMAL SCAN</span>
+                <span class="hud-label hud-label--bottom">
+                  <span id="thermalTemp">36.6&deg;C</span><span id="thermalRec">REC 00:00:00</span>
+                </span>
+              </div>
             </div>
-            <p class="timeline-org">Accure Inc &middot; Bangalore, India</p>
-            <ul>
-              <li>Improved LLM reasoning reliability for AccureIQx by designing agentic AI workflows and prompt-engineering pipelines, evaluated through a seven-dimension framework.</li>
-              <li>Strengthened adversarial robustness of agentic reasoning systems, achieving high anomaly-detection accuracy across five stress-test scenarios using synthetic cybersecurity datasets.</li>
-              <li>Cut manual weekly reporting time by 35% by building automated Python analytics pipelines integrating multi-source EDA data via REST APIs.</li>
-            </ul>
+            <span class="floating-chip chip-1">RAG</span>
+            <span class="floating-chip chip-2">Agentic AI</span>
+            <span class="floating-chip chip-3">AI Automation</span>
+            <span class="floating-chip chip-4">LLMs</span>
           </div>
         </div>
+        <div class="hero-hud" aria-hidden="true">
+          <span class="hhud-line"></span>
+          <span class="hhud-coord hhud-coord--tl">26.2902&deg;N</span>
+          <span class="hhud-coord hhud-coord--tr">81.8167&deg;E</span>
+          <span class="hhud-coord hhud-coord--bl">ALT 0&deg; &middot; RNG 100%</span>
+          <span class="hhud-coord hhud-coord--br">SPD 0 / TRK 000</span>
+          <span class="hhud-bracket hhud-bracket--tl"></span>
+          <span class="hhud-bracket hhud-bracket--tr"></span>
+          <span class="hhud-bracket hhud-bracket--bl"></span>
+          <span class="hhud-bracket hhud-bracket--br"></span>
+        </div>
+        <div class="hero-horizon" aria-hidden="true"></div>
+        <div class="hero-glass" aria-hidden="true"></div>
+        <div class="hero-datum" aria-hidden="true"></div>
+        <a href="#about" class="scroll-cue" aria-label="Scroll to about section">
+          <span>Scroll</span>
+          <span class="scroll-cue-track"><span class="scroll-cue-dot"></span></span>
+        </a>
+      </section>
 
-        <div class="timeline-item reveal">
-          <span class="timeline-node"><iconify-icon icon="lucide:heart-pulse"></iconify-icon></span>
-          <div class="glass-card timeline-card">
-            <div class="timeline-card-head">
-              <h3>Software Developer Intern</h3>
-              <span class="timeline-date">May 2025 &ndash; Jul 2025</span>
+      <!-- ABOUT -->
+      <section id="about" class="section">
+        <div class="container">
+          <div class="section-head reveal" data-sector="PROFILE">
+            <span class="eyebrow"><span class="eyebrow-line"></span><span class="eyebrow-label">About</span></span>
+            <h2 class="display-lg">Turning <em class="ed-italic">research</em> into<br />software that ships</h2>
+            <p class="section-lede">
+              Final-year Data Science &amp; AI student at IIIT Naya Raipur, currently working as an AI Engineer at
+              Accure Inc &mdash; moving between agentic reasoning research and the production systems that put it to
+              work.
+            </p>
+          </div>
+
+          <div class="about-grid">
+            <div class="glass-card feature-card reveal">
+              <span class="feature-num">Agentic</span>
+              <h3>Reasoning pipelines</h3>
+              <p>
+                Agentic AI workflows and prompt-engineering pipelines evaluated through a seven-dimension reliability
+                framework.
+              </p>
             </div>
-            <p class="timeline-org">Taskar &mdash; India&rsquo;s 1st Healthcare Mall &middot; Remote</p>
-            <ul>
-              <li>Reduced manual reporting workflows by 40% via microservice-based RESTful API integrations for live healthcare and inventory data.</li>
-              <li>Improved analytics dashboard load times by 30% by optimizing UI rendering and async data fetching with React Hooks.</li>
-              <li>Increased user engagement 15% by redesigning dashboard layouts based on stakeholder feedback.</li>
-            </ul>
-          </div>
-        </div>
-
-        <div class="timeline-item reveal">
-          <span class="timeline-node"><iconify-icon icon="lucide:server"></iconify-icon></span>
-          <div class="glass-card timeline-card">
-            <div class="timeline-card-head">
-              <h3>Software Engineering Intern</h3>
-              <span class="timeline-date">May 2024 &ndash; Jul 2024</span>
+            <div class="glass-card feature-card reveal" data-reveal-delay="1">
+              <span class="feature-num">Adversarial</span>
+              <h3>Robustness testing</h3>
+              <p>
+                Stress-testing agentic systems against synthetic adversarial datasets to catch failure modes before
+                production does.
+              </p>
             </div>
-            <p class="timeline-org">Research Designs and Standards Organisation (RDSO) &middot; Lucknow, India</p>
-            <ul>
-              <li>Supported 500+ concurrent users at 99.9% uptime by engineering a responsive attendance tracking system (HTML, CSS, JS, PHP, MySQL).</li>
-              <li>Cut login times 60% for 1,000+ daily users via an optimized, AJAX-driven authentication workflow.</li>
-              <li>Validated production-grade performance under high concurrency using Apache JMeter load testing.</li>
-            </ul>
+            <div class="glass-card feature-card reveal" data-reveal-delay="2">
+              <span class="feature-num">Unsupervised</span>
+              <h3>Anomaly detection</h3>
+              <p>
+                Detection systems trained on unlabeled data, built to catch defect types the training set never saw.
+              </p>
+            </div>
+          </div>
+
+          <div class="glass-card stat-strip reveal">
+            <div class="stat">
+              <p class="stat-num">3</p>
+              <p class="stat-label">Roles held</p>
+            </div>
+            <div class="stat">
+              <p class="stat-num">4</p>
+              <p class="stat-label">Projects shipped</p>
+            </div>
+            <div class="stat">
+              <p class="stat-num">30+</p>
+              <p class="stat-label">Tools &amp; frameworks</p>
+            </div>
+            <div class="stat">
+              <p class="stat-num">2026</p>
+              <p class="stat-label">Graduating</p>
+            </div>
+          </div>
+
+          <div class="term profile-term reveal" data-reveal-delay="2" aria-hidden="true">
+            <div class="term-title">USER PROFILE <span class="term-cursor"></span></div>
+            <div class="term-row"><span class="term-key">ROLE</span><span class="term-val">AI / ML ENGINEER</span></div>
+            <div class="term-row">
+              <span class="term-key">FOCUS</span
+              ><span class="term-val">GENAI &middot; LLM &middot; RAG &middot; CV</span>
+            </div>
+            <div class="term-row"><span class="term-key">STATUS</span><span class="term-val ok">AVAILABLE</span></div>
           </div>
         </div>
-      </div>
-    </div>
-  </section>
+      </section>
 
-  <!-- PROJECTS -->
-  <section id="projects" class="section">
-    <div class="container">
-      <div class="section-head section-head--center reveal" data-sector="MISSIONS">
-        <span class="eyebrow eyebrow--center"><span class="eyebrow-line"></span><span class="eyebrow-label">Selected Work</span></span>
-        <h2 class="display-lg">Research, <em class="ed-italic">shipped</em><br>as software</h2>
-        <p class="section-lede">Agentic pipelines, vision systems, and NLP tools built end-to-end.</p>
-      </div>
-
-      <div class="glass-card filter-bar reveal" role="tablist" aria-label="Filter projects by category">
-        <button class="filter-btn is-active" data-filter="all" role="tab" aria-selected="true">All</button>
-        <button class="filter-btn" data-filter="agentic" role="tab" aria-selected="false">Agentic AI</button>
-        <button class="filter-btn" data-filter="vision" role="tab" aria-selected="false">Computer Vision</button>
-        <button class="filter-btn" data-filter="nlp" role="tab" aria-selected="false">NLP</button>
-      </div>
-
-      <div class="project-grid">
-
-        <article class="glass-card project-card reveal tilt-card" data-category="agentic">
-          <div class="project-card-top">
-            <span class="project-tag">Agentic Contract Auditor</span>
-            <span class="project-year">2026</span>
+      <!-- SKILLS -->
+      <section id="skills" class="section">
+        <div class="container">
+          <div class="section-head section-head--center reveal" data-sector="MODULES">
+            <span class="eyebrow eyebrow--center"
+              ><span class="eyebrow-line"></span><span class="eyebrow-label">Toolkit</span></span
+            >
+            <h2 class="display-lg">The stack behind<br /><em class="ed-italic">production</em> AI</h2>
+            <p class="section-lede">~25+ tools across the ML lifecycle — from first notebook to deployed pipeline.</p>
           </div>
-          <h3>CFR Compliance Checker</h3>
-          <p>An agentic compliance analysis system that evaluates contract clauses against authoritative U.S. federal regulations using MCP-based retrieval, deterministic rules, LLM reasoning, evidence verification, durable memory, human review workflows, and production-ready persistence.</p>
-          <div class="chip-row">
-            <span class="chip">Python</span><span class="chip">FastMCP</span>
-            <span class="chip">Agno</span><span class="chip">Ollama</span><span class="chip">Pydantic</span>
+
+          <div class="stack-grid">
+            <div class="stack-card glass-card reveal">
+              <div class="stack-card-head">
+                <span class="stack-dot" style="--dot: var(--accent)"></span>
+                <h3>Languages &amp; Core</h3>
+                <span class="stack-count">/ 05</span>
+              </div>
+              <div class="stack-items">
+                <span class="stack-item"
+                  ><span class="stack-item-icon"><iconify-icon icon="simple-icons:python"></iconify-icon></span
+                  >Python</span
+                >
+                <span class="stack-item"
+                  ><span class="stack-item-icon"><iconify-icon icon="lucide:database"></iconify-icon></span>SQL</span
+                >
+                <span class="stack-item"
+                  ><span class="stack-item-icon"><iconify-icon icon="simple-icons:cplusplus"></iconify-icon></span
+                  >C++</span
+                >
+                <span class="stack-item"
+                  ><span class="stack-item-icon"><iconify-icon icon="simple-icons:javascript"></iconify-icon></span
+                  >JavaScript</span
+                >
+                <span class="stack-item"
+                  ><span class="stack-item-icon"><iconify-icon icon="simple-icons:html5"></iconify-icon></span
+                  >HTML/CSS</span
+                >
+              </div>
+            </div>
+
+            <div class="stack-card glass-card reveal" data-reveal-delay="1">
+              <div class="stack-card-head">
+                <span class="stack-dot" style="--dot: var(--accent-strong)"></span>
+                <h3>Generative AI &amp; LLMs</h3>
+                <span class="stack-count">/ 06</span>
+              </div>
+              <div class="stack-items">
+                <span class="stack-item"
+                  ><span class="stack-item-icon"><iconify-icon icon="simple-icons:langchain"></iconify-icon></span
+                  >LangChain</span
+                >
+                <span class="stack-item"
+                  ><span class="stack-item-icon"><iconify-icon icon="lucide:git-branch"></iconify-icon></span
+                  >LangGraph</span
+                >
+                <span class="stack-item"
+                  ><span class="stack-item-icon"><iconify-icon icon="lucide:plug-zap"></iconify-icon></span>MCP</span
+                >
+                <span class="stack-item"
+                  ><span class="stack-item-icon"><iconify-icon icon="lucide:message-square-code"></iconify-icon></span
+                  >Chainlit</span
+                >
+                <span class="stack-item"
+                  ><span class="stack-item-icon"><iconify-icon icon="simple-icons:huggingface"></iconify-icon></span
+                  >Hugging Face</span
+                >
+                <span class="stack-item"
+                  ><span class="stack-item-icon"><iconify-icon icon="lucide:terminal"></iconify-icon></span>Ollama</span
+                >
+              </div>
+            </div>
+
+            <div class="stack-card glass-card reveal" data-reveal-delay="1">
+              <div class="stack-card-head">
+                <span class="stack-dot" style="--dot: var(--accent-deep)"></span>
+                <h3>ML &amp; Deep Learning</h3>
+                <span class="stack-count">/ 06</span>
+              </div>
+              <div class="stack-items">
+                <span class="stack-item"
+                  ><span class="stack-item-icon"><iconify-icon icon="simple-icons:pytorch"></iconify-icon></span
+                  >PyTorch</span
+                >
+                <span class="stack-item"
+                  ><span class="stack-item-icon"><iconify-icon icon="simple-icons:tensorflow"></iconify-icon></span
+                  >TensorFlow</span
+                >
+                <span class="stack-item"
+                  ><span class="stack-item-icon"><iconify-icon icon="simple-icons:scikitlearn"></iconify-icon></span
+                  >Scikit-learn</span
+                >
+                <span class="stack-item"
+                  ><span class="stack-item-icon"><iconify-icon icon="simple-icons:opencv"></iconify-icon></span
+                  >OpenCV</span
+                >
+                <span class="stack-item"
+                  ><span class="stack-item-icon"><iconify-icon icon="simple-icons:pandas"></iconify-icon></span
+                  >Pandas</span
+                >
+                <span class="stack-item"
+                  ><span class="stack-item-icon"><iconify-icon icon="simple-icons:numpy"></iconify-icon></span
+                  >NumPy</span
+                >
+              </div>
+            </div>
+
+            <div class="stack-card glass-card reveal" data-reveal-delay="2">
+              <div class="stack-card-head">
+                <span class="stack-dot" style="--dot: #4fb0a8"></span>
+                <h3>Infra &amp; Data</h3>
+                <span class="stack-count">/ 08</span>
+              </div>
+              <div class="stack-items">
+                <span class="stack-item"
+                  ><span class="stack-item-icon"><iconify-icon icon="simple-icons:docker"></iconify-icon></span
+                  >Docker</span
+                >
+                <span class="stack-item"
+                  ><span class="stack-item-icon"><iconify-icon icon="simple-icons:amazonaws"></iconify-icon></span
+                  >AWS</span
+                >
+                <span class="stack-item"
+                  ><span class="stack-item-icon"><iconify-icon icon="simple-icons:fastapi"></iconify-icon></span
+                  >FastAPI</span
+                >
+                <span class="stack-item"
+                  ><span class="stack-item-icon"><iconify-icon icon="simple-icons:postgresql"></iconify-icon></span
+                  >PostgreSQL</span
+                >
+                <span class="stack-item"
+                  ><span class="stack-item-icon"><iconify-icon icon="lucide:database"></iconify-icon></span
+                  >ChromaDB</span
+                >
+                <span class="stack-item"
+                  ><span class="stack-item-icon"><iconify-icon icon="simple-icons:git"></iconify-icon></span>Git</span
+                >
+                <span class="stack-item"
+                  ><span class="stack-item-icon"><iconify-icon icon="simple-icons:tableau"></iconify-icon></span
+                  >Tableau</span
+                >
+                <span class="stack-item"
+                  ><span class="stack-item-icon"><iconify-icon icon="simple-icons:streamlit"></iconify-icon></span
+                  >Streamlit</span
+                >
+              </div>
+            </div>
+
+            <div class="stack-orbit glass-card reveal" data-reveal-delay="2">
+              <div class="orbit-head">
+                <span class="orbit-kicker">// core_loop</span>
+                <span class="orbit-live"><span class="orbit-live-dot"></span>live</span>
+              </div>
+              <p class="orbit-title">Daily orbit</p>
+
+              <div class="orbit-stage" aria-hidden="true">
+                <div class="orbit-ring orbit-ring--outer"></div>
+                <div class="orbit-ring orbit-ring--inner"></div>
+                <div class="orbit-core">AI</div>
+
+                <div class="orbit-node" style="--angle: 0deg">
+                  <iconify-icon icon="simple-icons:python"></iconify-icon>
+                </div>
+                <div class="orbit-node" style="--angle: 45deg">
+                  <iconify-icon icon="simple-icons:pytorch"></iconify-icon>
+                </div>
+                <div class="orbit-node" style="--angle: 90deg">
+                  <iconify-icon icon="simple-icons:langchain"></iconify-icon>
+                </div>
+                <div class="orbit-node" style="--angle: 135deg">
+                  <iconify-icon icon="lucide:git-branch"></iconify-icon>
+                </div>
+                <div class="orbit-node" style="--angle: 180deg">
+                  <iconify-icon icon="simple-icons:docker"></iconify-icon>
+                </div>
+                <div class="orbit-node" style="--angle: 225deg">
+                  <iconify-icon icon="simple-icons:amazonaws"></iconify-icon>
+                </div>
+                <div class="orbit-node" style="--angle: 270deg">
+                  <iconify-icon icon="simple-icons:huggingface"></iconify-icon>
+                </div>
+                <div class="orbit-node" style="--angle: 315deg">
+                  <iconify-icon icon="simple-icons:fastapi"></iconify-icon>
+                </div>
+              </div>
+
+              <div class="orbit-foot">
+                <span>tools_in_motion = 08</span>
+                <span>updated daily</span>
+              </div>
+            </div>
           </div>
-          <span class="project-status">status // operational</span>
-          <a href="https://github.com/vvXranjan/cfr-compliance-mcp" target="_blank" rel="noopener" class="project-link">
-            View on GitHub <iconify-icon icon="lucide:arrow-up-right"></iconify-icon>
-          </a>
-        </article>
 
-        <article class="glass-card project-card reveal tilt-card" data-category="agentic">
-          <div class="project-card-top">
-            <span class="project-tag">Multi-Agent Incident Response</span>
-            <span class="project-year">2026</span>
-          </div>
-          <h3>Distributed Agentic Incident &amp; Security Response Engine</h3>
-          <p>Kafka-based incident response combining a z-score detector with an LOF-based ML anomaly gate, a two-phase Investigator Agent over sandboxed MCP diagnostics, ChromaDB historical retrieval, and Slack/FastAPI human-approved remediation.</p>
-          <div class="chip-row">
-            <span class="chip">Python</span><span class="chip">Agno</span>
-            <span class="chip">MCP / FastMCP</span><span class="chip">Pydantic v2</span>
-            <span class="chip">Kafka</span><span class="chip">ChromaDB</span>
-            <span class="chip">FastAPI</span><span class="chip">React</span>
-          </div>
-          <span class="project-status">status // operational</span>
-          <a href="https://github.com/vvXranjan/incident-response-engine" target="_blank" rel="noopener" class="project-link">
-            View on GitHub <iconify-icon icon="lucide:arrow-up-right"></iconify-icon>
-          </a>
-        </article>
-
-        <article class="glass-card project-card reveal" data-category="agentic">
-          <div class="project-card-top">
-            <span class="project-tag">GenAI Career Copilot</span>
-            <span class="project-year">2026</span>
-          </div>
-          <h3>Smart ATS: Resume &amp; JD Intelligence Platform</h3>
-          <p>Explainable AI-powered ATS that uses LLM-based resume/JD intelligence, hybrid semantic + skill matching, RAG, LangGraph agents, and MCP tools for career insights..</p>
-          <div class="chip-row">
-            <span class="chip">Python</span><span class="chip">FastAPI</span>
-            <span class="chip">LangGraph</span><span class="chip">MCP</span>
-            <span class="chip">PostgreSQL</span><span class="chip">ChromaDB</span>
-            <span class="chip">Kafka</span><span class="chip">Streamlit</span>
-          </div>
-          <span class="project-status">status // operational</span>
-          <a href="https://github.com/vvXranjan/smart-ats-resume-matcher" target="_blank" rel="noopener" class="project-link">
-            View on GitHub <iconify-icon icon="lucide:arrow-up-right"></iconify-icon>
-          </a>
-        </article>
-
-        <article class="glass-card project-card reveal tilt-card" data-category="nlp" data-reveal-delay="1">
-          <div class="project-card-top">
-            <span class="project-tag">Churn Prediction &amp; XAI</span>
-            <span class="project-year">2026</span>
-          </div>
-          <h3>Evidence-Grounded Telco Churn Prediction System</h3>
-          <p>Evidence-grounded telco churn prediction using leakage-safe XGBoost, SHAP explanations, and a constrained LLM layer. Every LLM claim is deterministically verified against authoritative SHAP evidence (PASS/FLAG). The LLM is never the source of truth.</p>
-          <div class="chip-row">
-            <span class="chip">Python</span><span class="chip">XGBoost</span>
-            <span class="chip">SHAP</span><span class="chip">FastAPI</span>
-            <span class="chip">OpenAI</span><span class="chip">Gradio</span>
-            <span class="chip">MLflow</span><span class="chip">Docker</span>
-          </div>
-          <span class="project-status">status // operational</span>
-          <a href="https://github.com/vvXranjan/telco-churn-analysis" target="_blank" rel="noopener" class="project-link">
-            View on GitHub <iconify-icon icon="lucide:arrow-up-right"></iconify-icon>
-          </a>
-        </article>
-
-
-        <article class="glass-card project-card reveal tilt-card" data-category="agentic" data-reveal-delay="1">
-          <div class="project-card-top">
-            <span class="project-tag">Issue &rarr; Verified PR Pipeline</span>
-            <span class="project-year">2026</span>
-          </div>
-          <h3>Multi-Agent Orchestration System</h3>
-          <p>LangGraph pipeline (Researcher, Planner, Coder, TestWriter, Verifier, PRWriter) that turns a GitHub Issue into a verified Pull Request, with Docker-sandboxed verification and a mandatory human approval gate before any PR is opened.</p>
-          <div class="chip-row">
-            <span class="chip">Python</span><span class="chip">LangGraph</span>
-            <span class="chip">Docker</span><span class="chip">Pydantic</span>
-            <span class="chip">GitHub API</span><span class="chip">Slack API</span>
-          </div>
-          <span class="project-status">status // operational</span>
-          <a href="https://github.com/vvXranjan/multi-agent-orchestrator" target="_blank" rel="noopener" class="project-link">
-            View on GitHub <iconify-icon icon="lucide:arrow-up-right"></iconify-icon>
-          </a>
-        </article>
-
-        <article class="glass-card project-card reveal tilt-card" data-category="vision" data-reveal-delay="1">           <div class="project-card-top">             <span class="project-tag">PatchCore PoC</span>             <span class="project-year">2025</span>           </div>           <h3>Welding Anomaly Detection</h3>           <p>Unsupervised anomaly-detection pipeline trained only on normal weld images to catch              unseen defect types without labeled data, using PatchCore (Anomalib). Generates              pixel-level explainable heatmaps alongside anomaly scores.</p>           <div class="chip-row">             <span class="chip">PyTorch</span><span class="chip">Anomalib</span>             <span class="chip">OpenCV</span><span class="chip">NumPy</span>           </div><span class="project-status">status // operational</span>           <a href="https://github.com/vvXranjan/welding-anomaly-detection-poc" target="_blank" rel="noopener" class="project-link">             View on GitHub <iconify-icon icon="lucide:arrow-up-right"></iconify-icon>           </a>         </article>
-
-
-      </div>
-      <p class="filter-empty" hidden>No projects in this category yet.</p>
-    </div>
-  </section>
-
-  <!-- CONTACT -->
-  <section id="contact" class="section">
-    <div class="container">
-      <div class="glass-card contact-panel reveal">
-        <div class="bg-grid contact-grid-fx" aria-hidden="true"></div>
-        <span class="eyebrow"><span class="eyebrow-line"></span><span class="eyebrow-label">Contact</span></span>
-        <h2 class="display-lg">Let&rsquo;s build something<br><em class="ed-italic">reliable</em></h2>
-        <p class="section-lede">Open to AI Engineering roles and interesting problems in agentic
-           systems, RAG, or applied ML &mdash; reach out.</p>
-
-        <div class="contact-row">
-          <a href="mailto:vaivikran@gmail.com" class="btn-pill btn-pill--solid btn-pill--lg btn-magnetic">
-            Start a conversation
-            <span class="btn-pill-icon"><iconify-icon icon="lucide:arrow-up-right"></iconify-icon></span>
-          </a>
-          <div class="contact-cards">
-            <a href="mailto:vaivikran@gmail.com" class="contact-card">
-              <span class="contact-card-icon"><iconify-icon icon="lucide:mail"></iconify-icon></span>
-              <span><span class="contact-card-label">Email</span><span class="contact-card-value">vaivikran@gmail.com</span></span>
-            </a>
-            <a href="https://www.linkedin.com/in/vaibhavvranjan" target="_blank" rel="noopener" class="contact-card">
-              <span class="contact-card-icon"><iconify-icon icon="simple-icons:linkedin"></iconify-icon></span>
-              <span><span class="contact-card-label">LinkedIn</span><span class="contact-card-value">in/vaibhavvranjan</span></span>
-            </a>
-            <a href="https://github.com/vvXranjan" target="_blank" rel="noopener" class="contact-card">
-              <span class="contact-card-icon"><iconify-icon icon="simple-icons:github"></iconify-icon></span>
-              <span><span class="contact-card-label">GitHub</span><span class="contact-card-value">vvXranjan</span></span>
-            </a>
+          <div class="focus-strip reveal" data-reveal-delay="2">
+            <span class="focus-strip-label">Focus areas</span>
+            <div class="focus-tags">
+              <span class="focus-tag">Generative AI</span>
+              <span class="focus-tag">LLMs</span>
+              <span class="focus-tag">RAG</span>
+              <span class="focus-tag">NLP</span>
+              <span class="focus-tag">Computer Vision</span>
+              <span class="focus-tag">Anomaly Detection</span>
+              <span class="focus-tag">Data Engineering</span>
+              <span class="focus-tag">Prompt Engineering</span>
+            </div>
           </div>
         </div>
+      </section>
+
+      <!-- EXPERIENCE -->
+      <section id="experience" class="section">
+        <div class="container">
+          <div class="section-head section-head--center reveal" data-sector="JOURNEY">
+            <span class="eyebrow eyebrow--center"
+              ><span class="eyebrow-line"></span><span class="eyebrow-label">Journey</span></span
+            >
+            <h2 class="display-lg">From load-tested<br />systems to <em class="ed-italic">agentic</em> AI</h2>
+            <p class="section-lede">Three roles, each closer to the model layer than the last.</p>
+          </div>
+
+          <div class="timeline">
+            <div class="timeline-spine" aria-hidden="true"></div>
+
+            <div class="timeline-item reveal">
+              <span class="timeline-node"><iconify-icon icon="lucide:brain-circuit"></iconify-icon></span>
+              <div class="glass-card timeline-card">
+                <div class="timeline-card-head">
+                  <h3>AI Engineer</h3>
+                  <span class="timeline-date">Jan 2026 &ndash; Present</span>
+                </div>
+                <p class="timeline-org">Accure Inc &middot; Bangalore, India</p>
+                <ul>
+                  <li>
+                    Improved LLM reasoning reliability for AccureIQx by designing agentic AI workflows and
+                    prompt-engineering pipelines, evaluated through a seven-dimension framework.
+                  </li>
+                  <li>
+                    Strengthened adversarial robustness of agentic reasoning systems, achieving high anomaly-detection
+                    accuracy across five stress-test scenarios using synthetic cybersecurity datasets.
+                  </li>
+                  <li>
+                    Cut manual weekly reporting time by 35% by building automated Python analytics pipelines integrating
+                    multi-source EDA data via REST APIs.
+                  </li>
+                </ul>
+              </div>
+            </div>
+
+            <div class="timeline-item reveal">
+              <span class="timeline-node"><iconify-icon icon="lucide:heart-pulse"></iconify-icon></span>
+              <div class="glass-card timeline-card">
+                <div class="timeline-card-head">
+                  <h3>Software Developer Intern</h3>
+                  <span class="timeline-date">May 2025 &ndash; Jul 2025</span>
+                </div>
+                <p class="timeline-org">Taskar &mdash; India&rsquo;s 1st Healthcare Mall &middot; Remote</p>
+                <ul>
+                  <li>
+                    Reduced manual reporting workflows by 40% via microservice-based RESTful API integrations for live
+                    healthcare and inventory data.
+                  </li>
+                  <li>
+                    Improved analytics dashboard load times by 30% by optimizing UI rendering and async data fetching
+                    with React Hooks.
+                  </li>
+                  <li>Increased user engagement 15% by redesigning dashboard layouts based on stakeholder feedback.</li>
+                </ul>
+              </div>
+            </div>
+
+            <div class="timeline-item reveal">
+              <span class="timeline-node"><iconify-icon icon="lucide:server"></iconify-icon></span>
+              <div class="glass-card timeline-card">
+                <div class="timeline-card-head">
+                  <h3>Software Engineering Intern</h3>
+                  <span class="timeline-date">May 2024 &ndash; Jul 2024</span>
+                </div>
+                <p class="timeline-org">Research Designs and Standards Organisation (RDSO) &middot; Lucknow, India</p>
+                <ul>
+                  <li>
+                    Supported 500+ concurrent users at 99.9% uptime by engineering a responsive attendance tracking
+                    system (HTML, CSS, JS, PHP, MySQL).
+                  </li>
+                  <li>
+                    Cut login times 60% for 1,000+ daily users via an optimized, AJAX-driven authentication workflow.
+                  </li>
+                  <li>
+                    Validated production-grade performance under high concurrency using Apache JMeter load testing.
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- PROJECTS -->
+      <section id="projects" class="section">
+        <div class="container">
+          <div class="section-head section-head--center reveal" data-sector="MISSIONS">
+            <span class="eyebrow eyebrow--center"
+              ><span class="eyebrow-line"></span><span class="eyebrow-label">Selected Work</span></span
+            >
+            <h2 class="display-lg">Research, <em class="ed-italic">shipped</em><br />as software</h2>
+            <p class="section-lede">Agentic pipelines, vision systems, and NLP tools built end-to-end.</p>
+          </div>
+
+          <div class="glass-card filter-bar reveal" role="tablist" aria-label="Filter projects by category">
+            <button class="filter-btn is-active" data-filter="all" role="tab" aria-selected="true">All</button>
+            <button class="filter-btn" data-filter="agentic" role="tab" aria-selected="false">Agentic AI</button>
+            <button class="filter-btn" data-filter="vision" role="tab" aria-selected="false">Computer Vision</button>
+            <button class="filter-btn" data-filter="nlp" role="tab" aria-selected="false">NLP</button>
+          </div>
+
+          <div class="project-grid">
+            <article class="glass-card project-card reveal tilt-card" data-category="agentic">
+              <div class="project-card-top">
+                <span class="project-tag">Agentic Contract Auditor</span>
+                <span class="project-year">2026</span>
+              </div>
+              <h3>CFR Compliance Checker</h3>
+              <p>
+                An agentic compliance analysis system that evaluates contract clauses against authoritative U.S. federal
+                regulations using MCP-based retrieval, deterministic rules, LLM reasoning, evidence verification,
+                durable memory, human review workflows, and production-ready persistence.
+              </p>
+              <div class="chip-row">
+                <span class="chip">Python</span><span class="chip">FastMCP</span> <span class="chip">Agno</span
+                ><span class="chip">Ollama</span><span class="chip">Pydantic</span>
+              </div>
+              <span class="project-status">status // operational</span>
+              <a
+                href="https://github.com/vvXranjan/cfr-compliance-mcp"
+                target="_blank"
+                rel="noopener"
+                class="project-link"
+              >
+                View on GitHub <iconify-icon icon="lucide:arrow-up-right"></iconify-icon>
+              </a>
+            </article>
+
+            <article class="glass-card project-card reveal tilt-card" data-category="agentic">
+              <div class="project-card-top">
+                <span class="project-tag">Multi-Agent Incident Response</span>
+                <span class="project-year">2026</span>
+              </div>
+              <h3>Distributed Agentic Incident &amp; Security Response Engine</h3>
+              <p>
+                Kafka-based incident response combining a z-score detector with an LOF-based ML anomaly gate, a
+                two-phase Investigator Agent over sandboxed MCP diagnostics, ChromaDB historical retrieval, and
+                Slack/FastAPI human-approved remediation.
+              </p>
+              <div class="chip-row">
+                <span class="chip">Python</span><span class="chip">Agno</span> <span class="chip">MCP / FastMCP</span
+                ><span class="chip">Pydantic v2</span> <span class="chip">Kafka</span><span class="chip">ChromaDB</span>
+                <span class="chip">FastAPI</span><span class="chip">React</span>
+              </div>
+              <span class="project-status">status // operational</span>
+              <a
+                href="https://github.com/vvXranjan/incident-response-engine"
+                target="_blank"
+                rel="noopener"
+                class="project-link"
+              >
+                View on GitHub <iconify-icon icon="lucide:arrow-up-right"></iconify-icon>
+              </a>
+            </article>
+
+            <article class="glass-card project-card reveal" data-category="agentic">
+              <div class="project-card-top">
+                <span class="project-tag">GenAI Career Copilot</span>
+                <span class="project-year">2026</span>
+              </div>
+              <h3>Smart ATS: Resume &amp; JD Intelligence Platform</h3>
+              <p>
+                Explainable AI-powered ATS that uses LLM-based resume/JD intelligence, hybrid semantic + skill matching,
+                RAG, LangGraph agents, and MCP tools for career insights..
+              </p>
+              <div class="chip-row">
+                <span class="chip">Python</span><span class="chip">FastAPI</span> <span class="chip">LangGraph</span
+                ><span class="chip">MCP</span> <span class="chip">PostgreSQL</span><span class="chip">ChromaDB</span>
+                <span class="chip">Kafka</span><span class="chip">Streamlit</span>
+              </div>
+              <span class="project-status">status // operational</span>
+              <a
+                href="https://github.com/vvXranjan/smart-ats-resume-matcher"
+                target="_blank"
+                rel="noopener"
+                class="project-link"
+              >
+                View on GitHub <iconify-icon icon="lucide:arrow-up-right"></iconify-icon>
+              </a>
+            </article>
+
+            <article class="glass-card project-card reveal tilt-card" data-category="nlp" data-reveal-delay="1">
+              <div class="project-card-top">
+                <span class="project-tag">Churn Prediction &amp; XAI</span>
+                <span class="project-year">2026</span>
+              </div>
+              <h3>Evidence-Grounded Telco Churn Prediction System</h3>
+              <p>
+                Evidence-grounded telco churn prediction using leakage-safe XGBoost, SHAP explanations, and a
+                constrained LLM layer. Every LLM claim is deterministically verified against authoritative SHAP evidence
+                (PASS/FLAG). The LLM is never the source of truth.
+              </p>
+              <div class="chip-row">
+                <span class="chip">Python</span><span class="chip">XGBoost</span> <span class="chip">SHAP</span
+                ><span class="chip">FastAPI</span> <span class="chip">OpenAI</span><span class="chip">Gradio</span>
+                <span class="chip">MLflow</span><span class="chip">Docker</span>
+              </div>
+              <span class="project-status">status // operational</span>
+              <a
+                href="https://github.com/vvXranjan/telco-churn-analysis"
+                target="_blank"
+                rel="noopener"
+                class="project-link"
+              >
+                View on GitHub <iconify-icon icon="lucide:arrow-up-right"></iconify-icon>
+              </a>
+            </article>
+
+            <article class="glass-card project-card reveal tilt-card" data-category="agentic" data-reveal-delay="1">
+              <div class="project-card-top">
+                <span class="project-tag">Issue &rarr; Verified PR Pipeline</span>
+                <span class="project-year">2026</span>
+              </div>
+              <h3>Multi-Agent Orchestration System</h3>
+              <p>
+                LangGraph pipeline (Researcher, Planner, Coder, TestWriter, Verifier, PRWriter) that turns a GitHub
+                Issue into a verified Pull Request, with Docker-sandboxed verification and a mandatory human approval
+                gate before any PR is opened.
+              </p>
+              <div class="chip-row">
+                <span class="chip">Python</span><span class="chip">LangGraph</span> <span class="chip">Docker</span
+                ><span class="chip">Pydantic</span> <span class="chip">GitHub API</span
+                ><span class="chip">Slack API</span>
+              </div>
+              <span class="project-status">status // operational</span>
+              <a
+                href="https://github.com/vvXranjan/multi-agent-orchestrator"
+                target="_blank"
+                rel="noopener"
+                class="project-link"
+              >
+                View on GitHub <iconify-icon icon="lucide:arrow-up-right"></iconify-icon>
+              </a>
+            </article>
+
+            <article class="glass-card project-card reveal tilt-card" data-category="vision" data-reveal-delay="1">
+              <div class="project-card-top">
+                <span class="project-tag">Agentic Vision System</span>
+                <span class="project-year">2026</span>
+              </div>
+              <h3>Welding Anomaly Detection</h3>
+              <p>
+                Agentic industrial visual-inspection system built around sealed PatchCore anomaly detection. Uses
+                deterministic anomaly routing, selective LLM reasoning, provenance-gated RAG over welding references,
+                and MCP tools to produce grounded inspection reports with explainable heatmaps.
+              </p>
+              <div class="chip-row">
+                <span class="chip">PyTorch</span>
+                <span class="chip">PatchCore</span>
+                <span class="chip">RAG</span>
+                <span class="chip">MCP</span>
+                <span class="chip">ChromaDB</span>
+                <span class="chip">Docker</span>
+              </div>
+
+              <span class="project-status">status // operational</span>
+
+              <a
+                href="https://github.com/vvXranjan/welding-anomaly-detection-poc"
+                target="_blank"
+                rel="noopener"
+                class="project-link"
+              >
+                View on GitHub
+                <iconify-icon icon="lucide:arrow-up-right"></iconify-icon>
+              </a>
+            </article>
+          </div>
+          <p class="filter-empty" hidden>No projects in this category yet.</p>
+        </div>
+      </section>
+
+      <!-- CONTACT -->
+      <section id="contact" class="section">
+        <div class="container">
+          <div class="glass-card contact-panel reveal">
+            <div class="bg-grid contact-grid-fx" aria-hidden="true"></div>
+            <span class="eyebrow"><span class="eyebrow-line"></span><span class="eyebrow-label">Contact</span></span>
+            <h2 class="display-lg">Let&rsquo;s build something<br /><em class="ed-italic">reliable</em></h2>
+            <p class="section-lede">
+              Open to AI Engineering roles and interesting problems in agentic systems, RAG, or applied ML &mdash; reach
+              out.
+            </p>
+
+            <div class="contact-row">
+              <a href="mailto:vaivikran@gmail.com" class="btn-pill btn-pill--solid btn-pill--lg btn-magnetic">
+                Start a conversation
+                <span class="btn-pill-icon"><iconify-icon icon="lucide:arrow-up-right"></iconify-icon></span>
+              </a>
+              <div class="contact-cards">
+                <a href="mailto:vaivikran@gmail.com" class="contact-card">
+                  <span class="contact-card-icon"><iconify-icon icon="lucide:mail"></iconify-icon></span>
+                  <span
+                    ><span class="contact-card-label">Email</span
+                    ><span class="contact-card-value">vaivikran@gmail.com</span></span
+                  >
+                </a>
+                <a
+                  href="https://www.linkedin.com/in/vaibhavvranjan"
+                  target="_blank"
+                  rel="noopener"
+                  class="contact-card"
+                >
+                  <span class="contact-card-icon"><iconify-icon icon="simple-icons:linkedin"></iconify-icon></span>
+                  <span
+                    ><span class="contact-card-label">LinkedIn</span
+                    ><span class="contact-card-value">in/vaibhavvranjan</span></span
+                  >
+                </a>
+                <a href="https://github.com/vvXranjan" target="_blank" rel="noopener" class="contact-card">
+                  <span class="contact-card-icon"><iconify-icon icon="simple-icons:github"></iconify-icon></span>
+                  <span
+                    ><span class="contact-card-label">GitHub</span
+                    ><span class="contact-card-value">vvXranjan</span></span
+                  >
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer>
+      <div class="container footer-grid">
+        <div>
+          <a href="#home" class="brand">VVR<span class="dot">.</span></a>
+          <p class="footer-tagline">AI Engineer building agentic pipelines, RAG systems, and production ML tools.</p>
+        </div>
+        <nav class="footer-nav">
+          <a href="#about" data-nav>About</a>
+          <a href="#skills" data-nav>Skills</a>
+          <a href="#experience" data-nav>Journey</a>
+          <a href="#projects" data-nav>Work</a>
+          <a href="#contact" data-nav>Contact</a>
+        </nav>
+        <div class="footer-socials">
+          <a href="https://www.linkedin.com/in/vaibhavvranjan" target="_blank" rel="noopener" aria-label="LinkedIn"
+            ><iconify-icon icon="simple-icons:linkedin"></iconify-icon
+          ></a>
+          <a href="https://github.com/vvXranjan" target="_blank" rel="noopener" aria-label="GitHub"
+            ><iconify-icon icon="simple-icons:github"></iconify-icon
+          ></a>
+          <a href="mailto:vaivikran@gmail.com" aria-label="Email"><iconify-icon icon="lucide:mail"></iconify-icon></a>
+        </div>
       </div>
-    </div>
-  </section>
+      <div class="container footer-bottom">
+        <p>&copy; 2026 Vaibhav Ranjan. All rights reserved.</p>
+        <p class="footer-credit">Built with code, not templates.</p>
+      </div>
+    </footer>
 
-</main>
+    <button id="backToTop" aria-label="Back to top"><iconify-icon icon="lucide:arrow-up"></iconify-icon></button>
 
-<footer>
-  <div class="container footer-grid">
-    <div>
-      <a href="#home" class="brand">VVR<span class="dot">.</span></a>
-      <p class="footer-tagline">AI Engineer building agentic pipelines, RAG systems, and
-         production ML tools.</p>
-    </div>
-    <nav class="footer-nav">
-      <a href="#about" data-nav>About</a>
-      <a href="#skills" data-nav>Skills</a>
-      <a href="#experience" data-nav>Journey</a>
-      <a href="#projects" data-nav>Work</a>
-      <a href="#contact" data-nav>Contact</a>
-    </nav>
-    <div class="footer-socials">
-      <a href="https://www.linkedin.com/in/vaibhavvranjan" target="_blank" rel="noopener" aria-label="LinkedIn"><iconify-icon icon="simple-icons:linkedin"></iconify-icon></a>
-      <a href="https://github.com/vvXranjan" target="_blank" rel="noopener" aria-label="GitHub"><iconify-icon icon="simple-icons:github"></iconify-icon></a>
-      <a href="mailto:vaivikran@gmail.com" aria-label="Email"><iconify-icon icon="lucide:mail"></iconify-icon></a>
-    </div>
-  </div>
-  <div class="container footer-bottom">
-    <p>&copy; 2026 Vaibhav Ranjan. All rights reserved.</p>
-    <p class="footer-credit">Built with code, not templates.</p>
-  </div>
-</footer>
+    <audio id="bgMusic" loop preload="none"></audio>
 
-<button id="backToTop" aria-label="Back to top"><iconify-icon icon="lucide:arrow-up"></iconify-icon></button>
-
-<audio id="bgMusic" loop preload="none"></audio>
-
-<script src="js/script.js"></script>
-</body>
+    <script src="js/script.js"></script>
+  </body>
 </html>
