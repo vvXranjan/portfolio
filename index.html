@@ -306,8 +306,8 @@
             <span class="eyebrow"><span class="eyebrow-line"></span><span class="eyebrow-label">About</span></span>
             <h2 class="display-lg">Turning <em class="ed-italic">research</em> into<br />software that ships</h2>
             <p class="section-lede">
-              Final-year Data Science &amp; AI student at IIIT Naya Raipur, currently working as an AI Engineer at
-              Accure Inc &mdash; moving between agentic reasoning research and the production systems that put it to
+              B.Tech Data Science &amp; AI graduate from IIIT Naya Raipur, now working as an AI Engineer at
+              Zonov.ai &mdash; moving between agentic reasoning research and the production systems that put it to
               work.
             </p>
           </div>
@@ -340,11 +340,11 @@
 
           <div class="glass-card stat-strip reveal">
             <div class="stat">
-              <p class="stat-num">3</p>
+              <p class="stat-num">4</p>
               <p class="stat-label">Roles held</p>
             </div>
             <div class="stat">
-              <p class="stat-num">4</p>
+              <p class="stat-num">7</p>
               <p class="stat-label">Projects shipped</p>
             </div>
             <div class="stat">
@@ -353,7 +353,7 @@
             </div>
             <div class="stat">
               <p class="stat-num">2026</p>
-              <p class="stat-label">Graduating</p>
+              <p class="stat-label">Graduated</p>
             </div>
           </div>
 
@@ -429,8 +429,8 @@
                   ><span class="stack-item-icon"><iconify-icon icon="lucide:plug-zap"></iconify-icon></span>MCP</span
                 >
                 <span class="stack-item"
-                  ><span class="stack-item-icon"><iconify-icon icon="lucide:message-square-code"></iconify-icon></span
-                  >Chainlit</span
+                  ><span class="stack-item-icon"><iconify-icon icon="lucide:bot"></iconify-icon></span
+                  >Agno</span
                 >
                 <span class="stack-item"
                   ><span class="stack-item-icon"><iconify-icon icon="simple-icons:huggingface"></iconify-icon></span
@@ -480,7 +480,7 @@
               <div class="stack-card-head">
                 <span class="stack-dot" style="--dot: #4fb0a8"></span>
                 <h3>Infra &amp; Data</h3>
-                <span class="stack-count">/ 08</span>
+                <span class="stack-count">/ 11</span>
               </div>
               <div class="stack-items">
                 <span class="stack-item"
@@ -507,12 +507,24 @@
                   ><span class="stack-item-icon"><iconify-icon icon="simple-icons:git"></iconify-icon></span>Git</span
                 >
                 <span class="stack-item"
-                  ><span class="stack-item-icon"><iconify-icon icon="simple-icons:tableau"></iconify-icon></span
-                  >Tableau</span
+                  ><span class="stack-item-icon"><iconify-icon icon="simple-icons:apachekafka"></iconify-icon></span
+                  >Kafka</span
                 >
                 <span class="stack-item"
-                  ><span class="stack-item-icon"><iconify-icon icon="simple-icons:streamlit"></iconify-icon></span
-                  >Streamlit</span
+                  ><span class="stack-item-icon"><iconify-icon icon="simple-icons:githubactions"></iconify-icon></span
+                  >GitHub Actions</span
+                >
+                <span class="stack-item"
+                  ><span class="stack-item-icon"><iconify-icon icon="lucide:layers"></iconify-icon></span
+                  >SQLAlchemy</span
+                >
+                <span class="stack-item"
+                  ><span class="stack-item-icon"><iconify-icon icon="lucide:flask-conical"></iconify-icon></span
+                  >pytest</span
+                >
+                <span class="stack-item"
+                  ><span class="stack-item-icon"><iconify-icon icon="simple-icons:playwright"></iconify-icon></span
+                  >Playwright</span
                 >
               </div>
             </div>
@@ -586,32 +598,59 @@
               ><span class="eyebrow-line"></span><span class="eyebrow-label">Journey</span></span
             >
             <h2 class="display-lg">From load-tested<br />systems to <em class="ed-italic">agentic</em> AI</h2>
-            <p class="section-lede">Three roles, each closer to the model layer than the last.</p>
+            <p class="section-lede">Four roles, each closer to the model layer than the last.</p>
           </div>
 
           <div class="timeline">
             <div class="timeline-spine" aria-hidden="true"></div>
 
             <div class="timeline-item reveal">
-              <span class="timeline-node"><iconify-icon icon="lucide:brain-circuit"></iconify-icon></span>
+              <span class="timeline-node"><iconify-icon icon="lucide:rocket"></iconify-icon></span>
               <div class="glass-card timeline-card">
                 <div class="timeline-card-head">
                   <h3>AI Engineer</h3>
-                  <span class="timeline-date">Jan 2026 &ndash; Present</span>
+                  <span class="timeline-date">Sep 2026 &ndash; Present</span>
+                </div>
+                <p class="timeline-org">Zonov.ai &middot; Jaipur, India</p>
+                <ul>
+                  <li>
+                    Built ZONOV Exam and Learn, a multi-tenant examination and AI-tutoring platform on FastAPI,
+                    SQLAlchemy 2, and PostgreSQL (55 Alembic migrations, 30k+ lines of Python), with server-authoritative
+                    grading, deterministic paper generation, face-verified identity, and versioned results.
+                  </li>
+                  <li>
+                    Designed a pluggable AI provider layer (Gemini, OpenAI-compatible/Ollama) and a 9-stage safety
+                    pipeline for the AI Tutor (input screening, curriculum grounding, canary-token leak detection,
+                    answer-leak checks via SymPy), benchmarked on a 39-case golden set across Gemini, Llama 3.2, and
+                    Mistral 7B.
+                  </li>
+                  <li>
+                    Established CI/CD in GitHub Actions: 2,000+ tests (pytest, Playwright E2E) against real PostgreSQL,
+                    pip-audit scanning, and Docker builds with container smoke tests; added JWT auth, rate limiting, and
+                    CSP/security-header middleware.
+                  </li>
+                </ul>
+              </div>
+            </div>
+
+            <div class="timeline-item reveal">
+              <span class="timeline-node"><iconify-icon icon="lucide:brain-circuit"></iconify-icon></span>
+              <div class="glass-card timeline-card">
+                <div class="timeline-card-head">
+                  <h3>AI Engineer Intern</h3>
+                  <span class="timeline-date">Jan 2026 &ndash; Jul 2026</span>
                 </div>
                 <p class="timeline-org">Accure Inc &middot; Bangalore, India</p>
                 <ul>
                   <li>
-                    Improved LLM reasoning reliability for AccureIQx by designing agentic AI workflows and
-                    prompt-engineering pipelines, evaluated through a seven-dimension framework.
+                    Improved LLM reasoning reliability for the AccureIQx enterprise generative AI platform by designing
+                    and governing agentic AI workflows, RAG pipelines, and prompt-engineering pipelines, evaluated
+                    through a seven-dimension framework and six-criterion validation rubric.
                   </li>
                   <li>
                     Strengthened adversarial robustness of agentic reasoning systems, achieving high anomaly-detection
-                    accuracy across five stress-test scenarios using synthetic cybersecurity datasets.
-                  </li>
-                  <li>
-                    Cut manual weekly reporting time by 35% by building automated Python analytics pipelines integrating
-                    multi-source EDA data via REST APIs.
+                    accuracy across five stress-test scenarios by engineering synthetic cybersecurity incident datasets
+                    with realistic log data.
                   </li>
                 </ul>
               </div>
@@ -634,7 +673,6 @@
                     Improved analytics dashboard load times by 30% by optimizing UI rendering and async data fetching
                     with React Hooks.
                   </li>
-                  <li>Increased user engagement 15% by redesigning dashboard layouts based on stakeholder feedback.</li>
                 </ul>
               </div>
             </div>
@@ -649,14 +687,12 @@
                 <p class="timeline-org">Research Designs and Standards Organisation (RDSO) &middot; Lucknow, India</p>
                 <ul>
                   <li>
-                    Supported 500+ concurrent users at 99.9% uptime by engineering a responsive attendance tracking
-                    system (HTML, CSS, JS, PHP, MySQL).
+                    Supported 500+ concurrent users at 99.9% uptime, verified through load testing, by engineering a
+                    responsive, service-oriented attendance tracking system (HTML, CSS, JS, PHP, MySQL).
                   </li>
                   <li>
-                    Cut login times 60% for 1,000+ daily users via an optimized, AJAX-driven authentication workflow.
-                  </li>
-                  <li>
-                    Validated production-grade performance under high concurrency using Apache JMeter load testing.
+                    Cut login times 60% for 1,000+ daily users with an optimized authentication workflow, and added
+                    AJAX-based real-time interactivity that boosted retention 20%.
                   </li>
                 </ul>
               </div>
@@ -692,13 +728,15 @@
               </div>
               <h3>CFR Compliance Checker</h3>
               <p>
-                An agentic compliance analysis system that evaluates contract clauses against authoritative U.S. federal
-                regulations using MCP-based retrieval, deterministic rules, LLM reasoning, evidence verification,
-                durable memory, human review workflows, and production-ready persistence.
+                Agentic compliance pipeline (security &rarr; eCFR retrieval &rarr; deterministic rules &rarr; LLM reasoning
+                &rarr; verification &rarr; human review) with evidence provenance attached only by the retrieval layer.
+                Unresolved cases route to NEEDS REVIEW instead of silent acceptance, backed by an optimistic-concurrency
+                review lifecycle, an immutable audit trail, and 268 offline tests.
               </p>
               <div class="chip-row">
                 <span class="chip">Python</span><span class="chip">FastMCP</span> <span class="chip">Agno</span
                 ><span class="chip">Ollama</span><span class="chip">Pydantic</span>
+                <span class="chip">FastAPI</span><span class="chip">PostgreSQL</span>
               </div>
               <span class="project-status">status // operational</span>
               <a
@@ -745,8 +783,10 @@
               </div>
               <h3>Smart ATS: Resume &amp; JD Intelligence Platform</h3>
               <p>
-                Explainable AI-powered ATS that uses LLM-based resume/JD intelligence, hybrid semantic + skill matching,
-                RAG, LangGraph agents, and MCP tools for career insights..
+                Deterministic hybrid ATS (semantic + keyword + skill-graph, explainable scoring) as the source of truth,
+                with a 9-node LangGraph Career Copilot and an 11-tool MCP server that never fabricates a skill.
+                Validated on a 30-pair hand-labeled suite (Spearman 0.839, Recommendation Recall@3 0.913) with 240
+                tests, JWT auth, rate limiting, Prometheus metrics, and Kafka-based async ingestion.
               </p>
               <div class="chip-row">
                 <span class="chip">Python</span><span class="chip">FastAPI</span> <span class="chip">LangGraph</span
